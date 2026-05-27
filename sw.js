@@ -1,5 +1,5 @@
-const CACHE_CORE = 'gourmetos-core-v22';
-const CACHE_DATA = 'gourmetos-data-v22';
+const CACHE_CORE = 'gourmetos-core-v23';
+const CACHE_DATA = 'gourmetos-data-v23';
 
 const CORE_URLS = [
   './',

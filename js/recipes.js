@@ -256,7 +256,12 @@ export async function getActiveRecipeFromPlan(weeklyPlan) {
   const todayDay = weeklyPlan?.find((d) => d.dateStr === todayStr);
 
   const slot = todayDay?.slots?.[0];
-  const recipe = prepareRecipe(slot?.selected ?? todayDay?.recipes?.[0] ?? db.recipes[0]);
+  const candidate = slot?.selected ?? todayDay?.recipes?.[0];
+  const allowed =
+    (candidate && isRecipeAllowed(candidate) ? candidate : null) ||
+    db.recipes.find((r) => isRecipeAllowed(r)) ||
+    null;
+  const recipe = allowed ? prepareRecipe(allowed) : candidate ? prepareRecipe(candidate) : null;
   const weatherTag = todayDay?.weatherTag ?? 'mild';
 
   return {

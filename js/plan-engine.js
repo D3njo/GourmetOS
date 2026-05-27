@@ -100,7 +100,18 @@ function resolveDaySelections(
       options.filter((r) => !ids.includes(r.id)),
       slotIndex
     );
-    const fallback = allRecipes.find((r) => isRecipeAllowed(r, { presetTags: excludedTags }));
+    const fallback = findAllowedRecipe(allRecipes, {
+      weatherTag,
+      mealType,
+      effortLevel,
+      excludedTags,
+      dayIndex: DAY_KEYS.indexOf(dayKey),
+      usedIds: diversity?.usedIds,
+      usedCuisines: diversity?.usedCuisines,
+      usedProteins: diversity?.usedProteins,
+      usedTastes: diversity?.usedTastes,
+      usedTechniques: diversity?.usedTechniques
+    });
     const recipeId = pick || options[0]?.id || fallback?.id;
     if (!recipeId) break;
     ids.push(recipeId);

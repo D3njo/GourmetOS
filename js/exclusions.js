@@ -6,14 +6,16 @@ import { recipeMatchesDietPreferences, getActiveDietPreferences } from './diet-p
 /** Preset checkbox id → pattern on recipe name / ingredients (EN + DE). */
 const PRESET_PATTERNS = {
   fish:
-    /\b(fish|fisch|salmon|lachs|tuna|thunfisch|cod|kabeljau|trout|forelle|anchov|anchovies?|sardines?|mackerel|hering|eel|aal|halibut|seezunge|haddock|hake|monkfish|saltfish|tilapia|pollock|bream|sea\s*bass|\bbass\b|fish\s*pie|fish\s*sauce|fischsauce|fish\s*stock|fischfond)\b/i,
+    /\b(fish|fisch|salmon|lachs|tuna|thunfisch|cod|kabeljau|trout|forelle|anchov|anchovies?|sardines?|mackerel|hering|herring|herrings?|eel|aal|halibut|seezunge|haddock|hake|monkfish|saltfish|tilapia|pollock|bream|barramundi|pilchard|pilchards?|snapper|swordfish|turbot|sole|perch|whiting|flounder|char|mahi|carp|sea\s*bass|\bbass\b|fish\s*pie|fish\s*sauce|fischsauce|fish\s*stock|fischfond)\b/i,
   shellfish:
-    /\b(shellfish|seafood|krustentiere|prawn|prawns|shrimp|shrimps|garnelen|garnele|crab|crabs|krabbe|lobster|hummer|mussel|muschel|clam|squid|calamari|oyster|austern|scallop|jakobsmuschel|langoustine|crayfish|scampi|gamba|surimi|king\s+prawns?|raw\s+king\s+prawns?)\b/i,
-  beef: /\b(beef|rind|rindfleisch|steak|fillet|mince|brisket|veal|kalb|burger\s*patty|entrecôte|entrecote)\b/i,
-  pork: /\b(pork|schwein|schweinefleisch|bacon|speck|ham|schinken|sausage|wurst|chorizo|pancetta|prosciutto|salami|guanciale)\b/i,
+    /\b(shellfish|seafood|krustentiere|prawn|prawns|shrimp|shrimps|garnelen|garnele|crab|crabs|krabbe|lobster|hummer|mussel|muschel|clam|squid|calamari|calamar|octopus|oyster|austern|scallop|jakobsmuschel|langoustine|crayfish|scampi|gambas?|surimi|king\s+prawns?|raw\s+king\s+prawns?)\b/i,
+  beef:
+    /\b(beef|rind|rindfleisch|steak|fillet|mince|brisket|veal|kalb|oxtail|ox\s*tail|short\s*rib|ribeye|sirloin|burger\s*patty|entrecôte|entrecote|meatballs?|meatloaf|\bmeat\b|venison|bison|boar)\b/i,
+  pork:
+    /\b(pork|schwein|schweinefleisch|bacon|speck|ham|schinken|sausage|wurst|chorizo|pancetta|prosciutto|salami|guanciale|rabbit|kaninchen|goose|gans|quail|wachtel)\b/i,
   duck: /\b(duck|ente|duck\s*breast|entenbrust|canard)\b/i,
   dairy:
-    /\b(milk|milch|cream|sahne|cheese|käse|kaese|butter|yogurt|joghurt|parmesan|mozzarella|cheddar|feta|ricotta|mascarpone|ghee|buttermilk|sour\s*cream|crème|creme\s*fraiche)\b/i,
+    /\b(milk|milch|cream|sahne|cheese|käse|kaese|butter|yogurt|joghurt|parmesan|mozzarella|cheddar|feta|ricotta|mascarpone|ghee|buttermilk|sour\s*cream|crème|creme\s*fraiche|whey|casein|lactose|paneer|halloumi|quark|brie|camembert|honey|honig|gelatin|gelatine)\b/i,
   eggs: /\b(eggs?|ei\b|eier|egg\s*white|egg\s*yolk|mayonnaise|mayo|meringue|omelette|omelet|frittata)\b/i,
   gluten:
     /\b(gluten|wheat|weizen|pasta|noodle|nudeln|bread|brot|flour|mehl|pastry|couscous|bulgur|semolina|spaghetti|penne|udon|ramen|baguette|tortilla|panko|breadcrumbs|brotkrumen)\b/i,
@@ -59,20 +61,43 @@ function sanitizeExclusionText(text) {
     .replace(/via\s+[\w\s&]+\s+effort/gi, ' ');
 }
 
+function isGenericDescription(desc) {
+  return desc && /flavors via|suited to .* effort/i.test(desc);
+}
+
 export function recipeTextBlob(recipe) {
   const ingredients = (recipe.ingredients || []).map((i) => i.name);
-  const parts = [recipe.name, recipe.name_en, recipe.name_de, ...ingredients];
+  const parts = [
+    recipe.name,
+    recipe.name_en,
+    recipe.name_de,
+    recipe.technique,
+    recipe.technique_en,
+    recipe.technique_de,
+    recipe.source?.category,
+    recipe.fineDiningMeta?.inspiration,
+    ...ingredients
+  ];
 
   if (ingredients.length) {
     parts.push(recipe.description, recipe.description_en, recipe.description_de);
-  } else if (recipe.description && !/flavors via|suited to .* effort/i.test(recipe.description)) {
-    parts.push(recipe.description);
+  } else {
+    if (recipe.description && !isGenericDescription(recipe.description)) parts.push(recipe.description);
+    if (recipe.description_en && !isGenericDescription(recipe.description_en)) {
+      parts.push(recipe.description_en);
+    }
+    if (recipe.description_de && !isGenericDescription(recipe.description_de)) {
+      parts.push(recipe.description_de);
+    }
   }
 
-  return parts
+  const blob = parts
     .filter(Boolean)
     .map((p) => sanitizeExclusionText(normalize(p)))
     .join(' ');
+
+  const chefMove = recipe.chef_move ? normalize(recipe.chef_move) : '';
+  return [blob, chefMove].filter(Boolean).join(' ');
 }
 
 /**

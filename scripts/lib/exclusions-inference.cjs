@@ -2,14 +2,16 @@
 
 const PRESET_PATTERNS = {
   fish:
-    /\b(fish|fisch|salmon|lachs|tuna|thunfisch|cod|kabeljau|trout|forelle|anchov|anchovies?|sardines?|mackerel|hering|eel|aal|halibut|seezunge|haddock|hake|monkfish|saltfish|tilapia|pollock|bream|sea\s*bass|\bbass\b|fish\s*pie|fish\s*sauce|fischsauce|fish\s*stock|fischfond)\b/i,
+    /\b(fish|fisch|salmon|lachs|tuna|thunfisch|cod|kabeljau|trout|forelle|anchov|anchovies?|sardines?|mackerel|hering|herring|herrings?|eel|aal|halibut|seezunge|haddock|hake|monkfish|saltfish|tilapia|pollock|bream|barramundi|pilchard|pilchards?|snapper|swordfish|turbot|sole|perch|whiting|flounder|char|mahi|carp|sea\s*bass|\bbass\b|fish\s*pie|fish\s*sauce|fischsauce|fish\s*stock|fischfond)\b/i,
   shellfish:
-    /\b(shellfish|seafood|krustentiere|prawn|prawns|shrimp|shrimps|garnelen|garnele|crab|crabs|krabbe|lobster|hummer|mussel|muschel|clam|squid|calamari|oyster|austern|scallop|jakobsmuschel|langoustine|crayfish|scampi|gamba|surimi|king\s+prawns?|raw\s+king\s+prawns?)\b/i,
-  beef: /\b(beef|rind|rindfleisch|steak|fillet|mince|brisket|veal|kalb|burger\s*patty|entrecôte|entrecote)\b/i,
-  pork: /\b(pork|schwein|schweinefleisch|bacon|speck|ham|schinken|sausage|wurst|chorizo|pancetta|prosciutto|salami|guanciale)\b/i,
+    /\b(shellfish|seafood|krustentiere|prawn|prawns|shrimp|shrimps|garnelen|garnele|crab|crabs|krabbe|lobster|hummer|mussel|muschel|clam|squid|calamari|calamar|octopus|oyster|austern|scallop|jakobsmuschel|langoustine|crayfish|scampi|gambas?|surimi|king\s+prawns?|raw\s+king\s+prawns?)\b/i,
+  beef:
+    /\b(beef|rind|rindfleisch|steak|fillet|mince|brisket|veal|kalb|oxtail|ox\s*tail|short\s*rib|ribeye|sirloin|burger\s*patty|entrecôte|entrecote|meatballs?|meatloaf|\bmeat\b|venison|bison|boar)\b/i,
+  pork:
+    /\b(pork|schwein|schweinefleisch|bacon|speck|ham|schinken|sausage|wurst|chorizo|pancetta|prosciutto|salami|guanciale|rabbit|kaninchen|goose|gans|quail|wachtel)\b/i,
   duck: /\b(duck|ente|duck\s*breast|entenbrust|canard)\b/i,
   dairy:
-    /\b(milk|milch|cream|sahne|cheese|käse|kaese|butter|yogurt|joghurt|parmesan|mozzarella|cheddar|feta|ricotta|mascarpone|ghee|buttermilk|sour\s*cream|crème|creme\s*fraiche)\b/i,
+    /\b(milk|milch|cream|sahne|cheese|käse|kaese|butter|yogurt|joghurt|parmesan|mozzarella|cheddar|feta|ricotta|mascarpone|ghee|buttermilk|sour\s*cream|crème|creme\s*fraiche|whey|casein|lactose|paneer|halloumi|quark|brie|camembert|honey|honig|gelatin|gelatine)\b/i,
   eggs: /\b(eggs?|ei\b|eier|egg\s*white|egg\s*yolk|mayonnaise|mayo|meringue|omelette|omelet|frittata)\b/i,
   gluten:
     /\b(gluten|wheat|weizen|pasta|noodle|nudeln|bread|brot|flour|mehl|pastry|couscous|bulgur|semolina|spaghetti|penne|udon|ramen|baguette|tortilla|panko|breadcrumbs|brotkrumen)\b/i,
@@ -50,10 +52,23 @@ function sanitizeExclusionText(text) {
     .replace(/via\s+[\w\s&]+\s+effort/gi, ' ');
 }
 
+function isGenericDescription(desc) {
+  return desc && /flavors via|suited to .* effort/i.test(desc);
+}
+
 function inferFromEntry(entry) {
   const desc = entry.description || entry.description_en;
-  const useDesc = desc && !/flavors via|suited to .* effort/i.test(desc) ? desc : null;
-  const text = [entry.name, entry.name_en, entry.name_de, useDesc]
+  const useDesc = desc && !isGenericDescription(desc) ? desc : null;
+  const text = [
+    entry.name,
+    entry.name_en,
+    entry.name_de,
+    entry.technique,
+    entry.technique_en,
+    entry.technique_de,
+    entry.source?.category,
+    useDesc
+  ]
     .filter(Boolean)
     .map((s) => sanitizeExclusionText(s.toLowerCase()))
     .join(' ');

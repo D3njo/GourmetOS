@@ -48,7 +48,7 @@ function hasLandMeat(recipe) {
   if (hasInferredTags(recipe, LAND_MEAT_TAGS)) return true;
   if (LAND_MEAT_EXTRA.test(recipeHaystack(recipe))) return true;
   const protein = inferProtein(recipe);
-  return ['beef', 'pork', 'poultry', 'lamb', 'chicken'].includes(protein);
+  return ['beef', 'pork', 'poultry', 'lamb', 'chicken', 'meat'].includes(protein);
 }
 
 function hasFishShell(recipe) {

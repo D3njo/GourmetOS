@@ -78,6 +78,66 @@ async function main() {
   assert(!recipeMatchesDietPreferences(sardines, ['vegetarian']), 'sardines not vegetarian');
   assert(!recipeMatchesDietPreferences(anchovySalad, ['vegetarian']), 'anchovies not vegetarian');
 
+  const barramundiStub = {
+    name: 'Barramundi with Moroccan spices',
+    technique_en: 'Seafood',
+    description: 'Balanced and versatile — fresh flavors via sear & butter, suited to medium effort.',
+    ingredients: [],
+    exclude_tags: []
+  };
+  const barramundiFull = {
+    name: 'Barramundi with Moroccan spices',
+    ingredients: [{ name: 'Barramundi fillets' }],
+    exclude_tags: []
+  };
+  const oxtailStub = {
+    name: 'Oxtail with broad beans',
+    description: 'Toss the oxtail with the onion and garlic.',
+    ingredients: [],
+    exclude_tags: []
+  };
+  const oxtailFull = {
+    name: 'Oxtail with broad beans',
+    ingredients: [{ name: 'Oxtail' }],
+    exclude_tags: []
+  };
+
+  assert(!recipeMatchesDietPreferences(barramundiStub, ['vegetarian']), 'barramundi stub not vegetarian');
+  assert(!recipeMatchesDietPreferences(barramundiStub, ['vegan']), 'barramundi stub not vegan');
+  assert(!recipeMatchesDietPreferences(barramundiFull, ['vegetarian']), 'barramundi full not vegetarian');
+  assert(!recipeMatchesDietPreferences(oxtailStub, ['vegetarian']), 'oxtail stub not vegetarian');
+  assert(!recipeMatchesDietPreferences(oxtailStub, ['vegan']), 'oxtail stub not vegan');
+  assert(!recipeMatchesDietPreferences(oxtailFull, ['vegetarian']), 'oxtail full not vegetarian');
+  assert(recipeMatchesDietPreferences(salmon, ['pescatarian']), 'salmon ok pescatarian');
+  assert(!recipeMatchesDietPreferences(oxtailStub, ['pescatarian']), 'oxtail not pescatarian');
+
+  assert(!recipeMatchesDietPreferences({ name: 'Gambas al ajillo', ingredients: [] }, ['vegetarian']), 'gambas');
+  assert(
+    !recipeMatchesDietPreferences({ name: 'Arroz con gambas y calamar', ingredients: [] }, ['vegetarian']),
+    'gambas calamar'
+  );
+  assert(
+    !recipeMatchesDietPreferences({ name: 'Pilchard puttanesca', ingredients: [] }, ['vegetarian']),
+    'pilchard'
+  );
+  assert(
+    !recipeMatchesDietPreferences({ name: 'Sledz w Oleju (Polish Herrings)', ingredients: [] }, ['vegetarian']),
+    'herrings'
+  );
+  assert(
+    !recipeMatchesDietPreferences({ name: 'Syrian Rice with Meat', ingredients: [] }, ['vegetarian']),
+    'generic meat title'
+  );
+  assert(
+    !recipeMatchesDietPreferences({ name: 'Bitterballen (Dutch meatballs)', ingredients: [] }, ['vegetarian']),
+    'meatballs'
+  );
+
+  assert(
+    recipeMatchesDietPreferences({ name: 'Kidney Bean Curry', ingredients: [{ name: 'kidney beans' }] }, ['vegetarian']),
+    'kidney bean curry ok'
+  );
+
   const stubCurry = { name: 'Thai Green Curry', ingredients: [], exclude_tags: [] };
   const fullCurry = {
     name: 'Thai Green Curry',
@@ -97,10 +157,31 @@ async function main() {
     ingredients: [],
     exclude_tags: []
   };
+  const barramundiDish = {
+    id: 'barramundi',
+    name: 'Barramundi with Moroccan spices',
+    weather_primary: 'mild',
+    meal_type: ['dinner'],
+    ingredients: [],
+    exclude_tags: []
+  };
+  const oxtailDish = {
+    id: 'oxtail',
+    name: 'Oxtail with broad beans',
+    weather_primary: 'mild',
+    meal_type: ['dinner'],
+    ingredients: [],
+    exclude_tags: []
+  };
   const vegDish = { ...veg, id: 'veg-bowl' };
-  const options = getRecipeOptions([fishDish, vegDish], { weatherTag: 'mild', limit: 5 });
-  assert(!options.some((o) => o.id === 'sea-bass'), 'getRecipeOptions excludes fish when vegetarian');
-  assert(options.some((o) => o.id === 'veg-bowl'), 'getRecipeOptions includes veg');
+  const options = getRecipeOptions([fishDish, barramundiDish, oxtailDish, vegDish], {
+    weatherTag: 'mild',
+    limit: 5
+  });
+  assert(!options.some((o) => o.id === 'sea-bass'), 'options exclude sea bass');
+  assert(!options.some((o) => o.id === 'barramundi'), 'options exclude barramundi');
+  assert(!options.some((o) => o.id === 'oxtail'), 'options exclude oxtail');
+  assert(options.some((o) => o.id === 'veg-bowl'), 'options include veg');
 
   savePreferences({ dietPreferences: [], excludedTags: [], customExclusions: [] });
 

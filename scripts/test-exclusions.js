@@ -98,6 +98,23 @@ async function main() {
   assert(!recipeMatchesDietPreferences(seaBass, ['vegetarian']), 'sea bass blocked for vegetarian');
   assert(!isRecipeAllowed(seaBass, { dietPreferences: ['vegetarian'] }), 'isRecipeAllowed sea bass');
 
+  const barramundi = {
+    name: 'Barramundi with Moroccan spices',
+    technique_en: 'Seafood',
+    ingredients: [],
+    exclude_tags: []
+  };
+  const oxtail = {
+    name: 'Oxtail with broad beans',
+    description: 'Toss the oxtail with onion.',
+    ingredients: [],
+    exclude_tags: []
+  };
+  assert(inferRecipeExcludeTags(barramundi).includes('fish'), 'barramundi infers fish');
+  assert(inferRecipeExcludeTags(oxtail).includes('beef'), 'oxtail infers beef');
+  assert(!isRecipeAllowed(barramundi, { dietPreferences: ['vegetarian'] }), 'barramundi blocked');
+  assert(!isRecipeAllowed(oxtail, { dietPreferences: ['vegan'] }), 'oxtail blocked vegan');
+
   const fullCurry = {
     name: 'Thai Green Curry',
     ingredients: [{ name: 'Raw King Prawns' }, { name: 'Jasmine Rice' }],
