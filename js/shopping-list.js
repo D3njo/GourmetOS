@@ -1,6 +1,8 @@
 import { scaleIngredients, formatAmount } from './portions.js';
 import { getShoppingListState, saveShoppingListState, getPreferences } from './storage.js';
 import { enrichShoppingGroups, normalizeIngredientName } from './ingredient-normalize.js';
+import { isIngredientAtHome } from './home-inventory.js';
+import { getHomeInventory } from './storage.js';
 import { getLocale } from './i18n.js';
 import { isNumericAmount } from './measure-parse.js';
 import { isRecipeAllowed, filterAllowedIngredients } from './exclusions.js';
@@ -10,6 +12,7 @@ const CATEGORY_ORDER = ['produce', 'butchery', 'dry_goods', 'spices'];
 export function aggregateIngredients(recipeEntries) {
   const merged = new Map();
   let hiddenCount = 0;
+  const inventory = getHomeInventory();
 
   for (const entry of recipeEntries) {
     const { recipe, portions = recipe.base_portions } = entry;
@@ -27,13 +30,24 @@ export function aggregateIngredients(recipeEntries) {
         if (isNumericAmount(existing.amount) && isNumericAmount(ing.amount)) {
           existing.amount += ing.amount;
         }
+        existing.atHome = existing.atHome || isIngredientAtHome(ing.name, inventory);
       } else {
-        merged.set(key, { ...ing, name: ing.name, normalizedName });
+        merged.set(key, {
+          ...ing,
+          name: ing.name,
+          normalizedName,
+          atHome: isIngredientAtHome(ing.name, inventory)
+        });
       }
     }
   }
 
-  return { ingredients: Array.from(merged.values()), hiddenCount };
+  const ingredients = Array.from(merged.values()).map((ing) => ({
+    ...ing,
+    atHome: ing.atHome ?? isIngredientAtHome(ing.name, inventory)
+  }));
+
+  return { ingredients, hiddenCount };
 }
 
 export function groupByCategory(ingredients, categoryMeta = {}) {

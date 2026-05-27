@@ -18,6 +18,7 @@ import {
   renderFavoritesList,
   renderWeatherStatus
 } from './today-view.js';
+import { renderMealBoostPreferences, renderHomeInventorySection } from './home-inventory-view.js';
 
 function renderDietPreferences(prefs) {
   const container = $('#diet-preferences');
@@ -55,6 +56,8 @@ export async function renderPreferences() {
   if (unitSelect) unitSelect.value = prefs.unitSystem || 'metric';
 
   renderDietPreferences(prefs);
+  renderMealBoostPreferences(prefs);
+  renderHomeInventorySection();
 
   if (!excludeContainer) return;
 

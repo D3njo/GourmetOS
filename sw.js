@@ -1,5 +1,5 @@
-const CACHE_CORE = 'gourmetos-core-v23';
-const CACHE_DATA = 'gourmetos-data-v23';
+const CACHE_CORE = 'gourmetos-core-v24';
+const CACHE_DATA = 'gourmetos-data-v24';
 
 const CORE_URLS = [
   './',
@@ -41,6 +41,9 @@ const CORE_URLS = [
   './js/exclusions.js',
   './js/measure-parse.js',
   './js/diet-preferences.js',
+  './js/protein-preferences.js',
+  './js/home-inventory.js',
+  './js/ui/home-inventory-view.js',
   './js/plan-engine.js',
   './js/portions.js',
   './js/math.js',

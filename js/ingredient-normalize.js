@@ -88,6 +88,7 @@ export function enrichShoppingItem(item, options = {}) {
     normalizedName,
     buyTiming: timing,
     isPantry: pantry,
+    atHome: !!item.atHome,
     displayName: formatIngredientDisplayName(item.name)
   };
 }

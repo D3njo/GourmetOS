@@ -2,7 +2,9 @@
  * Explainable recommendation scoring v2 — weather mood, taste, occasion, diversity.
  */
 
-import { getPreferences } from './storage.js';
+import { getPreferences, getHomeInventory } from './storage.js';
+import { highProteinBoost } from './protein-preferences.js';
+import { homeIngredientBoost } from './home-inventory.js';
 import { isFavorite } from './recipe-store.js';
 import { effortScoreBoost } from './recipe-complexity.js';
 import { inferProtein } from './recipe-meta.js';
@@ -84,6 +86,24 @@ export function scoreRecipe(recipe, context = {}) {
   if (isFavorite(recipe.id)) {
     score += 4;
     reasons.push('favorite');
+  }
+
+  if (prefs.preferHighProtein) {
+    const proteinBoost = highProteinBoost(recipe);
+    if (proteinBoost > 0) {
+      score += proteinBoost;
+      reasons.push('highProtein');
+    }
+  }
+
+  if (prefs.preferHomeIngredients) {
+    const inventory = context.homeInventory ?? getHomeInventory();
+    const { boost, missing, total } = homeIngredientBoost(recipe, inventory);
+    if (boost > 0) {
+      score += boost;
+      reasons.push('usesHomeIngredients');
+      if (total > 0 && missing.length <= 2) reasons.push('minimalShopping');
+    }
   }
 
   if (usedIds?.has(recipe.id)) {

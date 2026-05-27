@@ -7,6 +7,7 @@
 import { getPreferences } from './storage.js';
 import { inferRecipeExcludeTags, recipeTextBlob } from './exclusions.js';
 import { inferProtein } from './recipe-meta.js';
+import { isHighProteinRecipe } from './protein-preferences.js';
 
 const LAND_MEAT_TAGS = ['beef', 'pork', 'duck'];
 const FISH_SHELL_TAGS = ['fish', 'shellfish'];
@@ -27,7 +28,8 @@ export const DIET_PREFERENCE_IDS = [
   'pescatarian',
   'low_carb',
   'gluten_free',
-  'dairy_free'
+  'dairy_free',
+  'high_protein'
 ];
 
 export function getActiveDietPreferences() {
@@ -105,7 +107,8 @@ const DIET_MATCHERS = {
   pescatarian: matchesPescatarian,
   low_carb: matchesLowCarb,
   gluten_free: matchesGlutenFree,
-  dairy_free: matchesDairyFree
+  dairy_free: matchesDairyFree,
+  high_protein: isHighProteinRecipe
 };
 
 /** True when recipe satisfies all active diet preferences. */

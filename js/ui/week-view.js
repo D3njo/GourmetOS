@@ -3,8 +3,11 @@ import {
   setDayEffort,
   clearDayPlanSelection,
   getActivePlanModeKey,
-  getUnitSystem as getStoredUnitSystem
+  getUnitSystem as getStoredUnitSystem,
+  getPreferences,
+  getHomeInventory
 } from '../storage.js';
+import { recipeInventoryCoverage } from '../home-inventory.js';
 import { isOnlineOnly, recipeImageUrl } from '../recipe-loader.js';
 import { scaleIngredients, formatAmount } from '../portions.js';
 import { filterAllowedIngredients } from '../exclusions.js';
@@ -32,6 +35,21 @@ import {
   computeCompositionScore,
   compositionSummary
 } from '../week-composition.js';
+
+function homeInventoryTags(recipe) {
+  if (!getPreferences().preferHomeIngredients || !recipe) return '';
+  const cov = recipeInventoryCoverage(recipe, getHomeInventory());
+  if (!cov.matched) return '';
+  let html = `<span class="tag tag-sm inventory-tag">${escapeHtml(
+    t('ingredientsAtHomeCount').replace('{n}', String(cov.matched)).replace('{total}', String(cov.total))
+  )}</span>`;
+  if (cov.missing.length <= 2 && cov.total >= 2) {
+    html += `<span class="tag tag-sm inventory-tag">${escapeHtml(
+      t('missingIngredientsCount').replace('{n}', String(cov.missing.length))
+    )}</span>`;
+  }
+  return html;
+}
 
 function renderSlotIngredients(recipe) {
   if (isOnlineOnly(recipe)) {
@@ -130,6 +148,7 @@ export function renderWeekView() {
                 <span class="tag tag-sm effort-tag">${recipeEffortBadge(r)}</span>
                 <span class="tag tag-sm">${slotSourceLabel(r)}${r.isCustomized ? ' · ' + t('sourceCustomized') : ''}${isOnlineOnly(r) ? ' · ' + t('onlineOnlyRecipe') : ''}</span>
                 ${r.tier === 'premium' ? `<span class="tag tag-sm premium-tag">${t('premiumBadge')}</span>` : ''}
+                ${homeInventoryTags(r)}
               </div>
             </div>
             <div class="meal-slot-actions">

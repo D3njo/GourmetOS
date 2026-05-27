@@ -62,6 +62,14 @@ async function main() {
   assert(!recipeMatchesDietPreferences(pasta, ['low_carb']), 'pasta not low carb');
   assert(recipeMatchesDietPreferences(veg, ['low_carb']), 'veg low carb');
 
+  const dessert = { name: 'Chocolate mousse', ingredients: [{ name: 'chocolate' }, { name: 'cream' }] };
+  const chickenDish = { name: 'Roast chicken', ingredients: [{ name: 'chicken' }, { name: 'potato' }] };
+  const lentilCurry = { name: 'Lentil curry', ingredients: [{ name: 'lentils' }, { name: 'tomatoes' }] };
+
+  assert(!recipeMatchesDietPreferences(dessert, ['high_protein']), 'dessert not high protein');
+  assert(recipeMatchesDietPreferences(chickenDish, ['high_protein']), 'chicken high protein diet');
+  assert(recipeMatchesDietPreferences(lentilCurry, ['vegan', 'high_protein']), 'vegan lentil high protein');
+
   const seaBass = { name: 'Sea bass with ginger', ingredients: [], exclude_tags: [] };
   const haddock = { name: 'Smoked Haddock Kedgeree', ingredients: [], exclude_tags: [] };
   const saltfish = { name: 'Saltfish and Ackee', ingredients: [], exclude_tags: [] };

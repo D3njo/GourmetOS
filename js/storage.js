@@ -4,6 +4,7 @@ import {
   normalizePlanModeKey,
   normalizePlanSelectionStore
 } from './weather-buckets.js';
+import { normalizeIngredientName } from './ingredient-normalize.js';
 
 const STORAGE_KEYS = {
   theme: 'gourmetos_theme',
@@ -15,7 +16,8 @@ const STORAGE_KEYS = {
   portions: 'gourmetos_portions',
   weatherMode: 'gourmetos_weather_mode',
   weatherCache: 'gourmetos_weather_cache',
-  forecastCache: 'gourmetos_forecast_cache'
+  forecastCache: 'gourmetos_forecast_cache',
+  homeInventory: 'gourmetos_home_inventory'
 };
 
 const DEFAULT_PREFERENCES = {
@@ -28,7 +30,9 @@ const DEFAULT_PREFERENCES = {
   unitSystem: 'metric',
   shoppingScope: 'day',
   spoonacularApiKey: '',
-  preferExoticIngredients: false
+  preferExoticIngredients: false,
+  preferHighProtein: false,
+  preferHomeIngredients: false
 };
 
 const DEFAULT_MEAL_PLAN = {
@@ -215,6 +219,49 @@ export function getForecastCache() {
 
 export function saveForecastCache(data) {
   setItem(STORAGE_KEYS.forecastCache, data);
+}
+
+export function getHomeInventory() {
+  const raw = getItem(STORAGE_KEYS.homeInventory, []);
+  return Array.isArray(raw) ? raw : [];
+}
+
+export function saveHomeInventory(items) {
+  setItem(STORAGE_KEYS.homeInventory, Array.isArray(items) ? items : []);
+}
+
+/**
+ * @param {string[]} names - display names to add
+ * @param {'manual'|'photo'|'shopping'} [source]
+ */
+export function addHomeInventoryItems(names, source = 'manual') {
+  const current = getHomeInventory();
+  const seen = new Set(current.map((i) => i.normalizedName));
+  const added = [];
+
+  for (const raw of names) {
+    const name = String(raw || '').trim();
+    if (!name) continue;
+    const normalizedName = normalizeIngredientName(name);
+    if (!normalizedName || seen.has(normalizedName)) continue;
+    seen.add(normalizedName);
+    const item = {
+      id: `${normalizedName}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+      name,
+      normalizedName,
+      source: source || 'manual',
+      createdAt: Date.now()
+    };
+    current.push(item);
+    added.push(item);
+  }
+
+  saveHomeInventory(current);
+  return added;
+}
+
+export function removeHomeInventoryItem(id) {
+  saveHomeInventory(getHomeInventory().filter((item) => item.id !== id));
 }
 
 export { STORAGE_KEYS, DEFAULT_MEAL_PLAN, DEFAULT_EFFORT_PLAN };
