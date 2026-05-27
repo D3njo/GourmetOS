@@ -247,7 +247,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "elaborate",
       "ingredientCount": 12,
       "totalMinutes": 96,
@@ -357,7 +359,8 @@
       ],
       "exclude_tags": [
         "shellfish",
-        "fish"
+        "fish",
+        "gluten"
       ],
       "effort": "elaborate",
       "ingredientCount": 14,
@@ -737,7 +740,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "elaborate",
       "ingredientCount": 11,
       "totalMinutes": 216,
@@ -904,7 +909,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "elaborate",
       "ingredientCount": 12,
       "totalMinutes": 96,
@@ -1124,7 +1131,10 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish",
+        "pork"
+      ],
       "effort": "elaborate",
       "ingredientCount": 17,
       "totalMinutes": 48,
@@ -1234,7 +1244,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "elaborate",
       "ingredientCount": 15,
       "totalMinutes": 36,
@@ -1289,7 +1301,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "elaborate",
       "ingredientCount": 9,
       "totalMinutes": 96,
@@ -1400,7 +1414,8 @@
       "exclude_tags": [
         "beef",
         "gluten",
-        "eggs"
+        "eggs",
+        "pork"
       ],
       "effort": "medium",
       "ingredientCount": 8,
@@ -1623,7 +1638,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "medium",
       "ingredientCount": 8,
       "totalMinutes": 72,
@@ -1730,7 +1747,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "elaborate",
       "ingredientCount": 6,
       "totalMinutes": 96,
@@ -1788,7 +1807,9 @@
         "breakfast",
         "brunch"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "gluten"
+      ],
       "effort": "elaborate",
       "ingredientCount": 6,
       "totalMinutes": 288,
@@ -1844,7 +1865,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "gluten"
+      ],
       "effort": "elaborate",
       "ingredientCount": 6,
       "totalMinutes": 96,
@@ -2184,7 +2207,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "elaborate",
       "ingredientCount": 14,
       "totalMinutes": 120,
@@ -2510,7 +2535,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "fish"
+      ],
       "effort": "elaborate",
       "ingredientCount": 18,
       "totalMinutes": 72,
@@ -2566,7 +2593,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "elaborate",
       "ingredientCount": 9,
       "totalMinutes": 96,
@@ -3056,7 +3085,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "elaborate",
       "ingredientCount": 16,
       "totalMinutes": 36,
@@ -3111,7 +3142,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "elaborate",
       "ingredientCount": 15,
       "totalMinutes": 72,
@@ -3167,7 +3200,10 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish",
+        "gluten"
+      ],
       "effort": "elaborate",
       "ingredientCount": 15,
       "totalMinutes": 48,
@@ -3222,7 +3258,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish"
+      ],
       "effort": "elaborate",
       "ingredientCount": 16,
       "totalMinutes": 72,
@@ -3334,7 +3372,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish"
+      ],
       "effort": "elaborate",
       "ingredientCount": 14,
       "totalMinutes": 48,
@@ -3667,7 +3707,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "gluten"
+      ],
       "effort": "elaborate",
       "ingredientCount": 15,
       "totalMinutes": 96,
@@ -3723,7 +3765,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "fish"
+      ],
       "effort": "elaborate",
       "ingredientCount": 9,
       "totalMinutes": 96,
@@ -3777,7 +3821,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "elaborate",
       "ingredientCount": 12,
       "totalMinutes": 96,
@@ -4000,7 +4046,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "quick",
       "ingredientCount": 5,
       "totalMinutes": 24,
@@ -4331,7 +4379,8 @@
       "exclude_tags": [
         "eggs",
         "gluten",
-        "dairy"
+        "dairy",
+        "fish"
       ],
       "effort": "medium",
       "ingredientCount": 9,
@@ -4495,7 +4544,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "gluten"
+      ],
       "effort": "medium",
       "ingredientCount": 8,
       "totalMinutes": 48,
@@ -4608,7 +4659,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "medium",
       "ingredientCount": 10,
       "totalMinutes": 72,
@@ -4717,7 +4770,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "medium",
       "ingredientCount": 11,
       "totalMinutes": 24,
@@ -4878,7 +4933,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "gluten"
+      ],
       "effort": "elaborate",
       "ingredientCount": 6,
       "totalMinutes": 96,
@@ -4990,7 +5047,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "elaborate",
       "ingredientCount": 7,
       "totalMinutes": 96,
@@ -5221,7 +5280,8 @@
       ],
       "exclude_tags": [
         "shellfish",
-        "fish"
+        "fish",
+        "gluten"
       ],
       "effort": "medium",
       "ingredientCount": 10,
@@ -5394,7 +5454,8 @@
       ],
       "exclude_tags": [
         "dairy",
-        "eggs"
+        "eggs",
+        "beef"
       ],
       "effort": "quick",
       "ingredientCount": 8,
@@ -5562,7 +5623,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "elaborate",
       "ingredientCount": 15,
       "totalMinutes": 156,
@@ -5605,7 +5668,10 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish",
+        "beef"
+      ],
       "effort": "elaborate",
       "ingredientCount": 15,
       "totalMinutes": 96,
@@ -5731,7 +5797,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "elaborate",
       "ingredientCount": 17,
       "totalMinutes": 120,
@@ -5946,7 +6014,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "fish"
+      ],
       "effort": "elaborate",
       "ingredientCount": 14,
       "totalMinutes": 72,
@@ -6033,7 +6103,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "duck"
+      ],
       "effort": "elaborate",
       "ingredientCount": 15,
       "totalMinutes": 36,
@@ -6075,7 +6147,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "elaborate",
       "ingredientCount": 19,
       "totalMinutes": 132,
@@ -6414,7 +6488,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "medium",
       "ingredientCount": 13,
       "totalMinutes": 48,
@@ -6457,7 +6533,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish"
+      ],
       "effort": "medium",
       "ingredientCount": 13,
       "totalMinutes": 60,
@@ -6583,7 +6661,10 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish",
+        "pork"
+      ],
       "effort": "medium",
       "ingredientCount": 10,
       "totalMinutes": 72,
@@ -6881,7 +6962,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "medium",
       "ingredientCount": 10,
       "totalMinutes": 84,
@@ -7179,7 +7262,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "medium",
       "ingredientCount": 10,
       "totalMinutes": 72,
@@ -7306,7 +7391,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish"
+      ],
       "effort": "medium",
       "ingredientCount": 9,
       "totalMinutes": 48,
@@ -7607,7 +7694,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "gluten"
+      ],
       "effort": "medium",
       "ingredientCount": 10,
       "totalMinutes": 24,
@@ -7733,7 +7822,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "elaborate",
       "ingredientCount": 16,
       "totalMinutes": 84,
@@ -7821,7 +7912,9 @@
         "dinner",
         "snack"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "fish"
+      ],
       "effort": "quick",
       "ingredientCount": 8,
       "totalMinutes": 24,
@@ -7993,7 +8086,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "elaborate",
       "ingredientCount": 18,
       "totalMinutes": 72,
@@ -8037,7 +8132,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish"
+      ],
       "effort": "elaborate",
       "ingredientCount": 11,
       "totalMinutes": 96,
@@ -8168,7 +8265,9 @@
         "dinner",
         "lunch"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "medium",
       "ingredientCount": 7,
       "totalMinutes": 48,
@@ -8211,7 +8310,10 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork",
+        "eggs"
+      ],
       "effort": "medium",
       "ingredientCount": 7,
       "totalMinutes": 72,
@@ -8255,7 +8357,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "medium",
       "ingredientCount": 6,
       "totalMinutes": 48,
@@ -8298,7 +8402,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish"
+      ],
       "effort": "medium",
       "ingredientCount": 7,
       "totalMinutes": 72,
@@ -8594,7 +8700,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "fish"
+      ],
       "effort": "medium",
       "ingredientCount": 7,
       "totalMinutes": 72,
@@ -8679,7 +8787,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "gluten"
+      ],
       "effort": "medium",
       "ingredientCount": 7,
       "totalMinutes": 48,
@@ -8763,7 +8873,10 @@
         "breakfast",
         "brunch"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy",
+        "gluten"
+      ],
       "effort": "elaborate",
       "ingredientCount": 9,
       "totalMinutes": 108,
@@ -8807,7 +8920,10 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork",
+        "dairy"
+      ],
       "effort": "quick",
       "ingredientCount": 6,
       "totalMinutes": 24,
@@ -8892,7 +9008,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "gluten"
+      ],
       "effort": "elaborate",
       "ingredientCount": 9,
       "totalMinutes": 96,
@@ -9062,7 +9180,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "elaborate",
       "ingredientCount": 17,
       "totalMinutes": 48,
@@ -9488,7 +9608,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "medium",
       "ingredientCount": 9,
       "totalMinutes": 24,
@@ -9529,7 +9651,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "gluten"
+      ],
       "effort": "medium",
       "ingredientCount": 10,
       "totalMinutes": 24,
@@ -9738,7 +9862,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "medium",
       "ingredientCount": 10,
       "totalMinutes": 72,
@@ -10039,7 +10165,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "medium",
       "ingredientCount": 10,
       "totalMinutes": 36,
@@ -10081,7 +10209,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "eggs"
+      ],
       "effort": "medium",
       "ingredientCount": 11,
       "totalMinutes": 72,
@@ -10294,7 +10424,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "medium",
       "ingredientCount": 13,
       "totalMinutes": 48,
@@ -10336,7 +10468,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "medium",
       "ingredientCount": 13,
       "totalMinutes": 36,
@@ -10421,7 +10555,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "medium",
       "ingredientCount": 13,
       "totalMinutes": 72,
@@ -10551,7 +10687,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "gluten"
+      ],
       "effort": "medium",
       "ingredientCount": 13,
       "totalMinutes": 48,
@@ -10674,7 +10812,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "medium",
       "ingredientCount": 10,
       "totalMinutes": 72,
@@ -10927,7 +11067,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "medium",
       "ingredientCount": 12,
       "totalMinutes": 84,
@@ -10970,7 +11112,9 @@
         "dinner",
         "lunch"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish"
+      ],
       "effort": "medium",
       "ingredientCount": 12,
       "totalMinutes": 36,
@@ -11184,7 +11328,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "medium",
       "ingredientCount": 11,
       "totalMinutes": 72,
@@ -11314,7 +11460,10 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "fish",
+        "gluten"
+      ],
       "effort": "medium",
       "ingredientCount": 10,
       "totalMinutes": 48,
@@ -11484,7 +11633,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish"
+      ],
       "effort": "medium",
       "ingredientCount": 11,
       "totalMinutes": 48,
@@ -11527,7 +11678,10 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish",
+        "pork"
+      ],
       "effort": "medium",
       "ingredientCount": 9,
       "totalMinutes": 48,
@@ -11569,7 +11723,10 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef",
+        "gluten"
+      ],
       "effort": "medium",
       "ingredientCount": 13,
       "totalMinutes": 72,
@@ -11654,7 +11811,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "medium",
       "ingredientCount": 8,
       "totalMinutes": 60,
@@ -12080,7 +12239,9 @@
         "dinner",
         "lunch"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "gluten"
+      ],
       "effort": "medium",
       "ingredientCount": 11,
       "totalMinutes": 48,
@@ -12207,7 +12368,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "medium",
       "ingredientCount": 12,
       "totalMinutes": 72,
@@ -12251,7 +12414,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish"
+      ],
       "effort": "medium",
       "ingredientCount": 8,
       "totalMinutes": 48,
@@ -12677,7 +12842,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "fish"
+      ],
       "effort": "medium",
       "ingredientCount": 9,
       "totalMinutes": 48,
@@ -12805,7 +12972,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "medium",
       "ingredientCount": 11,
       "totalMinutes": 48,
@@ -12934,7 +13103,9 @@
         "dinner",
         "snack"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "quick",
       "ingredientCount": 8,
       "totalMinutes": 36,
@@ -13059,7 +13230,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "elaborate",
       "ingredientCount": 7,
       "totalMinutes": 120,
@@ -13813,7 +13986,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish"
+      ],
       "effort": "medium",
       "ingredientCount": 6,
       "totalMinutes": 72,
@@ -13899,7 +14074,10 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "fish",
+        "gluten"
+      ],
       "effort": "medium",
       "ingredientCount": 7,
       "totalMinutes": 48,
@@ -13982,7 +14160,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "gluten"
+      ],
       "effort": "medium",
       "ingredientCount": 12,
       "totalMinutes": 36,
@@ -14190,7 +14370,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "fish"
+      ],
       "effort": "medium",
       "ingredientCount": 7,
       "totalMinutes": 48,
@@ -14316,7 +14498,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "eggs"
+      ],
       "effort": "elaborate",
       "ingredientCount": 14,
       "totalMinutes": 132,
@@ -14531,7 +14715,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "elaborate",
       "ingredientCount": 13,
       "totalMinutes": 144,
@@ -14574,7 +14760,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "elaborate",
       "ingredientCount": 14,
       "totalMinutes": 168,
@@ -14617,7 +14805,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "elaborate",
       "ingredientCount": 14,
       "totalMinutes": 96,
@@ -14660,7 +14850,10 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef",
+        "eggs"
+      ],
       "effort": "elaborate",
       "ingredientCount": 8,
       "totalMinutes": 132,
@@ -14703,7 +14896,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "elaborate",
       "ingredientCount": 11,
       "totalMinutes": 240,
@@ -14746,7 +14941,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "elaborate",
       "ingredientCount": 14,
       "totalMinutes": 96,
@@ -14789,7 +14986,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "elaborate",
       "ingredientCount": 18,
       "totalMinutes": 84,
@@ -14832,7 +15031,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "elaborate",
       "ingredientCount": 17,
       "totalMinutes": 132,
@@ -14875,7 +15076,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "elaborate",
       "ingredientCount": 16,
       "totalMinutes": 72,
@@ -14918,7 +15121,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "elaborate",
       "ingredientCount": 12,
       "totalMinutes": 144,
@@ -15087,7 +15292,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "elaborate",
       "ingredientCount": 17,
       "totalMinutes": 60,
@@ -15173,7 +15380,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "elaborate",
       "ingredientCount": 11,
       "totalMinutes": 120,
@@ -15215,7 +15424,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "quick",
       "ingredientCount": 8,
       "totalMinutes": 24,
@@ -15593,7 +15804,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "eggs"
+      ],
       "effort": "elaborate",
       "ingredientCount": 10,
       "totalMinutes": 108,
@@ -15847,7 +16060,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "fish"
+      ],
       "effort": "elaborate",
       "ingredientCount": 9,
       "totalMinutes": 108,
@@ -16146,7 +16361,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "eggs"
+      ],
       "effort": "elaborate",
       "ingredientCount": 17,
       "totalMinutes": 168,
@@ -16233,7 +16450,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "fish"
+      ],
       "effort": "elaborate",
       "ingredientCount": 17,
       "totalMinutes": 60,
@@ -16361,7 +16580,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "fish"
+      ],
       "effort": "elaborate",
       "ingredientCount": 12,
       "totalMinutes": 96,
@@ -16406,7 +16627,9 @@
         "dinner",
         "lunch"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "fish"
+      ],
       "effort": "elaborate",
       "ingredientCount": 12,
       "totalMinutes": 144,
@@ -16664,7 +16887,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "elaborate",
       "ingredientCount": 17,
       "totalMinutes": 156,
@@ -16837,7 +17062,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish"
+      ],
       "effort": "elaborate",
       "ingredientCount": 14,
       "totalMinutes": 60,
@@ -17048,7 +17275,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "elaborate",
       "ingredientCount": 9,
       "totalMinutes": 108,
@@ -17133,7 +17362,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "elaborate",
       "ingredientCount": 14,
       "totalMinutes": 96,
@@ -17175,7 +17406,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "gluten"
+      ],
       "effort": "elaborate",
       "ingredientCount": 13,
       "totalMinutes": 96,
@@ -17300,7 +17533,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "elaborate",
       "ingredientCount": 9,
       "totalMinutes": 120,
@@ -17819,7 +18054,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish"
+      ],
       "effort": "elaborate",
       "ingredientCount": 11,
       "totalMinutes": 204,
@@ -18160,7 +18397,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "elaborate",
       "ingredientCount": 9,
       "totalMinutes": 144,
@@ -18246,7 +18485,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "fish"
+      ],
       "effort": "elaborate",
       "ingredientCount": 16,
       "totalMinutes": 72,
@@ -18549,7 +18790,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "fish"
+      ],
       "effort": "elaborate",
       "ingredientCount": 14,
       "totalMinutes": 192,
@@ -18845,7 +19088,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "elaborate",
       "ingredientCount": 12,
       "totalMinutes": 120,
@@ -19016,7 +19261,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish"
+      ],
       "effort": "elaborate",
       "ingredientCount": 17,
       "totalMinutes": 180,
@@ -19060,7 +19307,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish"
+      ],
       "effort": "elaborate",
       "ingredientCount": 12,
       "totalMinutes": 108,
@@ -19148,7 +19397,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish"
+      ],
       "effort": "elaborate",
       "ingredientCount": 18,
       "totalMinutes": 216,
@@ -19192,7 +19443,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "elaborate",
       "ingredientCount": 10,
       "totalMinutes": 156,
@@ -19322,7 +19575,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "gluten"
+      ],
       "effort": "quick",
       "ingredientCount": 8,
       "totalMinutes": 36,
@@ -19409,7 +19664,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish"
+      ],
       "effort": "elaborate",
       "ingredientCount": 10,
       "totalMinutes": 96,
@@ -19498,7 +19755,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "elaborate",
       "ingredientCount": 16,
       "totalMinutes": 24,
@@ -19669,7 +19928,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "elaborate",
       "ingredientCount": 10,
       "totalMinutes": 168,
@@ -19795,7 +20056,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "elaborate",
       "ingredientCount": 15,
       "totalMinutes": 264,
@@ -19882,7 +20145,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "quick",
       "ingredientCount": 5,
       "totalMinutes": 24,
@@ -20138,7 +20403,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "elaborate",
       "ingredientCount": 14,
       "totalMinutes": 168,
@@ -20732,7 +20999,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "elaborate",
       "ingredientCount": 7,
       "totalMinutes": 120,
@@ -21332,7 +21601,9 @@
         "breakfast",
         "brunch"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "fish"
+      ],
       "effort": "quick",
       "ingredientCount": 5,
       "totalMinutes": 36,
@@ -21418,7 +21689,9 @@
         "dinner",
         "snack"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "elaborate",
       "ingredientCount": 20,
       "totalMinutes": 348,
@@ -21502,7 +21775,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "gluten"
+      ],
       "effort": "elaborate",
       "ingredientCount": 5,
       "totalMinutes": 264,
@@ -21888,7 +22163,9 @@
         "breakfast",
         "brunch"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "elaborate",
       "ingredientCount": 7,
       "totalMinutes": 96,
@@ -21972,7 +22249,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "gluten"
+      ],
       "effort": "elaborate",
       "ingredientCount": 6,
       "totalMinutes": 168,
@@ -22057,7 +22336,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "elaborate",
       "ingredientCount": 20,
       "totalMinutes": 120,
@@ -22145,7 +22426,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "elaborate",
       "ingredientCount": 7,
       "totalMinutes": 144,
@@ -22314,7 +22597,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "gluten"
+      ],
       "effort": "medium",
       "ingredientCount": 11,
       "totalMinutes": 60,
@@ -22774,7 +23059,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "medium",
       "ingredientCount": 12,
       "totalMinutes": 72,
@@ -22817,7 +23104,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "medium",
       "ingredientCount": 12,
       "totalMinutes": 36,
@@ -22989,7 +23278,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "fish"
+      ],
       "effort": "medium",
       "ingredientCount": 12,
       "totalMinutes": 60,
@@ -23073,7 +23364,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "medium",
       "ingredientCount": 8,
       "totalMinutes": 60,
@@ -23284,7 +23577,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "medium",
       "ingredientCount": 8,
       "totalMinutes": 48,
@@ -23325,7 +23620,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "medium",
       "ingredientCount": 12,
       "totalMinutes": 48,
@@ -23495,7 +23792,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "medium",
       "ingredientCount": 11,
       "totalMinutes": 60,
@@ -23538,7 +23837,9 @@
         "dinner",
         "snack"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "medium",
       "ingredientCount": 12,
       "totalMinutes": 15,
@@ -23750,7 +24051,9 @@
         "dinner",
         "lunch"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "eggs"
+      ],
       "effort": "medium",
       "ingredientCount": 10,
       "totalMinutes": 72,
@@ -23967,7 +24270,9 @@
         "dinner",
         "lunch"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "fish"
+      ],
       "effort": "medium",
       "ingredientCount": 9,
       "totalMinutes": 48,
@@ -24136,7 +24441,9 @@
         "breakfast",
         "brunch"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "medium",
       "ingredientCount": 8,
       "totalMinutes": 84,
@@ -24602,7 +24909,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "shellfish"
+      ],
       "effort": "medium",
       "ingredientCount": 11,
       "totalMinutes": 48,
@@ -25330,7 +25639,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "medium",
       "ingredientCount": 9,
       "totalMinutes": 72,
@@ -25372,7 +25683,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "medium",
       "ingredientCount": 12,
       "totalMinutes": 72,
@@ -26047,7 +26360,10 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "fish",
+        "eggs"
+      ],
       "effort": "medium",
       "ingredientCount": 11,
       "totalMinutes": 84,
@@ -26217,7 +26533,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "pork"
+      ],
       "effort": "medium",
       "ingredientCount": 13,
       "totalMinutes": 60,
@@ -26596,7 +26914,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "beef"
+      ],
       "effort": "medium",
       "ingredientCount": 4,
       "totalMinutes": 72,
@@ -26889,7 +27209,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "medium",
       "ingredientCount": 4,
       "totalMinutes": 48,
@@ -26932,7 +27254,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "medium",
       "ingredientCount": 6,
       "totalMinutes": 48,
@@ -27313,7 +27637,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "gluten"
+      ],
       "effort": "medium",
       "ingredientCount": 5,
       "totalMinutes": 60,
@@ -27397,7 +27723,9 @@
         "breakfast",
         "brunch"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "dairy"
+      ],
       "effort": "medium",
       "ingredientCount": 3,
       "totalMinutes": 84,
@@ -27776,7 +28104,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "gluten"
+      ],
       "effort": "medium",
       "ingredientCount": 6,
       "totalMinutes": 48,
@@ -28034,7 +28364,9 @@
         "breakfast",
         "brunch"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "gluten"
+      ],
       "effort": "quick",
       "ingredientCount": 3,
       "totalMinutes": 15,
@@ -28367,7 +28699,9 @@
       "meal_type": [
         "dinner"
       ],
-      "exclude_tags": [],
+      "exclude_tags": [
+        "gluten"
+      ],
       "effort": "quick",
       "ingredientCount": 7,
       "totalMinutes": 36,

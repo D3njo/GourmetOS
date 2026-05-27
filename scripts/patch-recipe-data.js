@@ -7,6 +7,7 @@
 const fs = require('fs');
 const path = require('path');
 const { enrichEditorialFields, ensureDescription } = require('./lib/editorial-inference.cjs');
+const { inferFromEntry } = require('./lib/exclusions-inference.cjs');
 
 const ROOT = path.join(__dirname, '..');
 
@@ -96,7 +97,14 @@ index.entries = (index.entries || []).map((entry) => {
     ...merged,
     ...editorial,
     description,
-    technique: editorial.technique || merged.technique
+    technique: editorial.technique || merged.technique,
+    exclude_tags: inferFromEntry({
+      name: merged.name,
+      name_en: override.name_en || merged.name_en,
+      name_de: override.name_de || merged.name_de,
+      description: override.description_en || null,
+      exclude_tags: override.exclude_tags || []
+    })
   };
 
   if (JSON.stringify(next) !== JSON.stringify(entry)) indexUpdated++;

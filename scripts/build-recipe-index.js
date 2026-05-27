@@ -8,6 +8,7 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const { enrichEditorialFields, ensureDescription } = require('./lib/editorial-inference.cjs');
+const { inferFromMeal } = require('./lib/exclusions-inference.cjs');
 
 const ROOT = path.join(__dirname, '..');
 const API = 'https://www.themealdb.com/api/json/v1/1';
@@ -182,7 +183,7 @@ function mealToIndexEntry(meal, catalogOverrides = {}, fineDining = {}, usedSlug
     weather_tags: weather,
     weather_primary,
     meal_type: override.meal_type || inferMealType(category, meal.strTags),
-    exclude_tags: override.exclude_tags || [],
+    exclude_tags: inferFromMeal(meal, override.exclude_tags || []),
     effort,
     ingredientCount,
     totalMinutes: Math.max(15, steps * 12),

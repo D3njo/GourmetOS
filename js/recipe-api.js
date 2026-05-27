@@ -3,6 +3,7 @@
  */
 
 import { enrichRecipeComplexity } from './recipe-complexity.js';
+import { inferRecipeExcludeTags } from './exclusions.js';
 
 const API_BASE = 'https://www.themealdb.com/api/json/v1/1';
 
@@ -97,20 +98,6 @@ function extractSteps(instructions) {
   }));
 }
 
-function inferExcludeTags(ingredients, catalogExcludes = []) {
-  const text = ingredients.map((i) => i.name.toLowerCase()).join(' ');
-  const tags = [...catalogExcludes];
-  if (/\b(beef|fillet|steak|kidney)\b/.test(text)) tags.push('beef');
-  if (/\blamb\b/.test(text)) tags.push('lamb');
-  if (/\bpork|bacon|ham|sausage\b/.test(text)) tags.push('pork');
-  if (/\b(duck|chicken)\b/.test(text)) tags.push('poultry');
-  if (/\b(fish|salmon|tuna|cod|haddock|anchovy)\b/.test(text)) tags.push('fish');
-  if (/\b(prawn|shrimp|crab|clam|mussel|squid)\b/.test(text)) tags.push('shellfish');
-  if (/\b(cream|cheese|milk|butter|yogurt)\b/.test(text)) tags.push('dairy');
-  if (/\begg\b/.test(text)) tags.push('eggs');
-  if (/\b(pasta|flour|bread|pastry|noodle|wheat)\b/.test(text)) tags.push('gluten');
-  return [...new Set(tags)];
-}
 
 function slugify(name, idMeal) {
   const base = (name || 'meal')
@@ -177,7 +164,12 @@ export function mapMealToRecipe(meal, meta) {
     technique: meta.technique_en || meal.strCategory,
     flavor_profile: meal.strTags?.replace(/,/g, ', ') || meal.strArea || '',
     weather_tags: meta.weather_tags || ['mild'],
-    exclude_tags: inferExcludeTags(ingredients, meta.exclude_tags || []),
+    exclude_tags: inferRecipeExcludeTags({
+      name: meta.name_en || meal.strMeal,
+      description: meta.description_en,
+      ingredients,
+      exclude_tags: meta.exclude_tags || []
+    }),
     weather_trigger: {},
     meal_type: meta.meal_type || ['dinner'],
     base_portions: 2,
