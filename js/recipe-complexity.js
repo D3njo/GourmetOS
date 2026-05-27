@@ -128,11 +128,8 @@ export function effortScoreBoost(recipeEffort, targetEffort) {
   return 0;
 }
 
-export function formatEffortBadge(recipe, locale = 'de') {
+export function formatEffortBadge(recipe) {
   const mins = recipe.totalMinutes ?? computeTotalMinutes(recipe);
   const count = recipe.ingredientCount ?? computeIngredientCount(recipe);
-  if (locale === 'en') {
-    return `${mins} min · ${count} ingredients`;
-  }
-  return `${mins} Min · ${count} Zutaten`;
+  return `${mins} min · ${count} ingredients`;
 }

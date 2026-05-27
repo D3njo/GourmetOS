@@ -126,7 +126,7 @@ export function renderTodayView() {
   if (heroDesc) heroDesc.textContent = recipe.description;
 
   if (heroTags) {
-    const effortBadge = formatEffortBadge(recipe, getStoredLocale());
+    const effortBadge = formatEffortBadge(recipe);
     const todayDay = getTodayDay(state.weeklyPlan);
     const effort = todayDay?.effortLevel ?? recipe.effort ?? 'medium';
     heroTags.innerHTML = `

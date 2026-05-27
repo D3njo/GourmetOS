@@ -3,7 +3,7 @@
 import { cleanFloat } from './math.js';
 import { isNumericAmount } from './measure-parse.js';
 
-const COUNT_UNITS = new Set(['stk', 'stück', 'pcs', 'pc', 'piece', 'pieces', 'zehe', 'clove', 'cloves']);
+const COUNT_UNITS = new Set(['stk', 'pcs', 'pc', 'piece', 'pieces', 'clove', 'cloves']);
 
 const DESCRIPTOR_UNITS = new Set([
   'finely chopped',
@@ -22,15 +22,15 @@ const DESCRIPTOR_UNITS = new Set([
 ]);
 
 const QUALITATIVE_LABELS = {
-  pinch: { de: 'Prise', en: 'pinch' },
-  dash: { de: 'Spritzer', en: 'dash' },
-  bunch: { de: 'Bund', en: 'bunch' },
-  handful: { de: 'Handvoll', en: 'handful' },
-  'to taste': { de: 'nach Geschmack', en: 'to taste' },
-  'for frying': { de: 'zum Braten', en: 'for frying' },
-  'for greasing': { de: 'zum Einfetten', en: 'for greasing' },
-  'as needed': { de: 'nach Bedarf', en: 'as needed' },
-  optional: { de: 'optional', en: 'optional' }
+  pinch: 'pinch',
+  dash: 'dash',
+  bunch: 'bunch',
+  handful: 'handful',
+  'to taste': 'to taste',
+  'for frying': 'for frying',
+  'for greasing': 'for greasing',
+  'as needed': 'as needed',
+  optional: 'optional'
 };
 
 const UNIT_LABELS = {
@@ -39,16 +39,16 @@ const UNIT_LABELS = {
     kg: 'kg',
     ml: 'ml',
     l: 'l',
-    stk: { de: 'Stk', en: 'pcs' },
-    zehe: { de: 'Zehe', en: 'clove' }
+    stk: 'pcs',
+    clove: 'clove'
   },
   imperial: {
     oz: 'oz',
     lb: 'lb',
     floz: 'fl oz',
     cup: 'cup',
-    stk: { de: 'Stk', en: 'pcs' },
-    zehe: { de: 'Zehe', en: 'clove' }
+    stk: 'pcs',
+    clove: 'clove'
   }
 };
 
@@ -70,38 +70,34 @@ export function formatTemperature(celsius, system = unitSystem) {
   return `${Math.round(celsius)}°C`;
 }
 
-function labelForUnit(code, locale) {
+function labelForUnit(code) {
   const bucket = UNIT_LABELS[unitSystem]?.[code];
-  if (!bucket) return code;
-  if (typeof bucket === 'string') return bucket;
-  return bucket[locale] || bucket.de || code;
+  return typeof bucket === 'string' ? bucket : code;
 }
 
-function qualitativeLabel(unit, locale) {
+function qualitativeLabel(unit) {
   const key = (unit || '').toLowerCase().trim();
-  const entry = QUALITATIVE_LABELS[key];
-  if (entry) return entry[locale] || entry.en || key;
-  return unit;
+  return QUALITATIVE_LABELS[key] || unit;
 }
 
 /** Convert stored metric amount + unit into display amount + unit */
-export function convertAmount(amount, unit, system = unitSystem, locale = 'de') {
+export function convertAmount(amount, unit, system = unitSystem) {
   const normalized = (unit || '').toLowerCase().trim();
 
   if (!isNumericAmount(amount)) {
-    return { amount, unit: qualitativeLabel(normalized, locale) || normalized };
+    return { amount, unit: qualitativeLabel(normalized) || normalized };
   }
 
   if (QUALITATIVE_LABELS[normalized] || DESCRIPTOR_UNITS.has(normalized)) {
-    const label = qualitativeLabel(normalized, locale);
+    const label = qualitativeLabel(normalized);
     return { amount: cleanFloat(amount), unit: label || normalized };
   }
 
-  if (COUNT_UNITS.has(normalized) || normalized === 'stk' || normalized === 'zehe') {
-    const code = normalized === 'zehe' ? 'zehe' : 'stk';
+  if (COUNT_UNITS.has(normalized) || normalized === 'stk' || normalized === 'zehe' || normalized === 'clove') {
+    const code = normalized === 'zehe' || normalized === 'clove' ? 'clove' : 'stk';
     return {
       amount: cleanFloat(amount),
-      unit: labelForUnit(code, locale)
+      unit: labelForUnit(code)
     };
   }
 
@@ -145,25 +141,25 @@ export function convertAmount(amount, unit, system = unitSystem, locale = 'de') 
   return { amount: cleanFloat(amount), unit: normalized };
 }
 
-export function formatAmountWithSystem(amount, unit, locale = 'de', system = unitSystem) {
+export function formatAmountWithSystem(amount, unit, _locale = 'en', system = unitSystem) {
   const normalized = (unit || '').toLowerCase().trim();
 
   if (!isNumericAmount(amount)) {
-    const label = qualitativeLabel(normalized, locale) || normalized;
+    const label = qualitativeLabel(normalized) || normalized;
     return label ? String(label) : '—';
   }
 
   if (QUALITATIVE_LABELS[normalized] || DESCRIPTOR_UNITS.has(normalized)) {
-    const label = qualitativeLabel(normalized, locale);
+    const label = qualitativeLabel(normalized);
     const n = cleanFloat(amount);
     if (n === 1) return label;
     return `${n} ${label}`;
   }
 
-  const { amount: converted, unit: displayUnit } = convertAmount(amount, unit, system, locale);
+  const { amount: converted, unit: displayUnit } = convertAmount(amount, unit, system);
   const cleaned = cleanFloat(converted);
   if (!Number.isFinite(cleaned)) {
-    return qualitativeLabel(normalized, locale) || '—';
+    return qualitativeLabel(normalized) || '—';
   }
   const formatted = Number.isInteger(cleaned)
     ? String(cleaned)

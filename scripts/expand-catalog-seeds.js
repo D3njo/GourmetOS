@@ -11,19 +11,19 @@ const ROOT = path.join(__dirname, '..');
 const TARGET_TOTAL = 100;
 
 const TECHNIQUE_BY_CATEGORY = {
-  Beef: { de: 'Braten & Schmoren', en: 'Roast & Braise' },
-  Lamb: { de: 'Schmoren & Ofen', en: 'Braise & Roast' },
-  Pork: { de: 'Braten & Pfanne', en: 'Roast & Pan' },
-  Seafood: { de: 'Fisch & Meeresfrüchte', en: 'Fish & Seafood' },
-  Chicken: { de: 'Geflügel & Ofen', en: 'Poultry & Oven' },
-  Pasta: { de: 'Pasta & Sugo', en: 'Pasta & Sauce' },
-  Soup: { de: 'Suppe & Fond', en: 'Soup & Stock' },
-  Dessert: { de: 'Patisserie', en: 'Pastry' },
-  Starter: { de: 'Vorspeise & Salat', en: 'Starter & Salad' },
-  Vegetarian: { de: 'Vegetarisch & Ofen', en: 'Vegetarian & Oven' },
-  Vegan: { de: 'Vegan & Pfanne', en: 'Vegan & Pan' },
-  Breakfast: { de: 'Frühstück & Brunch', en: 'Breakfast & Brunch' },
-  Side: { de: 'Beilage & Ofen', en: 'Side & Oven' }
+  Beef: 'Roast & Braise',
+  Lamb: 'Braise & Roast',
+  Pork: 'Roast & Pan',
+  Seafood: 'Fish & Seafood',
+  Chicken: 'Poultry & Oven',
+  Pasta: 'Pasta & Sauce',
+  Soup: 'Soup & Stock',
+  Dessert: 'Pastry',
+  Starter: 'Starter & Salad',
+  Vegetarian: 'Vegetarian & Oven',
+  Vegan: 'Vegan & Pan',
+  Breakfast: 'Breakfast & Brunch',
+  Side: 'Side & Oven'
 };
 
 function chefFromSource(url, name) {
@@ -44,7 +44,7 @@ function sourceLabel(url) {
 
 function buildSeed(entry) {
   const category = entry.cuisine || 'Miscellaneous';
-  const tech = TECHNIQUE_BY_CATEGORY[category] || { de: 'Klassisch', en: 'Classic' };
+  const tech = TECHNIQUE_BY_CATEGORY[category] || 'Classic';
   const chef = entry.chef || chefFromSource(entry.source?.url, entry.name);
   const label = sourceLabel(entry.source?.url);
 
@@ -59,16 +59,12 @@ function buildSeed(entry) {
       style: entry.effort === 'elaborate' ? 'haute-cuisine' : 'fine-dining',
       inspiration: `${chef} · ${entry.cuisine || 'International'}`
     },
-    source_label_de: label,
     source_label_en: label,
-    technique_de: tech.de,
-    technique_en: tech.en,
+    technique_en: tech,
     weather_tags: entry.weather_tags || ['mild'],
     meal_type: entry.meal_type || ['dinner'],
     exclude_tags: entry.exclude_tags || [],
-    name_de: entry.name_de || entry.name,
     name_en: entry.name,
-    description_de: entry.name_de || entry.name,
     description_en: entry.name
   };
 }

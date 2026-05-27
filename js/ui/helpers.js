@@ -17,7 +17,7 @@ export function effortPillsHtml(dayKey, activeEffort) {
 }
 
 export function recipeEffortBadge(recipe) {
-  return formatEffortBadge(recipe, getStoredLocale());
+  return formatEffortBadge(recipe);
 }
 
 export function slotSourceLabel(recipe) {

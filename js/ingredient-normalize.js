@@ -46,7 +46,7 @@ export function formatIngredientDisplayName(name) {
   const raw = (name || '').trim();
   if (!raw) return '';
 
-  const lowerParticles = new Set(['and', 'or', 'of', 'with', 'und', 'oder', 'mit', 'von']);
+  const lowerParticles = new Set(['and', 'or', 'of', 'with']);
 
   return raw
     .split(/\s+/)
