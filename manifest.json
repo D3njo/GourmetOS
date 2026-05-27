@@ -1,16 +1,22 @@
 {
   "name": "GourmetOS",
   "short_name": "GourmetOS",
-  "id": "./",
+  "id": "gourmetos",
   "description": "Weather-adaptive haute cuisine meal planner with dynamic portions",
   "start_url": "./index.html",
   "scope": "./",
+  "display_override": ["standalone", "fullscreen"],
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#121212",
   "theme_color": "#7CB342",
   "lang": "en",
+  "dir": "ltr",
+  "prefer_related_applications": false,
   "categories": ["food", "lifestyle", "utilities"],
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
   "icons": [
     {
       "src": "./assets/icons/icon-192.png",

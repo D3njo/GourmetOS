@@ -205,9 +205,28 @@ function bindRipples() {
   });
 }
 
-function registerServiceWorker() {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
+function initPwaDisplayMode() {
+  const standalone =
+    window.matchMedia('(display-mode: standalone)').matches ||
+    window.matchMedia('(display-mode: fullscreen)').matches ||
+    window.matchMedia('(display-mode: minimal-ui)').matches ||
+    window.navigator.standalone === true;
+
+  document.documentElement.classList.toggle('is-pwa-standalone', standalone);
+  document.documentElement.dataset.displayMode = standalone ? 'standalone' : 'browser';
+}
+
+async function registerServiceWorker() {
+  if (!('serviceWorker' in navigator)) return;
+
+  try {
+    const registration = await navigator.serviceWorker.register('./sw.js', {
+      scope: './',
+      updateViaCache: 'none'
+    });
+    await registration.update();
+  } catch (err) {
+    console.warn('[PWA] service worker registration failed', err);
   }
 }
 
@@ -225,6 +244,7 @@ function wireBridge() {
 }
 
 async function init() {
+  initPwaDisplayMode();
   wireBridge();
   initLocaleAndUnits();
   initTheme();
