@@ -1,6 +1,0 @@
-{
-  "image": "fridge_001.jpg",
-  "contains": ["milk", "eggs", "tomatoes"],
-  "optional": ["cheese"],
-  "notes": "door shelf, mixed lighting"
-}

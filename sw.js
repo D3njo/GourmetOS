@@ -1,5 +1,5 @@
-const CACHE_CORE = 'gourmetos-core-v29';
-const CACHE_DATA = 'gourmetos-data-v29';
+const CACHE_CORE = 'gourmetos-core-v32';
+const CACHE_DATA = 'gourmetos-data-v32';
 
 const CORE_URLS = [
   './',
@@ -13,6 +13,7 @@ const CORE_URLS = [
   './js/ui/dom.js',
   './js/ui/helpers.js',
   './js/ui/navigation.js',
+  './js/ui/portion-bar.js',
   './js/ui/today-view.js',
   './js/ui/week-view.js',
   './js/ui/preferences-view.js',
@@ -43,15 +44,6 @@ const CORE_URLS = [
   './js/diet-preferences.js',
   './js/protein-preferences.js',
   './js/home-inventory.js',
-  './js/inventory-scan-normalize.js',
-  './js/inventory-scan-fusion.js',
-  './js/inventory-grocery-classes.js',
-  './js/inventory-yolo-postprocess.js',
-  './js/inventory-grocery-detector.js',
-  './js/inventory-scan-confidence.js',
-  './js/inventory-vision-labels.js',
-  './js/inventory-vision-local.js',
-  './js/inventory-photo-scan.js',
   './js/ui/home-inventory-view.js',
   './js/plan-engine.js',
   './js/portions.js',
@@ -146,10 +138,7 @@ self.addEventListener('fetch', (event) => {
     url.hostname === 'api.open-meteo.com' ||
     url.hostname === 'www.themealdb.com' ||
     url.hostname === 'api.spoonacular.com' ||
-    url.hostname === 'cdn.jsdelivr.net' ||
-    url.hostname === 'huggingface.co' ||
-    url.hostname.endsWith('.huggingface.co') ||
-    url.hostname.endsWith('.hf.co')
+    url.hostname === 'cdn.jsdelivr.net'
   ) {
     event.respondWith(
       fetch(request)

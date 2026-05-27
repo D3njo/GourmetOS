@@ -232,7 +232,7 @@ export function saveHomeInventory(items) {
 
 /**
  * @param {string[]} names - display names to add
- * @param {'manual'|'photo'|'shopping'} [source]
+ * @param {'manual'|'shopping'} [source]
  */
 export function addHomeInventoryItems(names, source = 'manual') {
   const current = getHomeInventory();

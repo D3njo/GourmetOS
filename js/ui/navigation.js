@@ -10,6 +10,7 @@ import {
 import { bridge } from '../app-bridge.js';
 import { state } from '../app-state.js';
 import { $, $$ } from './dom.js';
+import { syncPortionBarVisibility } from './portion-bar.js';
 
 export async function maybeAutoRefreshMenu(trigger) {
   if (shouldRefreshWeekPlan()) {
@@ -50,8 +51,7 @@ export async function navigate(view, opts = {}) {
 
   $('.app-main')?.scrollTo({ top: 0, behavior: 'smooth' });
 
-  const portionBar = $('#portion-bar');
-  if (portionBar) portionBar.hidden = view === 'preferences';
+  syncPortionBarVisibility();
 
   if (view === 'today') {
     if (!skipMenuRefresh) await maybeAutoRefreshMenu('today');

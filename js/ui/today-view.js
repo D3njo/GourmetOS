@@ -46,6 +46,7 @@ import { state } from '../app-state.js';
 import { $, $$, escapeHtml, escapeAttr } from './dom.js';
 import { renderOnlineOnlyFallback } from './helpers.js';
 import { syncCookModeButton } from './cook-mode.js';
+import { syncPortionBarVisibility } from './portion-bar.js';
 
 export function renderWeatherStatus() {
   const el = $('#weather-status');
@@ -159,10 +160,9 @@ export function renderTodayView() {
   document.querySelectorAll('[data-portion-display]').forEach((el) => {
     el.textContent = state.portions;
   });
-  const portionBar = $('#portion-bar');
-  if (portionBar) portionBar.hidden = false;
   renderWeatherStatus();
   updateWeatherPills();
+  syncPortionBarVisibility();
 }
 
 function labelKey(prefix, value) {
