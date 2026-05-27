@@ -14,7 +14,7 @@ import { filterAllowedIngredients } from '../exclusions.js';
 import { formatIngredientDisplayName } from '../ingredient-normalize.js';
 import { getMealCount, setMealCount } from '../meal-plan.js';
 import { cycleSlotAlternative } from '../plan-engine.js';
-import { t, weatherLabelKey } from '../i18n.js';
+import { t, tFmt, weatherLabelKey } from '../i18n.js';
 import { formatTemperature as formatTempUnits } from '../units.js';
 import { weatherIcon } from '../weather.js';
 import { getRecipeSourceLabel, getRecipeSourceUrl } from '../recipe-api.js';
@@ -168,10 +168,13 @@ export function renderWeekView() {
                   const reason = compareAlternativeReason(r, alt);
                   const reasonText = reasonLabel(reason);
                   const name = alt.name.length > 20 ? alt.name.slice(0, 18) + '…' : alt.name;
+                  const isActive = alt.id === r.id;
                   return `
-                <button type="button" class="alt-chip ${alt.id === r.id ? 'active' : ''}"
+                <button type="button" class="alt-chip ${isActive ? 'active' : ''}"
                   data-recipe-id="${escapeAttr(alt.id)}" data-day="${escapeAttr(day.dayKey)}" data-slot="${slot.slotIndex}"
-                  title="${escapeAttr(`${name} — ${reasonText}`)}">
+                  aria-pressed="${isActive ? 'true' : 'false'}"
+                  aria-label="${escapeAttr(tFmt('selectAlternative', { name: alt.name, reason: reasonText }))}"
+                  title="${escapeAttr(`${alt.name} — ${reasonText}`)}">
                   <span class="alt-chip-reason">${escapeHtml(reasonText)}</span>
                   <span class="alt-chip-name">${escapeHtml(name)}</span>
                 </button>

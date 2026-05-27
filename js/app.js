@@ -22,6 +22,7 @@ import { bridge } from './app-bridge.js';
 import { state } from './app-state.js';
 import { $, $$ } from './ui/dom.js';
 import { maybeAutoRefreshMenu, resetMenuManual, navigate } from './ui/navigation.js';
+import { syncPortionBarVisibility } from './ui/portion-bar.js';
 import {
   renderTodayView,
   renderWeatherStatus,
@@ -151,6 +152,7 @@ function bindAccordions() {
       const panel = trigger.nextElementSibling;
       trigger.setAttribute('aria-expanded', expanded ? 'false' : 'true');
       panel?.classList.toggle('open', !expanded);
+      syncPortionBarVisibility();
     });
   });
 }
@@ -169,6 +171,7 @@ function changePortions(delta) {
   renderTodayView();
   if (state.view === 'week') renderWeekView();
   renderShoppingList();
+  syncPortionBarVisibility();
 }
 
 function bindPortions() {
