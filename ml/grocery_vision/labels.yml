@@ -1,0 +1,73 @@
+# GourmetOS V2 grocery vision target classes (30)
+version: 2
+classes:
+  - id: milk
+    group: dairy
+  - id: eggs
+    group: dairy
+  - id: yogurt
+    group: dairy
+  - id: cheese
+    group: dairy
+  - id: butter
+    group: dairy
+  - id: cream
+    group: dairy
+  - id: chicken
+    group: protein
+  - id: beef
+    group: protein
+  - id: pork
+    group: protein
+  - id: fish
+    group: protein
+  - id: salmon
+    group: protein
+  - id: tofu
+    group: protein
+  - id: beans
+    group: pantry
+  - id: chickpeas
+    group: pantry
+  - id: lentils
+    group: pantry
+  - id: rice
+    group: pantry
+  - id: pasta
+    group: pantry
+  - id: bread
+    group: pantry
+  - id: juice
+    group: pantry
+  - id: tomatoes
+    group: produce
+  - id: lettuce
+    group: produce
+  - id: spinach
+    group: produce
+  - id: cucumber
+    group: produce
+  - id: carrots
+    group: produce
+  - id: onions
+    group: produce
+  - id: garlic
+    group: produce
+  - id: peppers
+    group: produce
+  - id: mushrooms
+    group: produce
+  - id: broccoli
+    group: produce
+  - id: apples
+    group: fruit
+  - id: bananas
+    group: fruit
+  - id: lemons
+    group: fruit
+  - id: berries
+    group: fruit
+
+thresholds:
+  show: 0.42
+  auto_select: 0.74

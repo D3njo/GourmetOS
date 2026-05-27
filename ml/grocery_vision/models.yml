@@ -1,0 +1,32 @@
+# Grocery vision model bake-off candidates
+version: 2
+winner: gourmetos-grocery-detector
+
+candidates:
+  - id: gourmetos-grocery-detector
+    name: GourmetOS Grocery Detector (Norwegian YOLO12n ONNX)
+    type: yolo-onnx
+    license: Apache-2.0
+    source: valiantlynxz/norwegian-grocery-detector
+    onnx_path: assets/models/gourmetos-grocery-detector/model.onnx
+    labels_path: assets/models/gourmetos-grocery-detector/labels.json
+    input_size: 640
+    conf_threshold: 0.35
+    iou_threshold: 0.45
+    notes: Primary V2 browser provider after class mapping to GourmetOS inventory.
+
+  - id: baseline-clip-yolos
+    name: Transformers.js YOLOS-tiny + CLIP baseline
+    type: transformers-js
+    license: Apache-2.0
+    object_model: Xenova/yolos-tiny
+    clip_model: Xenova/clip-vit-base-patch32
+    notes: Current hybrid fallback; compared for recall on fridge photos.
+
+  - id: roboflow-refrigerator
+    name: Roboflow Refrigerator Food (optional)
+    type: yolo-onnx
+    license: check-before-use
+    enabled: false
+    onnx_path: assets/models/roboflow-refrigerator/model.onnx
+    notes: Enable after license verification and ONNX export.

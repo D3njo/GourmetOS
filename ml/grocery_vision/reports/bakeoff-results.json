@@ -1,0 +1,383 @@
+{
+  "version": 2,
+  "target_classes": [
+    "milk",
+    "eggs",
+    "yogurt",
+    "cheese",
+    "butter",
+    "cream",
+    "chicken",
+    "beef",
+    "pork",
+    "fish",
+    "salmon",
+    "tofu",
+    "beans",
+    "chickpeas",
+    "lentils",
+    "rice",
+    "pasta",
+    "bread",
+    "juice",
+    "tomatoes",
+    "lettuce",
+    "spinach",
+    "cucumber",
+    "carrots",
+    "onions",
+    "garlic",
+    "peppers",
+    "mushrooms",
+    "broccoli",
+    "apples",
+    "bananas",
+    "lemons",
+    "berries"
+  ],
+  "thresholds": {
+    "show": 0.42,
+    "auto_select": 0.74
+  },
+  "fixtures_only": true,
+  "candidates": [
+    {
+      "summary": {
+        "cases": 3,
+        "mean_show_precision": 0.8333,
+        "mean_show_recall": 1.0,
+        "mean_auto_precision": 1.0,
+        "mean_auto_recall": 0.8889,
+        "class_false_positives": {
+          "cheese": 1,
+          "butter": 1
+        },
+        "class_false_negatives": {},
+        "candidate_id": "gourmetos-grocery-detector",
+        "candidate_name": "GourmetOS Grocery Detector (Norwegian YOLO12n ONNX)",
+        "model_size_mb": null,
+        "type": "yolo-onnx"
+      },
+      "cases": [
+        {
+          "id": "fridge_001",
+          "image": "fridge_001.jpg",
+          "expected": [
+            "eggs",
+            "milk",
+            "tomatoes"
+          ],
+          "optional": [
+            "cheese"
+          ],
+          "predicted_show": [
+            "cheese",
+            "eggs",
+            "milk",
+            "tomatoes"
+          ],
+          "predicted_auto": [
+            "eggs",
+            "milk",
+            "tomatoes"
+          ],
+          "show_precision": 0.75,
+          "show_recall": 1.0,
+          "auto_precision": 1.0,
+          "auto_recall": 1.0,
+          "false_positives": [
+            "cheese"
+          ],
+          "false_negatives": [],
+          "auto_false_positives": [],
+          "optional_hits": [
+            "cheese"
+          ],
+          "notes": "door shelf, mixed lighting",
+          "predictions": [
+            {
+              "ingredient": "milk",
+              "confidence": 0.91,
+              "raw": "Melk"
+            },
+            {
+              "ingredient": "eggs",
+              "confidence": 0.88,
+              "raw": "Egg"
+            },
+            {
+              "ingredient": "tomatoes",
+              "confidence": 0.79,
+              "raw": "Tomat"
+            },
+            {
+              "ingredient": "cheese",
+              "confidence": 0.58,
+              "raw": "Ost"
+            }
+          ]
+        },
+        {
+          "id": "fridge_002",
+          "image": "fridge_002.jpg",
+          "expected": [
+            "carrots",
+            "chicken",
+            "spinach"
+          ],
+          "optional": [],
+          "predicted_show": [
+            "carrots",
+            "chicken",
+            "spinach"
+          ],
+          "predicted_auto": [
+            "carrots",
+            "chicken",
+            "spinach"
+          ],
+          "show_precision": 1.0,
+          "show_recall": 1.0,
+          "auto_precision": 1.0,
+          "auto_recall": 1.0,
+          "false_positives": [],
+          "false_negatives": [],
+          "auto_false_positives": [],
+          "optional_hits": [],
+          "notes": "produce drawer",
+          "predictions": [
+            {
+              "ingredient": "chicken",
+              "confidence": 0.86,
+              "raw": "Kylling"
+            },
+            {
+              "ingredient": "spinach",
+              "confidence": 0.81,
+              "raw": "Spinat"
+            },
+            {
+              "ingredient": "carrots",
+              "confidence": 0.77,
+              "raw": "Gulrot"
+            }
+          ]
+        },
+        {
+          "id": "fridge_003",
+          "image": "fridge_003.jpg",
+          "expected": [
+            "berries",
+            "bread",
+            "yogurt"
+          ],
+          "optional": [
+            "butter"
+          ],
+          "predicted_show": [
+            "berries",
+            "bread",
+            "butter",
+            "yogurt"
+          ],
+          "predicted_auto": [
+            "berries",
+            "yogurt"
+          ],
+          "show_precision": 0.75,
+          "show_recall": 1.0,
+          "auto_precision": 1.0,
+          "auto_recall": 0.6667,
+          "false_positives": [
+            "butter"
+          ],
+          "false_negatives": [],
+          "auto_false_positives": [],
+          "optional_hits": [
+            "butter"
+          ],
+          "notes": "top shelf dairy and fruit",
+          "predictions": [
+            {
+              "ingredient": "yogurt",
+              "confidence": 0.84,
+              "raw": "Yoghurt"
+            },
+            {
+              "ingredient": "berries",
+              "confidence": 0.76,
+              "raw": "Baer"
+            },
+            {
+              "ingredient": "bread",
+              "confidence": 0.73,
+              "raw": "Brod"
+            },
+            {
+              "ingredient": "butter",
+              "confidence": 0.55,
+              "raw": "Smor"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "summary": {
+        "cases": 3,
+        "mean_show_precision": 0.8889,
+        "mean_show_recall": 0.8889,
+        "mean_auto_precision": 0.3333,
+        "mean_auto_recall": 0.1111,
+        "class_false_positives": {
+          "bananas": 1
+        },
+        "class_false_negatives": {
+          "berries": 1
+        },
+        "candidate_id": "baseline-clip-yolos",
+        "candidate_name": "Transformers.js YOLOS-tiny + CLIP baseline",
+        "model_size_mb": null,
+        "type": "transformers-js"
+      },
+      "cases": [
+        {
+          "id": "fridge_001",
+          "image": "fridge_001.jpg",
+          "expected": [
+            "eggs",
+            "milk",
+            "tomatoes"
+          ],
+          "optional": [
+            "cheese"
+          ],
+          "predicted_show": [
+            "eggs",
+            "milk",
+            "tomatoes"
+          ],
+          "predicted_auto": [],
+          "show_precision": 1.0,
+          "show_recall": 1.0,
+          "auto_precision": 0.0,
+          "auto_recall": 0.0,
+          "false_positives": [],
+          "false_negatives": [],
+          "auto_false_positives": [],
+          "optional_hits": [],
+          "notes": "door shelf, mixed lighting",
+          "predictions": [
+            {
+              "ingredient": "milk",
+              "confidence": 0.68,
+              "raw": "clip:milk carton"
+            },
+            {
+              "ingredient": "eggs",
+              "confidence": 0.71,
+              "raw": "clip:eggs"
+            },
+            {
+              "ingredient": "tomatoes",
+              "confidence": 0.52,
+              "raw": "clip:tomatoes"
+            }
+          ]
+        },
+        {
+          "id": "fridge_002",
+          "image": "fridge_002.jpg",
+          "expected": [
+            "carrots",
+            "chicken",
+            "spinach"
+          ],
+          "optional": [],
+          "predicted_show": [
+            "carrots",
+            "chicken",
+            "spinach"
+          ],
+          "predicted_auto": [
+            "carrots"
+          ],
+          "show_precision": 1.0,
+          "show_recall": 1.0,
+          "auto_precision": 1.0,
+          "auto_recall": 0.3333,
+          "false_positives": [],
+          "false_negatives": [],
+          "auto_false_positives": [],
+          "optional_hits": [],
+          "notes": "produce drawer",
+          "predictions": [
+            {
+              "ingredient": "chicken",
+              "confidence": 0.61,
+              "raw": "clip:chicken breast"
+            },
+            {
+              "ingredient": "carrots",
+              "confidence": 0.88,
+              "raw": "yolos:carrot"
+            },
+            {
+              "ingredient": "spinach",
+              "confidence": 0.49,
+              "raw": "clip:spinach"
+            }
+          ]
+        },
+        {
+          "id": "fridge_003",
+          "image": "fridge_003.jpg",
+          "expected": [
+            "berries",
+            "bread",
+            "yogurt"
+          ],
+          "optional": [
+            "butter"
+          ],
+          "predicted_show": [
+            "bananas",
+            "bread",
+            "yogurt"
+          ],
+          "predicted_auto": [],
+          "show_precision": 0.6667,
+          "show_recall": 0.6667,
+          "auto_precision": 0.0,
+          "auto_recall": 0.0,
+          "false_positives": [
+            "bananas"
+          ],
+          "false_negatives": [
+            "berries"
+          ],
+          "auto_false_positives": [],
+          "optional_hits": [],
+          "notes": "top shelf dairy and fruit",
+          "predictions": [
+            {
+              "ingredient": "yogurt",
+              "confidence": 0.64,
+              "raw": "clip:yogurt"
+            },
+            {
+              "ingredient": "bread",
+              "confidence": 0.59,
+              "raw": "clip:bread"
+            },
+            {
+              "ingredient": "bananas",
+              "confidence": 0.45,
+              "raw": "yolos:banana"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
