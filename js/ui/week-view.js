@@ -8,10 +8,7 @@ import {
 import { isOnlineOnly } from '../recipe-loader.js';
 import { scaleIngredients, formatAmount } from '../portions.js';
 import { getMealCount, setMealCount } from '../meal-plan.js';
-import {
-  cycleSlotAlternative,
-  setSlotSelection
-} from '../plan-engine.js';
+import { cycleSlotAlternative } from '../plan-engine.js';
 import { t, weatherLabelKey } from '../i18n.js';
 import { formatTemperature as formatTempUnits } from '../units.js';
 import { weatherIcon } from '../weather.js';
@@ -209,17 +206,27 @@ export function renderWeekView() {
       const day = state.weeklyPlan.find((d) => d.dayKey === btn.dataset.day);
       const slot = day?.slots?.[Number(btn.dataset.slot)];
       if (!slot) return;
-      cycleSlotAlternative(btn.dataset.day, Number(btn.dataset.slot), slot.alternatives, slot.selected.id);
-      await bridge.refreshPlan();
-      renderWeekView();
+      const nextId = cycleSlotAlternative(
+        btn.dataset.day,
+        Number(btn.dataset.slot),
+        slot.alternatives,
+        slot.selected.id,
+        slot.selected
+      );
+      if (!nextId || nextId === slot.selected.id) return;
+      await bridge.applySlotSelection(btn.dataset.day, Number(btn.dataset.slot), nextId);
     });
   });
 
   container.querySelectorAll('.alt-chip[data-recipe-id]').forEach((btn) => {
     btn.addEventListener('click', async () => {
-      setSlotSelection(btn.dataset.day, Number(btn.dataset.slot), btn.dataset.recipeId);
-      await bridge.refreshPlan();
-      renderWeekView();
+      const dayKey = btn.dataset.day;
+      const slotIndex = Number(btn.dataset.slot);
+      const recipeId = btn.dataset.recipeId;
+      const day = state.weeklyPlan.find((d) => d.dayKey === dayKey);
+      const slot = day?.slots?.[slotIndex];
+      if (!slot || slot.selected?.id === recipeId) return;
+      await bridge.applySlotSelection(dayKey, slotIndex, recipeId);
     });
   });
 

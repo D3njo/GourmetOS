@@ -44,7 +44,7 @@ function localizeRecipe(recipe) {
   };
 }
 
-function prepareRecipe(recipe, context = {}) {
+export function prepareRecipe(recipe, context = {}) {
   const base = enrichRecipeComplexity(applyRecipeOverride(localizeRecipe(recipe)));
   return enrichEditorial(base, context);
 }

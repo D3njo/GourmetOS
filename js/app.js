@@ -9,7 +9,7 @@ import {
   saveShoppingScope
 } from './storage.js';
 import { invalidateRecipeCache, getActiveRecipeFromPlan, syncRecipePool } from './recipes.js';
-import { buildWeeklyPlan, getTodayDay } from './plan-engine.js';
+import { buildWeeklyPlan, getTodayDay, getTodayDayKey, refreshSlotInPlan } from './plan-engine.js';
 import {
   t,
   setLocale,
@@ -90,6 +90,24 @@ export function getActiveSlot() {
   if (!today?.slots?.length) return null;
   const idx = Math.min(state.todaySlotIndex, today.slots.length - 1);
   return today.slots[idx];
+}
+
+/** Swap alternative without rebuilding the whole week (stable alt list, no loading flash). */
+export async function applySlotSelection(dayKey, slotIndex, recipeId) {
+  if (!state.weeklyPlan?.length || !recipeId) return;
+
+  await refreshSlotInPlan(state.weeklyPlan, dayKey, slotIndex, recipeId);
+
+  if (dayKey === getTodayDayKey()) {
+    if (slotIndex === state.todaySlotIndex) {
+      const slot = getActiveSlot();
+      state.recipe = slot?.selected ?? state.recipe;
+    }
+    renderTodayView();
+  }
+
+  if (state.view === 'week') renderWeekView();
+  renderShoppingList();
 }
 
 export async function refreshPlan() {
@@ -188,6 +206,7 @@ function registerServiceWorker() {
 
 function wireBridge() {
   bridge.refreshPlan = refreshPlan;
+  bridge.applySlotSelection = applySlotSelection;
   bridge.renderWeekView = renderWeekView;
   bridge.renderTodayView = renderTodayView;
   bridge.renderPreferences = renderPreferences;

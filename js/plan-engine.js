@@ -7,7 +7,8 @@ import {
   getActivePlanModeKey,
   getDayEffort
 } from './storage.js';
-import { loadRecipes, getRecipeOptions, getRecipeById } from './recipes.js';
+import { loadRecipes, getRecipeOptions, getRecipeById, prepareRecipe } from './recipes.js';
+import { resolveRecipe } from './recipe-loader.js';
 import { getRecipeWeatherPrimary } from './weather-buckets.js';
 import { resolveRecipesForSlots } from './recipe-loader.js';
 import { getWeatherTagForDate, getCurrentWeekDates, getManualWeatherMode } from './weather.js';
@@ -165,6 +166,8 @@ export async function buildWeeklyPlan(forecast, excludedTags = []) {
 
       if (selected && !alternatives.some((a) => a.id === selected.id)) {
         alternatives = [selected, ...alternatives].slice(0, 3);
+      } else if (selected) {
+        alternatives = [selected, ...alternatives.filter((a) => a.id !== selected.id)].slice(0, 3);
       }
 
       return {
@@ -218,12 +221,81 @@ export function setSlotSelection(dayKey, slotIndex, recipeId) {
   savePlanSelectionsForMode(modeKey, selections);
 }
 
-export function cycleSlotAlternative(dayKey, slotIndex, alternatives, currentId) {
-  if (!alternatives?.length) return currentId;
-  const idx = alternatives.findIndex((r) => r.id === currentId);
-  const next = alternatives[(idx + 1) % alternatives.length];
-  setSlotSelection(dayKey, slotIndex, next.id);
-  return next.id;
+/** Stable ring: selected first, then other alternatives in list order (for cycling). */
+export function buildAlternativeRing(selected, alternatives = []) {
+  const byId = new Map();
+  const ring = [];
+
+  const add = (recipe) => {
+    if (!recipe?.id || byId.has(recipe.id)) return;
+    byId.set(recipe.id, recipe);
+    ring.push(recipe);
+  };
+
+  add(selected);
+  for (const alt of alternatives) add(alt);
+  return ring;
+}
+
+export function getNextAlternativeId(alternatives, currentId, selected) {
+  const ring = buildAlternativeRing(
+    selected || alternatives?.find((r) => r.id === currentId),
+    alternatives
+  );
+  if (ring.length <= 1) return currentId ?? ring[0]?.id ?? null;
+  const idx = ring.findIndex((r) => r.id === currentId);
+  const nextIdx = idx < 0 ? 0 : (idx + 1) % ring.length;
+  return ring[nextIdx].id;
+}
+
+export function cycleSlotAlternative(_dayKey, _slotIndex, alternatives, currentId, selected) {
+  return getNextAlternativeId(alternatives, currentId, selected);
+}
+
+/** Reorder alternatives with selected first — keeps pills/chips stable after a swap. */
+export function normalizeSlotAlternatives(slot) {
+  if (!slot?.selected) return slot?.alternatives ?? [];
+  const selected = slot.selected;
+  const others = (slot.alternatives || []).filter((a) => a.id !== selected.id);
+  return [selected, ...others].slice(0, 3);
+}
+
+/**
+ * Update one slot in the in-memory weekly plan (no full rebuild).
+ * Resolves recipe body only when needed.
+ */
+export async function refreshSlotInPlan(weeklyPlan, dayKey, slotIndex, recipeId) {
+  const day = weeklyPlan?.find((d) => d.dayKey === dayKey);
+  const slot = day?.slots?.[slotIndex];
+  if (!slot || !recipeId) return;
+
+  setSlotSelection(dayKey, slotIndex, recipeId);
+
+  const context = {
+    weatherTag: day.weatherTag,
+    effortLevel: day.effortLevel ?? slot.selected?.effort
+  };
+
+  let recipe =
+    slot.alternatives?.find((a) => a.id === recipeId) ||
+    (slot.selected?.id === recipeId ? slot.selected : null);
+
+  if (!recipe?.ingredients?.length) {
+    recipe = await resolveRecipe(recipeId);
+  }
+  if (!recipe) {
+    const db = await loadRecipes();
+    recipe = getRecipeById(db.recipes, recipeId);
+  }
+  if (!recipe) return;
+
+  slot.selected = prepareRecipe(recipe, context);
+  slot.recipeId = slot.selected.id;
+  slot.alternatives = normalizeSlotAlternatives({
+    selected: slot.selected,
+    alternatives: slot.alternatives
+  });
+  day.recipes = day.slots.map((s) => s.selected);
 }
 
 export function getTodayPrimarySlot(weeklyPlan) {

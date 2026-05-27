@@ -16,7 +16,7 @@ import {
   resolveAutoWeatherTag,
   refreshForecast
 } from '../weather.js';
-import { getTodayDay, getTodayDayKey, cycleSlotAlternative, setSlotSelection } from '../plan-engine.js';
+import { getTodayDay, getTodayDayKey, cycleSlotAlternative } from '../plan-engine.js';
 import { t, effortLabelKey, weatherLabelKey } from '../i18n.js';
 import { formatTemperature as formatTempUnits } from '../units.js';
 import {
@@ -105,7 +105,15 @@ export function renderTodayView() {
   const weatherBadge = $('#weather-badge');
 
   if (heroImg) {
-    heroImg.src = recipe.image;
+    const nextSrc = recipe.image || '';
+    const prevSrc = heroImg.getAttribute('src') || '';
+    if (prevSrc && prevSrc !== nextSrc) {
+      heroImg.classList.add('is-swapping');
+      const done = () => heroImg.classList.remove('is-swapping');
+      heroImg.addEventListener('load', done, { once: true });
+      heroImg.addEventListener('error', done, { once: true });
+    }
+    heroImg.src = nextSrc;
     heroImg.alt = recipe.name;
     heroImg.classList.remove('skeleton');
   }
@@ -537,8 +545,12 @@ export function renderTodayAlternatives() {
 export function bindAlternativeButtons(container) {
   container.querySelectorAll('[data-recipe-id]').forEach((btn) => {
     btn.addEventListener('click', async () => {
-      setSlotSelection(btn.dataset.day, Number(btn.dataset.slot), btn.dataset.recipeId);
-      await bridge.refreshPlan();
+      const dayKey = btn.dataset.day;
+      const slotIndex = Number(btn.dataset.slot);
+      const recipeId = btn.dataset.recipeId;
+      const slot = getTodayDay(state.weeklyPlan)?.slots?.[slotIndex];
+      if (!slot || slot.selected?.id === recipeId) return;
+      await bridge.applySlotSelection(dayKey, slotIndex, recipeId);
     });
   });
 
@@ -547,8 +559,15 @@ export function bindAlternativeButtons(container) {
       const today = getTodayDay(state.weeklyPlan);
       const slot = today?.slots?.[Number(btn.dataset.slot)];
       if (!slot) return;
-      cycleSlotAlternative(btn.dataset.day, Number(btn.dataset.slot), slot.alternatives, slot.selected.id);
-      await bridge.refreshPlan();
+      const nextId = cycleSlotAlternative(
+        btn.dataset.day,
+        Number(btn.dataset.slot),
+        slot.alternatives,
+        slot.selected.id,
+        slot.selected
+      );
+      if (!nextId || nextId === slot.selected.id) return;
+      await bridge.applySlotSelection(btn.dataset.day, Number(btn.dataset.slot), nextId);
     });
   });
 }

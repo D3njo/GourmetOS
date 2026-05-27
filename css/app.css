@@ -291,6 +291,11 @@ button:focus:not(:focus-visible),
   aspect-ratio: 16 / 10;
   object-fit: cover;
   display: block;
+  transition: opacity 0.22s ease;
+}
+
+.hero-image.is-swapping {
+  opacity: 0.35;
 }
 
 .hero-overlay {
@@ -883,6 +888,7 @@ button:focus:not(:focus-visible),
   align-items: flex-start;
   gap: 2px;
   text-align: left;
+  transition: border-color 0.18s ease, background-color 0.18s ease, color 0.18s ease;
 }
 
 .alt-pill-reason,
