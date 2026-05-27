@@ -50,6 +50,9 @@ export async function navigate(view, opts = {}) {
 
   $('.app-main')?.scrollTo({ top: 0, behavior: 'smooth' });
 
+  const portionBar = $('#portion-bar');
+  if (portionBar) portionBar.hidden = view === 'preferences';
+
   if (view === 'today') {
     if (!skipMenuRefresh) await maybeAutoRefreshMenu('today');
     bridge.renderTodayView();

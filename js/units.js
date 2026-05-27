@@ -1,8 +1,37 @@
 /** Metric ↔ imperial conversion for ingredient display */
 
 import { cleanFloat } from './math.js';
+import { isNumericAmount } from './measure-parse.js';
 
 const COUNT_UNITS = new Set(['stk', 'stück', 'pcs', 'pc', 'piece', 'pieces', 'zehe', 'clove', 'cloves']);
+
+const DESCRIPTOR_UNITS = new Set([
+  'finely chopped',
+  'roughly chopped',
+  'chopped',
+  'sliced',
+  'diced',
+  'minced',
+  'grated',
+  'shavings',
+  'crushed',
+  'whole',
+  'large',
+  'small',
+  'medium'
+]);
+
+const QUALITATIVE_LABELS = {
+  pinch: { de: 'Prise', en: 'pinch' },
+  dash: { de: 'Spritzer', en: 'dash' },
+  bunch: { de: 'Bund', en: 'bunch' },
+  handful: { de: 'Handvoll', en: 'handful' },
+  'to taste': { de: 'nach Geschmack', en: 'to taste' },
+  'for frying': { de: 'zum Braten', en: 'for frying' },
+  'for greasing': { de: 'zum Einfetten', en: 'for greasing' },
+  'as needed': { de: 'nach Bedarf', en: 'as needed' },
+  optional: { de: 'optional', en: 'optional' }
+};
 
 const UNIT_LABELS = {
   metric: {
@@ -48,9 +77,25 @@ function labelForUnit(code, locale) {
   return bucket[locale] || bucket.de || code;
 }
 
+function qualitativeLabel(unit, locale) {
+  const key = (unit || '').toLowerCase().trim();
+  const entry = QUALITATIVE_LABELS[key];
+  if (entry) return entry[locale] || entry.en || key;
+  return unit;
+}
+
 /** Convert stored metric amount + unit into display amount + unit */
 export function convertAmount(amount, unit, system = unitSystem, locale = 'de') {
   const normalized = (unit || '').toLowerCase().trim();
+
+  if (!isNumericAmount(amount)) {
+    return { amount, unit: qualitativeLabel(normalized, locale) || normalized };
+  }
+
+  if (QUALITATIVE_LABELS[normalized] || DESCRIPTOR_UNITS.has(normalized)) {
+    const label = qualitativeLabel(normalized, locale);
+    return { amount: cleanFloat(amount), unit: label || normalized };
+  }
 
   if (COUNT_UNITS.has(normalized) || normalized === 'stk' || normalized === 'zehe') {
     const code = normalized === 'zehe' ? 'zehe' : 'stk';
@@ -101,11 +146,28 @@ export function convertAmount(amount, unit, system = unitSystem, locale = 'de') 
 }
 
 export function formatAmountWithSystem(amount, unit, locale = 'de', system = unitSystem) {
+  const normalized = (unit || '').toLowerCase().trim();
+
+  if (!isNumericAmount(amount)) {
+    const label = qualitativeLabel(normalized, locale) || normalized;
+    return label ? String(label) : '—';
+  }
+
+  if (QUALITATIVE_LABELS[normalized] || DESCRIPTOR_UNITS.has(normalized)) {
+    const label = qualitativeLabel(normalized, locale);
+    const n = cleanFloat(amount);
+    if (n === 1) return label;
+    return `${n} ${label}`;
+  }
+
   const { amount: converted, unit: displayUnit } = convertAmount(amount, unit, system, locale);
   const cleaned = cleanFloat(converted);
+  if (!Number.isFinite(cleaned)) {
+    return qualitativeLabel(normalized, locale) || '—';
+  }
   const formatted = Number.isInteger(cleaned)
     ? String(cleaned)
     : String(cleaned).replace(/\.?0+$/, (m) => (m.startsWith('.') ? '' : m));
 
-  return `${formatted} ${displayUnit}`;
+  return `${formatted} ${displayUnit}`.trim();
 }

@@ -15,6 +15,7 @@ import { getWeatherTagForDate, getCurrentWeekDates, getManualWeatherMode } from 
 import { getDayLabels, t } from './i18n.js';
 import { toDateKey } from './menu-refresh.js';
 import { createWeekDiversity, trackWeekRecipe } from './week-composition.js';
+import { isRecipeAllowed, sanitizePlanSelections } from './exclusions.js';
 
 const DAY_KEYS = [
   'monday',
@@ -69,7 +70,11 @@ function resolveDaySelections(
     .slice(0, mealCount)
     .filter((id) => {
       const recipe = allRecipes.find((r) => r.id === id);
-      return recipe && getRecipeWeatherPrimary(recipe) === weatherTag;
+      return (
+        recipe &&
+        getRecipeWeatherPrimary(recipe) === weatherTag &&
+        isRecipeAllowed(recipe, { presetTags: excludedTags })
+      );
     });
   for (const id of ids) {
     trackRecipeDiversity(allRecipes.find((r) => r.id === id), diversity);
@@ -95,7 +100,9 @@ function resolveDaySelections(
       options.filter((r) => !ids.includes(r.id)),
       slotIndex
     );
-    const recipeId = pick || options[0]?.id || allRecipes[0]?.id;
+    const fallback = allRecipes.find((r) => isRecipeAllowed(r, { presetTags: excludedTags }));
+    const recipeId = pick || options[0]?.id || fallback?.id;
+    if (!recipeId) break;
     ids.push(recipeId);
     trackRecipeDiversity(
       allRecipes.find((r) => r.id === recipeId) || options[0],
@@ -120,7 +127,9 @@ export async function buildWeeklyPlan(forecast, excludedTags = []) {
   const plan = getMealPlan();
   const modeKey = getActivePlanModeKey();
   const manualOverride = getManualWeatherMode();
-  const selections = getPlanSelectionsForMode(modeKey);
+  const recipeById = new Map(db.recipes.map((r) => [r.id, r]));
+  const rawSelections = getPlanSelectionsForMode(modeKey);
+  const selections = sanitizePlanSelections(rawSelections, { presetTags: excludedTags, recipesById: recipeById });
   const weekDates = getCurrentWeekDates();
   const dayLabels = getDayLabels();
   const updatedSelections = { ...selections };
@@ -159,15 +168,24 @@ export async function buildWeeklyPlan(forecast, excludedTags = []) {
         usedTastes: diversity.usedTastes,
         usedTechniques: diversity.usedTechniques
       });
-      const selected =
+
+      let selected =
         getRecipeById(db.recipes, recipeId) ||
         alternatives[0] ||
-        db.recipes[0];
+        db.recipes.find((r) => isRecipeAllowed(r, { presetTags: excludedTags }));
 
-      if (selected && !alternatives.some((a) => a.id === selected.id)) {
-        alternatives = [selected, ...alternatives].slice(0, 3);
-      } else if (selected) {
-        alternatives = [selected, ...alternatives.filter((a) => a.id !== selected.id)].slice(0, 3);
+      if (selected && !isRecipeAllowed(selected, { presetTags: excludedTags })) {
+        selected = alternatives[0] ?? null;
+      }
+
+      alternatives = alternatives.filter((a) => isRecipeAllowed(a, { presetTags: excludedTags }));
+
+      if (selected?.id && isRecipeAllowed(selected, { presetTags: excludedTags })) {
+        if (!alternatives.some((a) => a.id === selected.id)) {
+          alternatives = [selected, ...alternatives].slice(0, 3);
+        } else {
+          alternatives = [selected, ...alternatives.filter((a) => a.id !== selected.id)].slice(0, 3);
+        }
       }
 
       return {
@@ -287,13 +305,13 @@ export async function refreshSlotInPlan(weeklyPlan, dayKey, slotIndex, recipeId)
     const db = await loadRecipes();
     recipe = getRecipeById(db.recipes, recipeId);
   }
-  if (!recipe) return;
+  if (!recipe || !isRecipeAllowed(recipe)) return;
 
   slot.selected = prepareRecipe(recipe, context);
   slot.recipeId = slot.selected.id;
   slot.alternatives = normalizeSlotAlternatives({
     selected: slot.selected,
-    alternatives: slot.alternatives
+    alternatives: (slot.alternatives || []).filter((a) => isRecipeAllowed(a))
   });
   day.recipes = day.slots.map((s) => s.selected);
 }

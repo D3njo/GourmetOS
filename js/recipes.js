@@ -169,7 +169,6 @@ export function getRecipeOptions(
   if (!pool.length) {
     pool = filterByExclusions(recipes, tags, customTerms);
   }
-  if (!pool.length) pool = recipes;
 
   const ranked = rankRecipes(pool, {
     weatherTag,

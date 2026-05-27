@@ -6,7 +6,7 @@ import {
 } from '../storage.js';
 import { clearRecipePool, refreshRecipeCatalog, getSyncStatus } from '../recipes.js';
 import { getSpoonacularQuota } from '../spoonacular-api.js';
-import { getExcludeOptions, t } from '../i18n.js';
+import { getExcludeOptions, getDietPreferenceOptions, t } from '../i18n.js';
 import { getLocale as getStoredLocale } from '../storage.js';
 import { setUnitSystem } from '../units.js';
 import { bridge } from '../app-bridge.js';
@@ -19,12 +19,41 @@ import {
   renderWeatherStatus
 } from './today-view.js';
 
+function renderDietPreferences(prefs) {
+  const container = $('#diet-preferences');
+  if (!container) return;
+
+  container.innerHTML = getDietPreferenceOptions()
+    .map(
+      (opt) => `
+    <label class="pref-row" style="cursor:pointer">
+      <span>${t(opt.labelKey)}</span>
+      <input type="checkbox" data-diet="${opt.id}" ${prefs.dietPreferences?.includes(opt.id) ? 'checked' : ''}
+        style="width:20px;height:20px;accent-color:var(--color-matcha)">
+    </label>
+  `
+    )
+    .join('');
+
+  container.querySelectorAll('input[data-diet]').forEach((input) => {
+    input.addEventListener('change', async () => {
+      const diets = [...container.querySelectorAll('input[data-diet]:checked')].map(
+        (el) => el.dataset.diet
+      );
+      savePreferences({ dietPreferences: diets });
+      await bridge.refreshPlan();
+    });
+  });
+}
+
 export async function renderPreferences() {
   const excludeContainer = $('#exclude-tags');
   const unitSelect = $('#unit-select');
   const prefs = getPreferences();
 
   if (unitSelect) unitSelect.value = prefs.unitSystem || 'metric';
+
+  renderDietPreferences(prefs);
 
   if (!excludeContainer) return;
 

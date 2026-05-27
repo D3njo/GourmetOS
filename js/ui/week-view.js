@@ -5,7 +5,7 @@ import {
   getActivePlanModeKey,
   getUnitSystem as getStoredUnitSystem
 } from '../storage.js';
-import { isOnlineOnly } from '../recipe-loader.js';
+import { isOnlineOnly, recipeImageUrl } from '../recipe-loader.js';
 import { scaleIngredients, formatAmount } from '../portions.js';
 import { getMealCount, setMealCount } from '../meal-plan.js';
 import { cycleSlotAlternative } from '../plan-engine.js';
@@ -100,7 +100,7 @@ export function renderWeekView() {
           return `
           <div class="meal-slot-card glass-inner">
             <div class="meal-slot-header">
-              <img class="meal-slot-thumb" src="${escapeAttr(r.image)}" alt="" loading="lazy">
+              <img class="meal-slot-thumb" src="${escapeAttr(recipeImageUrl(r))}" alt="" loading="lazy">
               <div class="meal-slot-info">
                 <span class="meal-slot-type">${escapeHtml(slot.mealTypeLabel)}</span>
                 <h4 class="meal-slot-title">${escapeHtml(r.name)}</h4>

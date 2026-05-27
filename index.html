@@ -95,9 +95,9 @@
           <div class="portion-control">
             <span class="font-semibold text-sm" data-i18n="changePortions"></span>
             <div class="flex items-center gap-3">
-              <button id="portion-minus" type="button" class="portion-btn ripple-host" data-i18n="lessPortions" data-i18n-attr="aria-label">−</button>
-              <span id="portion-value" class="portion-value">2</span>
-              <button id="portion-plus" type="button" class="portion-btn ripple-host" data-i18n="morePortions" data-i18n-attr="aria-label">+</button>
+              <button id="portion-minus" type="button" class="portion-btn ripple-host" data-portion-delta="-1" data-i18n="lessPortions" data-i18n-attr="aria-label">−</button>
+              <span id="portion-value" class="portion-value" data-portion-display>2</span>
+              <button id="portion-plus" type="button" class="portion-btn ripple-host" data-portion-delta="1" data-i18n="morePortions" data-i18n-attr="aria-label">+</button>
             </div>
           </div>
         </div>
@@ -155,7 +155,15 @@
             </svg>
           </button>
           <div id="panel-shopping-week" class="accordion-panel">
-            <div id="shopping-scope-toggle-week" class="mb-3 pt-2"></div>
+            <div class="portion-control portion-control-inline mb-3 pt-2">
+              <span class="font-semibold text-sm" data-i18n="changePortions"></span>
+              <div class="flex items-center gap-3">
+                <button type="button" class="portion-btn ripple-host" data-portion-delta="-1" data-i18n="lessPortions" data-i18n-attr="aria-label">−</button>
+                <span class="portion-value" data-portion-display>2</span>
+                <button type="button" class="portion-btn ripple-host" data-portion-delta="1" data-i18n="morePortions" data-i18n-attr="aria-label">+</button>
+              </div>
+            </div>
+            <div id="shopping-scope-toggle-week" class="mb-3"></div>
             <div id="shopping-list-week"></div>
           </div>
         </div>
@@ -186,6 +194,12 @@
             </div>
             <button type="button" id="btn-reset-menu" class="slot-swap-btn ripple-host" data-i18n="resetMenu"></button>
           </div>
+        </div>
+
+        <div class="card glass mt-4">
+          <p class="text-[12px] uppercase tracking-widest font-bold accent-saffron m-0 mb-2" data-i18n="dietPreferences"></p>
+          <p class="text-muted text-xs mb-3" data-i18n="dietPreferencesHint"></p>
+          <div id="diet-preferences"></div>
         </div>
 
         <div class="card glass mt-4">
@@ -269,6 +283,15 @@
         </div>
       </section>
     </main>
+  </div>
+
+  <div id="portion-bar" class="portion-bar glass" role="group" aria-label="Portions">
+    <span class="portion-bar-label font-semibold text-sm" data-i18n="changePortions"></span>
+    <div class="flex items-center gap-3">
+      <button type="button" class="portion-btn ripple-host" data-portion-delta="-1" data-i18n="lessPortions" data-i18n-attr="aria-label">−</button>
+      <span class="portion-value" data-portion-display>2</span>
+      <button type="button" class="portion-btn ripple-host" data-portion-delta="1" data-i18n="morePortions" data-i18n-attr="aria-label">+</button>
+    </div>
   </div>
 
   <nav class="bottom-dock glass" data-i18n="navAria" data-i18n-attr="aria-label">

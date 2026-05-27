@@ -1,6 +1,9 @@
 /** Shared numeric helpers */
 
 export function cleanFloat(value) {
+  if (typeof value !== 'number' || !Number.isFinite(value)) {
+    return value;
+  }
   if (Number.isInteger(value) || value >= 100) {
     return Math.round(value);
   }

@@ -4,6 +4,7 @@
 
 import { enrichRecipeComplexity } from './recipe-complexity.js';
 import { inferRecipeExcludeTags } from './exclusions.js';
+import { parseMeasure } from './measure-parse.js';
 
 const API_BASE = 'https://www.themealdb.com/api/json/v1/1';
 
@@ -49,34 +50,17 @@ function inferCategory(name) {
   return 'dry_goods';
 }
 
-function parseMeasure(raw) {
-  const text = (raw || '').trim();
-  if (!text) return { amount: null, unit: '' };
-  const match = text.match(/^([\d./\s]+)\s*(.*)$/);
-  if (match) {
-    const amountPart = match[1].trim();
-    const unit = match[2].trim();
-    const numeric = amountPart.includes('/')
-      ? amountPart
-      : parseFloat(amountPart.replace(',', '.'));
-    return {
-      amount: Number.isFinite(numeric) ? numeric : amountPart || null,
-      unit: unit || (Number.isFinite(numeric) ? 'g' : '')
-    };
-  }
-  return { amount: text, unit: '' };
-}
-
 function extractIngredients(meal) {
   const items = [];
   for (let i = 1; i <= 20; i++) {
     const name = meal[`strIngredient${i}`];
     if (!name?.trim()) continue;
-    const { amount, unit } = parseMeasure(meal[`strMeasure${i}`]);
+    const parsed = parseMeasure(meal[`strMeasure${i}`]);
     items.push({
       name: name.trim(),
-      amount: amount ?? 1,
-      unit: unit || 'pcs',
+      amount: parsed.amount,
+      unit: parsed.unit,
+      scaleable: parsed.scaleable !== false,
       category: inferCategory(name)
     });
   }

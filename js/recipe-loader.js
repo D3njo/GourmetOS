@@ -18,6 +18,48 @@ import { getSpoonacularApiKey } from './storage.js';
 let indexCache = null;
 let indexById = null;
 
+function normalizeTitleForMatch(text) {
+  return (text || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+}
+
+function titlesMatch(indexName, apiName) {
+  const a = normalizeTitleForMatch(indexName);
+  const b = normalizeTitleForMatch(apiName);
+  if (!a || !b) return true;
+  if (a === b || a.includes(b) || b.includes(a)) return true;
+  const wa = new Set(a.split(/\s+/).filter((w) => w.length > 2));
+  const wb = new Set(b.split(/\s+/).filter((w) => w.length > 2));
+  if (!wa.size || !wb.size) return true;
+  let overlap = 0;
+  for (const w of wa) {
+    if (wb.has(w)) overlap++;
+  }
+  return overlap / Math.min(wa.size, wb.size) >= 0.5;
+}
+
+function reconcileRecipeImage(recipe, entry, meal) {
+  const indexImage = entry?.image;
+  const apiImage = meal?.strMealThumb;
+  const namesOk = titlesMatch(entry?.name || entry?.name_en || recipe.name, meal?.strMeal);
+
+  if (indexImage && apiImage && !namesOk) {
+    return { ...recipe, image: indexImage, imageSource: 'index' };
+  }
+
+  return {
+    ...recipe,
+    image: (namesOk ? apiImage : null) || indexImage || recipe.image,
+    imageSource: namesOk && apiImage ? 'api' : 'index'
+  };
+}
+
+export function recipeImageUrl(recipe) {
+  const base = recipe?.image || '';
+  if (!base) return '';
+  const v = recipe.idMeal || recipe.id || '';
+  return base.includes('?') ? base : `${base}${v ? `?v=${encodeURIComponent(v)}` : ''}`;
+}
+
 export async function ensureIndexLoaded() {
   if (indexCache) return indexCache;
   indexCache = await loadRecipeIndex();
@@ -133,7 +175,12 @@ export async function resolveRecipe(id) {
   const entry = indexById.get(id);
 
   if (recipe?.ingredients?.length) {
-    return finalizeRecipe(enrichRecipeComplexity(recipe), entry);
+    if (entry?.idMeal && recipe.idMeal && String(recipe.idMeal) !== String(entry.idMeal)) {
+      recipe = null;
+    } else {
+      const merged = entry?.image ? { ...recipe, image: entry.image } : recipe;
+      return finalizeRecipe(enrichRecipeComplexity(merged), entry);
+    }
   }
 
   if (!entry) return recipe ?? null;
@@ -145,6 +192,7 @@ export async function resolveRecipe(id) {
       const meal = await fetchMealById(entry.idMeal);
       const meta = override || buildMetaFromMeal(meal, catalog.discovery || {});
       recipe = mapMealToRecipe(meal, { ...meta, slug: entry.id });
+      recipe = reconcileRecipeImage(recipe, entry, meal);
       recipe = {
         ...recipe,
         tier: entry.tier,
@@ -153,7 +201,9 @@ export async function resolveRecipe(id) {
         onlineOnly: false
       };
       recipe = finalizeRecipe(enrichRecipeComplexity(recipe), entry);
-      await putRecipes([recipe]);
+      if (titlesMatch(entry.name || entry.name_en, meal.strMeal)) {
+        await putRecipes([recipe]);
+      }
       return recipe;
     } catch {
       /* fall through to stub */

@@ -41,6 +41,24 @@ export function normalizeIngredientName(name) {
   return normalized.replace(/\s+/g, ' ');
 }
 
+/** Display-friendly title case for ingredient names. */
+export function formatIngredientDisplayName(name) {
+  const raw = (name || '').trim();
+  if (!raw) return '';
+
+  const lowerParticles = new Set(['and', 'or', 'of', 'with', 'und', 'oder', 'mit', 'von']);
+
+  return raw
+    .split(/\s+/)
+    .map((word, index) => {
+      const lower = word.toLowerCase();
+      if (index > 0 && lowerParticles.has(lower)) return lower;
+      if (word.length <= 2 && /^[a-z]{1,2}$/i.test(word)) return word.toUpperCase();
+      return lower.charAt(0).toUpperCase() + lower.slice(1);
+    })
+    .join(' ');
+}
+
 export function isPantryBasic(name) {
   const n = normalizeIngredientName(name);
   return PANTRY_BASICS.has(n) || PANTRY_LIKELY.some((p) => n.includes(p));
@@ -70,7 +88,7 @@ export function enrichShoppingItem(item, options = {}) {
     normalizedName,
     buyTiming: timing,
     isPantry: pantry,
-    displayName: item.name
+    displayName: formatIngredientDisplayName(item.name)
   };
 }
 

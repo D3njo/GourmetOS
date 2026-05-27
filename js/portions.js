@@ -6,8 +6,10 @@
 import { formatAmountWithSystem } from './units.js';
 import { getUnitSystem } from './storage.js';
 import { cleanFloat } from './math.js';
+import { isNumericAmount } from './measure-parse.js';
 
-export function scaleAmount(amount, basePortions, targetPortions) {
+export function scaleAmount(amount, basePortions, targetPortions, scaleable = true) {
+  if (scaleable === false || !isNumericAmount(amount)) return amount;
   if (!basePortions || basePortions <= 0) return amount;
   const scaled = amount * (targetPortions / basePortions);
   return cleanFloat(scaled);
@@ -22,7 +24,7 @@ export function formatAmount(amount, unit) {
 export function scaleIngredients(ingredients, basePortions, targetPortions) {
   return ingredients.map((ing) => ({
     ...ing,
-    amount: scaleAmount(ing.amount, basePortions, targetPortions)
+    amount: scaleAmount(ing.amount, basePortions, targetPortions, ing.scaleable)
   }));
 }
 

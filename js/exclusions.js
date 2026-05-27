@@ -1,19 +1,25 @@
 /** Preset + custom exclusion matching against recipes and ingredients */
 
 import { getPreferences } from './storage.js';
+import { recipeMatchesDietPreferences, getActiveDietPreferences } from './diet-preferences.js';
 
 /** Preset checkbox id → pattern on recipe name / ingredients (EN + DE). */
 const PRESET_PATTERNS = {
-  fish: /\b(fish|fisch|salmon|lachs|tuna|thunfisch|cod|kabeljau|trout|forelle|anchov|sardine|mackerel|hering|eel|aal|halibut|seezunge)\b/i,
-  shellfish: /\b(shellfish|prawn|shrimp|garnelen|garnele|crab|krabbe|lobster|hummer|mussel|muschel|clam|squid|calamari|oyster|austern|scallop|jakobsmuschel)\b/i,
-  beef: /\b(beef|rind|rindfleisch|steak|fillet|mince|brisket|veal|kalb|burger patty)\b/i,
-  pork: /\b(pork|schwein|schweinefleisch|bacon|speck|ham|schinken|sausage|wurst|chorizo|pancetta|prosciutto)\b/i,
-  duck: /\b(duck|ente|duck breast|entenbrust)\b/i,
-  dairy: /\b(milk|milch|cream|sahne|cheese|käse|butter|yogurt|joghurt|parmesan|mozzarella|cheddar|feta|ricotta|mascarpone)\b/i,
-  eggs: /\b(eggs?|ei\b|eier|egg white|egg yolk|mayonnaise|mayo)\b/i,
-  gluten: /\b(gluten|wheat|weizen|pasta|noodle|nudeln|bread|brot|flour|mehl|pastry|pastry|couscous|bulgur|semolina|spaghetti|penne|udon|ramen)\b/i,
+  fish: /\b(fish|fisch|salmon|lachs|tuna|thunfisch|cod|kabeljau|trout|forelle|anchov|sardine|mackerel|hering|eel|aal|halibut|seezunge|fish\s*sauce|fischsauce)\b/i,
+  shellfish:
+    /\b(shellfish|prawn|prawns|shrimp|shrimps|garnelen|garnele|crab|crabs|krabbe|lobster|hummer|mussel|muschel|clam|squid|calamari|oyster|austern|scallop|jakobsmuschel|langoustine|crayfish|king\s+prawn|king\s+prawns)\b/i,
+  beef: /\b(beef|rind|rindfleisch|steak|fillet|mince|brisket|veal|kalb|burger\s*patty|entrecôte|entrecote)\b/i,
+  pork: /\b(pork|schwein|schweinefleisch|bacon|speck|ham|schinken|sausage|wurst|chorizo|pancetta|prosciutto|salami|guanciale)\b/i,
+  duck: /\b(duck|ente|duck\s*breast|entenbrust|canard)\b/i,
+  dairy:
+    /\b(milk|milch|cream|sahne|cheese|käse|kaese|butter|yogurt|joghurt|parmesan|mozzarella|cheddar|feta|ricotta|mascarpone|ghee|buttermilk|sour\s*cream|crème|creme\s*fraiche)\b/i,
+  eggs: /\b(eggs?|ei\b|eier|egg\s*white|egg\s*yolk|mayonnaise|mayo|meringue|omelette|omelet|frittata)\b/i,
+  gluten:
+    /\b(gluten|wheat|weizen|pasta|noodle|nudeln|bread|brot|flour|mehl|pastry|couscous|bulgur|semolina|spaghetti|penne|udon|ramen|baguette|tortilla|panko|breadcrumbs|brotkrumen)\b/i,
   coriander: /\b(coriander|cilantro|koriander)\b/i
 };
+
+export const EXCLUSION_PRESET_IDS = Object.keys(PRESET_PATTERNS);
 
 export function getAllExcludedTerms() {
   const prefs = getPreferences();
@@ -35,7 +41,7 @@ function sanitizeExclusionText(text) {
     .replace(/via\s+[\w\s&]+\s+effort/gi, ' ');
 }
 
-function recipeTextBlob(recipe) {
+export function recipeTextBlob(recipe) {
   const ingredients = (recipe.ingredients || []).map((i) => i.name);
   const parts = [recipe.name, recipe.name_en, recipe.name_de, ...ingredients];
 
@@ -53,7 +59,6 @@ function recipeTextBlob(recipe) {
 
 /**
  * Infer allergen / diet tags from recipe text (not only stored exclude_tags).
- * Many index entries ship with exclude_tags: [] despite salmon etc. in the title.
  */
 export function inferRecipeExcludeTags(recipe) {
   const tags = new Set(recipe?.exclude_tags || []);
@@ -84,8 +89,38 @@ export function recipeMatchesExclusions(recipe, presetTags = null, customTerms =
   return !terms.some((term) => term.length > 0 && haystack.includes(term));
 }
 
+/** Alias — allergen + diet gate used across plan + UI. */
+export function isRecipeAllowed(recipe, options = {}) {
+  const { presetTags = null, customTerms = null, dietPreferences = null } = options;
+  if (!recipeMatchesExclusions(recipe, presetTags, customTerms)) return false;
+  if (!recipeMatchesDietPreferences(recipe, dietPreferences)) return false;
+  return true;
+}
+
+export { getActiveDietPreferences };
+
 export function filterByExclusions(recipes, presetTags, customTerms) {
   return recipes.filter((r) => recipeMatchesExclusions(r, presetTags, customTerms));
+}
+
+/**
+ * Remove stored plan recipe IDs that violate current exclusions.
+ * @returns {Record<string, string[]>}
+ */
+export function sanitizePlanSelections(selections, options = {}) {
+  const { presetTags = null, customTerms = null, recipesById = null } = options;
+  const out = {};
+
+  for (const [dayKey, ids] of Object.entries(selections || {})) {
+    if (!Array.isArray(ids)) continue;
+    out[dayKey] = ids.filter((id) => {
+      const recipe = recipesById?.get?.(id) ?? recipesById?.[id];
+      if (!recipe) return true;
+      return isRecipeAllowed(recipe, { presetTags, customTerms });
+    });
+  }
+
+  return out;
 }
 
 export function addCustomExclusion(term) {

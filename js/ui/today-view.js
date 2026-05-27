@@ -9,6 +9,8 @@ import { getUnitSystem as getStoredUnitSystem } from '../units.js';
 import { invalidateRecipeCache, loadRecipes } from '../recipes.js';
 import { isOnlineOnly } from '../recipe-loader.js';
 import { scaleIngredients, scaleSteps, formatAmount } from '../portions.js';
+import { formatIngredientDisplayName } from '../ingredient-normalize.js';
+import { recipeImageUrl } from '../recipe-loader.js';
 import {
   setManualWeather,
   clearManualWeather,
@@ -105,16 +107,18 @@ export function renderTodayView() {
   const weatherBadge = $('#weather-badge');
 
   if (heroImg) {
-    const nextSrc = recipe.image || '';
+    const nextSrc = recipeImageUrl(recipe);
     const prevSrc = heroImg.getAttribute('src') || '';
     if (prevSrc && prevSrc !== nextSrc) {
       heroImg.classList.add('is-swapping');
       const done = () => heroImg.classList.remove('is-swapping');
       heroImg.addEventListener('load', done, { once: true });
       heroImg.addEventListener('error', done, { once: true });
+      heroImg.removeAttribute('src');
     }
-    heroImg.src = nextSrc;
+    if (nextSrc) heroImg.src = nextSrc;
     heroImg.alt = recipe.name;
+    heroImg.dataset.recipeId = recipe.id;
     heroImg.classList.remove('skeleton');
   }
   if (heroTitle) heroTitle.textContent = recipe.name;
@@ -151,8 +155,11 @@ export function renderTodayView() {
   syncCookModeButton(recipe);
   renderIngredients();
   renderSteps();
-  const portionEl = $('#portion-value');
-  if (portionEl) portionEl.textContent = state.portions;
+  document.querySelectorAll('[data-portion-display]').forEach((el) => {
+    el.textContent = state.portions;
+  });
+  const portionBar = $('#portion-bar');
+  if (portionBar) portionBar.hidden = false;
   renderWeatherStatus();
   updateWeatherPills();
 }
@@ -591,7 +598,7 @@ export function renderIngredients() {
     .map(
       (ing) => `
       <div class="ingredient-row">
-        <span>${escapeHtml(ing.name)}</span>
+        <span>${escapeHtml(formatIngredientDisplayName(ing.name))}</span>
         <span class="ingredient-amount">${escapeHtml(formatAmount(ing.amount, ing.unit))}</span>
       </div>
     `

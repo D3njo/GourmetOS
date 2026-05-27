@@ -155,22 +155,29 @@ function bindAccordions() {
   });
 }
 
-function bindPortions() {
-  $('#portion-minus')?.addEventListener('click', () => {
-    state.portions = Math.max(1, state.portions - 1);
-    savePortions(state.portions);
-    renderTodayView();
-    if (state.view === 'week') renderWeekView();
-    renderShoppingList();
+function syncPortionDisplay() {
+  const text = String(state.portions);
+  document.querySelectorAll('[data-portion-display]').forEach((el) => {
+    el.textContent = text;
   });
+}
 
-  $('#portion-plus')?.addEventListener('click', () => {
-    state.portions = Math.min(12, state.portions + 1);
-    savePortions(state.portions);
-    renderTodayView();
-    if (state.view === 'week') renderWeekView();
-    renderShoppingList();
+function changePortions(delta) {
+  state.portions = Math.min(12, Math.max(1, state.portions + delta));
+  savePortions(state.portions);
+  syncPortionDisplay();
+  renderTodayView();
+  if (state.view === 'week') renderWeekView();
+  renderShoppingList();
+}
+
+function bindPortions() {
+  document.querySelectorAll('[data-portion-delta]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      changePortions(Number(btn.dataset.portionDelta) || 0);
+    });
   });
+  syncPortionDisplay();
 }
 
 function bindDock() {

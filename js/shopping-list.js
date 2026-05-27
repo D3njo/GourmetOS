@@ -2,6 +2,7 @@ import { scaleIngredients, formatAmount } from './portions.js';
 import { getShoppingListState, saveShoppingListState, getPreferences } from './storage.js';
 import { enrichShoppingGroups, normalizeIngredientName } from './ingredient-normalize.js';
 import { getLocale } from './i18n.js';
+import { isNumericAmount } from './measure-parse.js';
 
 const CATEGORY_ORDER = ['produce', 'butchery', 'dry_goods', 'spices'];
 
@@ -16,7 +17,10 @@ export function aggregateIngredients(recipeEntries) {
       const normalizedName = normalizeIngredientName(ing.name);
       const key = `${normalizedName}|${ing.unit}|${ing.category}`;
       if (merged.has(key)) {
-        merged.get(key).amount += ing.amount;
+        const existing = merged.get(key);
+        if (isNumericAmount(existing.amount) && isNumericAmount(ing.amount)) {
+          existing.amount += ing.amount;
+        }
       } else {
         merged.set(key, { ...ing, name: ing.name, normalizedName });
       }

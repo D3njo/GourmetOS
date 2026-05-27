@@ -42,6 +42,14 @@ const STRINGS = {
     prefsIntro:
       'Sprache, Maßeinheiten, Intoleranzen — der Algorithmus filtert Rezepte in Millisekunden.',
     excludeTags: 'Ausschlüsse',
+    dietPreferences: 'Ernährungsweise',
+    dietPreferencesHint: 'Aktive Auswahl filtert den Speiseplan sofort (kombinierbar mit Ausschlüssen).',
+    dietVegetarian: 'Vegetarisch',
+    dietVegan: 'Vegan',
+    dietPescatarian: 'Pescetarisch (Fisch ok)',
+    dietLowCarb: 'Low Carb',
+    dietGlutenFree: 'Glutenfrei',
+    dietDairyFree: 'Milchfrei',
     language: 'Sprache',
     languageDe: 'Deutsch',
     languageEn: 'English',
@@ -229,6 +237,14 @@ const STRINGS = {
     prefsIntro:
       'Language, units, exclusions — the algorithm filters recipes in milliseconds.',
     excludeTags: 'Exclusions',
+    dietPreferences: 'Diet style',
+    dietPreferencesHint: 'Active choices filter your plan immediately (works with exclusions below).',
+    dietVegetarian: 'Vegetarian',
+    dietVegan: 'Vegan',
+    dietPescatarian: 'Pescatarian (fish ok)',
+    dietLowCarb: 'Low carb',
+    dietGlutenFree: 'Gluten-free',
+    dietDairyFree: 'Dairy-free',
     language: 'Language',
     languageDe: 'Deutsch',
     languageEn: 'English',
@@ -359,6 +375,17 @@ export function t(key) {
 
 export function getDayLabels() {
   return DAY_LABELS.en;
+}
+
+export function getDietPreferenceOptions() {
+  return [
+    { id: 'vegetarian', labelKey: 'dietVegetarian' },
+    { id: 'vegan', labelKey: 'dietVegan' },
+    { id: 'pescatarian', labelKey: 'dietPescatarian' },
+    { id: 'low_carb', labelKey: 'dietLowCarb' },
+    { id: 'gluten_free', labelKey: 'dietGlutenFree' },
+    { id: 'dairy_free', labelKey: 'dietDairyFree' }
+  ];
 }
 
 export function getExcludeOptions() {

@@ -8,21 +8,27 @@ Weather-adaptive haute cuisine meal planner — Progressive Web App for GitHub P
 GourmetOS/
 ├── index.html
 ├── manifest.json
-├── sw.js                         # Service worker v12
+├── sw.js                         # Service worker (see js/config.js → SW_CACHE_VERSION)
 ├── css/app.css
 ├── js/
 │   ├── app.js                    # Thin orchestrator
 │   ├── app-state.js              # Shared state
 │   ├── app-bridge.js             # Cross-module callbacks
+│   ├── measure-parse.js          # Ingredient amounts (fractions, pinch, etc.)
+│   ├── exclusions.js             # Allergen exclusions + plan sanitize
+│   ├── diet-preferences.js       # Vegetarian, vegan, low carb, …
 │   ├── ui/                       # View modules
 │   ├── recipes.js                # Planning pool + scoring
 │   ├── recipe-idb.js             # IndexedDB recipe bodies
-│   ├── recipe-loader.js          # Lazy resolve + online-only stubs
+│   ├── recipe-loader.js          # Lazy resolve, image reconcile, online stubs
 │   ├── pool-sync.js              # TheMealDB sync (+ optional Spoonacular)
 │   └── …
 ├── scripts/
 │   ├── build-recipe-index.js     # Crawl TheMealDB → index + bundled
 │   ├── validate-data.js          # Data file checks
+│   ├── test-measures.js          # Amount parsing / NaN guards
+│   ├── test-exclusions.js        # Allergen filter + plan sanitize
+│   ├── test-diet-preferences.js  # Diet-style filters
 │   └── curate-premium-catalog.js # Premium catalog curation
 └── data/
     ├── recipe-catalog.json       # Curated premium seeds
@@ -41,6 +47,13 @@ GourmetOS/
 
 Premium recipes are ranked via `tier`, `qualityScore`, `chef`, and `fineDiningMeta`. Online-only entries show a badge and link to the source recipe.
 
+## Preferences
+
+- **Diet style** — vegetarian, vegan, pescatarian, low carb, gluten-free, dairy-free (combinable; filters plan immediately)
+- **Exclusions** — fish, shellfish, beef, pork, duck, gluten, dairy, eggs, coriander + custom terms (fail-closed; stored plan IDs are sanitized on change)
+- **Portions** — sticky control above the bottom nav on Today/Week; scales ingredients and shopping list
+- **Units** — metric or imperial
+
 ## Sync
 
 1. **TheMealDB** — syncs index IDs into IndexedDB (no API key required)
@@ -51,10 +64,15 @@ Premium recipes are ranked via `tier`, `qualityScore`, `chef`, and `fineDiningMe
 ## Scripts
 
 ```bash
+npm test               # syntax + data + measures + exclusions + diet
 npm run test:syntax    # ES module syntax check
 npm run test:data      # Validate JSON data + compliance rules
+npm run test:measures  # Measure parsing (no NaN in formatAmount)
+npm run test:exclusions
+npm run test:diet
 npm run build:data     # Rebuild index + bundled from TheMealDB
 npm run curate:catalog # Curate premium catalog seeds
+npm run icons:build    # Regenerate PWA icons from assets/icons/icon.svg
 ```
 
 ## Local dev
@@ -64,18 +82,19 @@ python3 -m http.server 8080
 # open http://localhost:8080
 ```
 
-After a service worker update, hard-reload the page (cache **v12**). First launch runs a background sync to fill IndexedDB.
+After a service worker update, hard-reload the page (current cache version in `js/config.js`, e.g. **v20**). First launch runs a background sync to fill IndexedDB.
 
 ## Browser smoke test
 
 Manual checks after changes:
 
 1. App loads without console errors
-2. **Today** shows recipe image, ingredients, and steps
-3. **Week** renders all 7 days with meal slots
-4. **Reset menu** in Preferences changes selections
-5. **Refresh recipes** updates pool sync status
-6. Offline reload works after the service worker installs
+2. **Today** — hero image matches recipe; ingredients without `NaN`; portion bar visible while scrolling to shopping list
+3. **Week** — all 7 days; portion controls in shopping accordion
+4. **Preferences** — exclusions and diet toggles remove incompatible dishes immediately (e.g. fish + shellfish → no prawn dishes)
+5. **Reset menu** changes selections
+6. **Refresh recipes** updates pool sync status
+7. Offline reload works after the service worker installs
 
 ## Deployment (GitHub Pages)
 

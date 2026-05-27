@@ -21,6 +21,7 @@ const STORAGE_KEYS = {
 const DEFAULT_PREFERENCES = {
   excludedTags: [],
   customExclusions: [],
+  dietPreferences: [],
   darkMode: true,
   useGeolocation: true,
   locale: 'en',
