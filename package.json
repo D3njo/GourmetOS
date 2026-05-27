@@ -10,6 +10,7 @@
     "test:compliance": "node scripts/validate-data.js",
     "build:data": "node scripts/build-recipe-index.js",
     "patch:data": "node scripts/patch-recipe-data.js",
-    "curate:catalog": "node scripts/curate-premium-catalog.js"
+    "curate:catalog": "node scripts/curate-premium-catalog.js",
+    "icons:build": "bash scripts/generate-icons.sh"
   }
 }

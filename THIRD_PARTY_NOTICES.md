@@ -33,8 +33,8 @@ Entries may link to third-party sites (e.g. BBC Good Food, Serious Eats, Jamie O
 
 ## App icons
 
-- **Files:** `assets/icons/icon-192.png`, `assets/icons/icon-512.png`
-- **Origin:** Project-authored simple icons for the PWA manifest.
+- **Files:** `assets/icons/icon.svg` (source), PNG exports for PWA install (`icon-192.png`, `icon-512.png`, `icon-maskable-512.png`, `apple-touch-icon.png`)
+- **Origin:** Project-authored vector icon (chef cloche, matcha accent, GourmetOS “G”). Regenerate with `npm run icons:build` (requires `rsvg-convert`).
 
 ## Disclaimer
 
