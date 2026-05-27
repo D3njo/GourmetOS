@@ -7,7 +7,7 @@ import {
   getActivePlanModeKey,
   getDayEffort
 } from './storage.js';
-import { loadRecipes, getRecipeOptions, getRecipeById, prepareRecipe } from './recipes.js';
+import { loadRecipes, getRecipeOptions, getRecipeById, prepareRecipe, findAllowedRecipe } from './recipes.js';
 import { resolveRecipe } from './recipe-loader.js';
 import { getRecipeWeatherPrimary } from './weather-buckets.js';
 import { resolveRecipesForSlots } from './recipe-loader.js';
@@ -122,13 +122,12 @@ export { DAY_KEYS };
 function enforceAllergenSafetyOnSlot(slot, day, dayIndex, allRecipes, excludedTags, diversity) {
   const allowOpts = { presetTags: excludedTags };
 
-  const pickReplacement = () => {
-    const options = getRecipeOptions(allRecipes, {
+  const pickReplacement = () =>
+    findAllowedRecipe(allRecipes, {
       weatherTag: day.weatherTag,
       mealType: slot.mealType,
       effortLevel: day.effortLevel,
       excludedTags,
-      limit: 5,
       dayIndex,
       usedIds: diversity?.usedIds,
       usedCuisines: diversity?.usedCuisines,
@@ -136,8 +135,6 @@ function enforceAllergenSafetyOnSlot(slot, day, dayIndex, allRecipes, excludedTa
       usedTastes: diversity?.usedTastes,
       usedTechniques: diversity?.usedTechniques
     });
-    return options.find((r) => isRecipeAllowed(r, allowOpts)) ?? null;
-  };
 
   let selected = slot.selected;
   if (selected && !isRecipeAllowed(selected, allowOpts)) {
@@ -211,37 +208,50 @@ export async function buildWeeklyPlan(forecast, excludedTags = []) {
 
     const slots = storedIds.map((recipeId, slotIndex) => {
       const mealType = getMealTypeForSlot(slotIndex, mealCount, dayKey);
+      const allowOpts = { presetTags: excludedTags };
+
       let alternatives = getRecipeOptions(db.recipes, {
         weatherTag,
         mealType,
         effortLevel,
         excludedTags,
-        limit: 3,
+        limit: 5,
         dayIndex: index + slotIndex,
         usedIds: diversity.usedIds,
         usedCuisines: diversity.usedCuisines,
         usedProteins: diversity.usedProteins,
         usedTastes: diversity.usedTastes,
         usedTechniques: diversity.usedTechniques
-      });
+      }).filter((a) => isRecipeAllowed(a, allowOpts));
 
-      let selected =
-        getRecipeById(db.recipes, recipeId) ||
-        alternatives[0] ||
-        db.recipes.find((r) => isRecipeAllowed(r, { presetTags: excludedTags }));
+      let selected = getRecipeById(db.recipes, recipeId);
+      if (selected && !isRecipeAllowed(selected, allowOpts)) selected = null;
 
-      if (selected && !isRecipeAllowed(selected, { presetTags: excludedTags })) {
-        selected = alternatives[0] ?? null;
+      if (!selected) {
+        selected =
+          alternatives[0] ??
+          findAllowedRecipe(db.recipes, {
+            weatherTag,
+            mealType,
+            effortLevel,
+            excludedTags,
+            dayIndex: index + slotIndex,
+            usedIds: diversity.usedIds,
+            usedCuisines: diversity.usedCuisines,
+            usedProteins: diversity.usedProteins,
+            usedTastes: diversity.usedTastes,
+            usedTechniques: diversity.usedTechniques
+          });
       }
 
-      alternatives = alternatives.filter((a) => isRecipeAllowed(a, { presetTags: excludedTags }));
-
-      if (selected?.id && isRecipeAllowed(selected, { presetTags: excludedTags })) {
+      if (selected?.id && isRecipeAllowed(selected, allowOpts)) {
         if (!alternatives.some((a) => a.id === selected.id)) {
           alternatives = [selected, ...alternatives].slice(0, 3);
         } else {
           alternatives = [selected, ...alternatives.filter((a) => a.id !== selected.id)].slice(0, 3);
         }
+      } else {
+        selected = alternatives[0] ?? null;
       }
 
       return {

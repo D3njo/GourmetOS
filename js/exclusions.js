@@ -5,7 +5,8 @@ import { recipeMatchesDietPreferences, getActiveDietPreferences } from './diet-p
 
 /** Preset checkbox id → pattern on recipe name / ingredients (EN + DE). */
 const PRESET_PATTERNS = {
-  fish: /\b(fish|fisch|salmon|lachs|tuna|thunfisch|cod|kabeljau|trout|forelle|anchov|sardine|mackerel|hering|eel|aal|halibut|seezunge|fish\s*sauce|fischsauce|fish\s*stock|fischfond)\b/i,
+  fish:
+    /\b(fish|fisch|salmon|lachs|tuna|thunfisch|cod|kabeljau|trout|forelle|anchov|anchovies?|sardines?|mackerel|hering|eel|aal|halibut|seezunge|haddock|hake|monkfish|saltfish|tilapia|pollock|bream|sea\s*bass|\bbass\b|fish\s*pie|fish\s*sauce|fischsauce|fish\s*stock|fischfond)\b/i,
   shellfish:
     /\b(shellfish|seafood|krustentiere|prawn|prawns|shrimp|shrimps|garnelen|garnele|crab|crabs|krabbe|lobster|hummer|mussel|muschel|clam|squid|calamari|oyster|austern|scallop|jakobsmuschel|langoustine|crayfish|scampi|gamba|surimi|king\s+prawns?|raw\s+king\s+prawns?)\b/i,
   beef: /\b(beef|rind|rindfleisch|steak|fillet|mince|brisket|veal|kalb|burger\s*patty|entrecôte|entrecote)\b/i,
@@ -151,7 +152,7 @@ export function sanitizePlanSelections(selections, options = {}) {
     if (!Array.isArray(ids)) continue;
     out[dayKey] = ids.filter((id) => {
       const recipe = recipesById?.get?.(id) ?? recipesById?.[id];
-      if (!recipe) return true;
+      if (!recipe) return !hasStrictFilterActive();
       return isRecipeAllowed(recipe, {
         presetTags,
         customTerms,

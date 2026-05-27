@@ -1,14 +1,18 @@
 /** CJS mirror of js/exclusions.js preset inference for build scripts */
 
 const PRESET_PATTERNS = {
-  fish: /\b(fish|fisch|salmon|lachs|tuna|thunfisch|cod|kabeljau|trout|forelle|anchov|sardine|mackerel|hering|eel|aal|halibut|seezunge)\b/i,
-  shellfish: /\b(shellfish|prawn|shrimp|garnelen|garnele|crab|krabbe|lobster|hummer|mussel|muschel|clam|squid|calamari|oyster|austern|scallop|jakobsmuschel)\b/i,
-  beef: /\b(beef|rind|rindfleisch|steak|fillet|mince|brisket|veal|kalb|burger patty)\b/i,
-  pork: /\b(pork|schwein|schweinefleisch|bacon|speck|ham|schinken|sausage|wurst|chorizo|pancetta|prosciutto)\b/i,
-  duck: /\b(duck|ente|duck breast|entenbrust)\b/i,
-  dairy: /\b(milk|milch|cream|sahne|cheese|käse|butter|yogurt|joghurt|parmesan|mozzarella|cheddar|feta|ricotta|mascarpone)\b/i,
-  eggs: /\b(eggs?|ei\b|eier|egg white|egg yolk|mayonnaise|mayo)\b/i,
-  gluten: /\b(gluten|wheat|weizen|pasta|noodle|nudeln|bread|brot|flour|mehl|pastry|couscous|bulgur|semolina|spaghetti|penne|udon|ramen)\b/i,
+  fish:
+    /\b(fish|fisch|salmon|lachs|tuna|thunfisch|cod|kabeljau|trout|forelle|anchov|anchovies?|sardines?|mackerel|hering|eel|aal|halibut|seezunge|haddock|hake|monkfish|saltfish|tilapia|pollock|bream|sea\s*bass|\bbass\b|fish\s*pie|fish\s*sauce|fischsauce|fish\s*stock|fischfond)\b/i,
+  shellfish:
+    /\b(shellfish|seafood|krustentiere|prawn|prawns|shrimp|shrimps|garnelen|garnele|crab|crabs|krabbe|lobster|hummer|mussel|muschel|clam|squid|calamari|oyster|austern|scallop|jakobsmuschel|langoustine|crayfish|scampi|gamba|surimi|king\s+prawns?|raw\s+king\s+prawns?)\b/i,
+  beef: /\b(beef|rind|rindfleisch|steak|fillet|mince|brisket|veal|kalb|burger\s*patty|entrecôte|entrecote)\b/i,
+  pork: /\b(pork|schwein|schweinefleisch|bacon|speck|ham|schinken|sausage|wurst|chorizo|pancetta|prosciutto|salami|guanciale)\b/i,
+  duck: /\b(duck|ente|duck\s*breast|entenbrust|canard)\b/i,
+  dairy:
+    /\b(milk|milch|cream|sahne|cheese|käse|kaese|butter|yogurt|joghurt|parmesan|mozzarella|cheddar|feta|ricotta|mascarpone|ghee|buttermilk|sour\s*cream|crème|creme\s*fraiche)\b/i,
+  eggs: /\b(eggs?|ei\b|eier|egg\s*white|egg\s*yolk|mayonnaise|mayo|meringue|omelette|omelet|frittata)\b/i,
+  gluten:
+    /\b(gluten|wheat|weizen|pasta|noodle|nudeln|bread|brot|flour|mehl|pastry|couscous|bulgur|semolina|spaghetti|penne|udon|ramen|baguette|tortilla|panko|breadcrumbs|brotkrumen)\b/i,
   coriander: /\b(coriander|cilantro|koriander)\b/i
 };
 

@@ -1,6 +1,6 @@
 import { getPreferences } from './storage.js';
 import { resolveWeatherTagFromValues } from './weather.js';
-import { filterByExclusions, getAllExcludedTerms } from './exclusions.js';
+import { filterByExclusions, getAllExcludedTerms, isRecipeAllowed } from './exclusions.js';
 import { applyRecipeOverride, isFavorite } from './recipe-store.js';
 import { getPlanningPool, resolveRecipesForSlots } from './recipe-loader.js';
 import { syncRecipePool, getSyncStatus } from './pool-sync.js';
@@ -133,8 +133,58 @@ export function filterRecipes(
   });
 
   pool = filterByExclusions(pool, tags, customTerms);
+  pool = pool.filter((r) => isRecipeAllowed(r, { presetTags: tags, customTerms }));
   pool = filterByEffort(pool, effortLevel);
   return pool;
+}
+
+/** First allowed recipe from ranked pool (allergen + diet), with relaxed fallbacks. */
+export function findAllowedRecipe(
+  recipes,
+  {
+    weatherTag,
+    mealType = null,
+    excludedTags = null,
+    effortLevel = null,
+    dayIndex = 0,
+    usedIds = null,
+    usedCuisines = null,
+    usedProteins = null,
+    usedTastes = null,
+    usedTechniques = null
+  } = {}
+) {
+  const { presetTags, customTerms } = getAllExcludedTerms();
+  const tags = excludedTags ?? presetTags;
+  const allowOpts = { presetTags: tags, customTerms };
+
+  const pools = [
+    filterRecipes(recipes, { weatherTag, excludedTags: tags, mealType, effortLevel }),
+    filterRecipes(recipes, { weatherTag, excludedTags: tags, effortLevel: null, mealType }),
+    filterRecipes(recipes, { weatherTag, excludedTags: tags }),
+    recipes.filter((r) => isRecipeAllowed(r, allowOpts))
+  ];
+
+  for (const pool of pools) {
+    if (!pool.length) continue;
+    const ranked = rankRecipes(pool, {
+      weatherTag,
+      mealType,
+      effortLevel,
+      dayIndex,
+      usedIds,
+      usedCuisines,
+      usedProteins,
+      usedTastes,
+      usedTechniques
+    });
+    for (const { recipe } of ranked) {
+      if (isRecipeAllowed(recipe, allowOpts)) return prepareRecipe(recipe);
+    }
+  }
+
+  const fallback = recipes.find((r) => isRecipeAllowed(r, allowOpts));
+  return fallback ? prepareRecipe(fallback) : null;
 }
 
 export { inferProtein } from './recipe-meta.js';
@@ -167,7 +217,7 @@ export function getRecipeOptions(
     pool = filterRecipes(recipes, { weatherTag, excludedTags: tags });
   }
   if (!pool.length) {
-    pool = filterByExclusions(recipes, tags, customTerms);
+    pool = recipes.filter((r) => isRecipeAllowed(r, { presetTags: tags, customTerms }));
   }
 
   const ranked = rankRecipes(pool, {
@@ -196,7 +246,8 @@ export function getRecipeOptions(
 
 export function pickRecipeForDay(recipes, dayIndex, weatherTag, effortLevel = null) {
   const options = getRecipeOptions(recipes, { weatherTag, effortLevel, limit: 5, dayIndex });
-  return options[dayIndex % options.length] ?? recipes[0];
+  if (options.length) return options[dayIndex % options.length];
+  return recipes.find((r) => isRecipeAllowed(r)) ?? null;
 }
 
 export async function getActiveRecipeFromPlan(weeklyPlan) {

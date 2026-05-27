@@ -1,23 +1,25 @@
 /**
  * Diet-style preferences (vegetarian, vegan, low carb, …).
  * Applied together with allergen exclusions via isRecipeAllowed().
+ * Fish/meat/dairy detection uses inferRecipeExcludeTags() (same as allergen presets).
  */
 
 import { getPreferences } from './storage.js';
 import { inferRecipeExcludeTags, recipeTextBlob } from './exclusions.js';
+import { inferProtein } from './recipe-meta.js';
 
-/** Land animal meat & poultry (not fish). */
-const LAND_MEAT =
-  /\b(beef|rind|steak|pork|schwein|bacon|ham|lamb|lamm|veal|kalb|chicken|hähnchen|huhn|turkey|pute|duck|ente|sausage|wurst|chorizo|mince|burger|venison|wild|goose|gans|rabbit|kaninchen)\b/i;
+const LAND_MEAT_TAGS = ['beef', 'pork', 'duck'];
+const FISH_SHELL_TAGS = ['fish', 'shellfish'];
+const DAIRY_EGG_TAGS = ['dairy', 'eggs'];
 
-const FISH_SHELL =
-  /\b(fish|fisch|salmon|lachs|tuna|thunfisch|cod|prawn|shrimp|crab|lobster|mussel|clam|squid|anchovy|sardine|trout|shellfish|garnelen)\b/i;
-
-const DAIRY_EGGS_HONEY =
-  /\b(milk|milch|cream|sahne|cheese|käse|kaese|butter|yogurt|joghurt|parmesan|mozzarella|egg|eggs|ei\b|eier|mayonnaise|mayo|honey|honig|gelatin|gelatine)\b/i;
+/** Poultry & land animals not covered by preset tags alone. */
+const LAND_MEAT_EXTRA =
+  /\b(chicken|hähnchen|huhn|turkey|pute|lamb|lamm|venison|wild|goose|gans|rabbit|kaninchen|mince|burger)\b/i;
 
 const HIGH_CARB =
   /\b(pasta|noodle|nudeln|spaghetti|penne|rice|reis|bread|brot|flour|mehl|potato|kartoffel|sugar|zucker|couscous|bulgur|quinoa|corn|mais|tortilla|wrap|pizza|dough|teig|bagel|croissant|porridge|haferflocken|oats|cereal)\b/i;
+
+const HONEY_GELATIN = /\b(honey|honig|gelatin|gelatine)\b/i;
 
 export const DIET_PREFERENCE_IDS = [
   'vegetarian',
@@ -37,25 +39,28 @@ function recipeHaystack(recipe) {
   return `${recipeTextBlob(recipe)} ${tags} ${(recipe.meal_type || []).join(' ')} ${recipe.technique || ''} ${recipe.cuisine || ''}`;
 }
 
-function hasLandMeat(recipe) {
-  const text = recipeHaystack(recipe);
-  if (LAND_MEAT.test(text)) return true;
+function hasInferredTags(recipe, tagIds) {
   const tags = inferRecipeExcludeTags(recipe);
-  return tags.some((t) => ['beef', 'pork', 'duck'].includes(t));
+  return tagIds.some((t) => tags.includes(t));
+}
+
+function hasLandMeat(recipe) {
+  if (hasInferredTags(recipe, LAND_MEAT_TAGS)) return true;
+  if (LAND_MEAT_EXTRA.test(recipeHaystack(recipe))) return true;
+  const protein = inferProtein(recipe);
+  return ['beef', 'pork', 'poultry', 'lamb', 'chicken'].includes(protein);
 }
 
 function hasFishShell(recipe) {
-  const text = recipeHaystack(recipe);
-  if (FISH_SHELL.test(text)) return true;
-  const tags = inferRecipeExcludeTags(recipe);
-  return tags.some((t) => ['fish', 'shellfish'].includes(t));
+  if (hasInferredTags(recipe, FISH_SHELL_TAGS)) return true;
+  const protein = inferProtein(recipe);
+  return protein === 'fish' || protein === 'seafood';
 }
 
 function hasDairyEggsHoney(recipe) {
-  const text = recipeHaystack(recipe);
-  if (DAIRY_EGGS_HONEY.test(text)) return true;
-  const tags = inferRecipeExcludeTags(recipe);
-  return tags.some((t) => ['dairy', 'eggs'].includes(t));
+  if (hasInferredTags(recipe, DAIRY_EGG_TAGS)) return true;
+  if (HONEY_GELATIN.test(recipeHaystack(recipe))) return true;
+  return inferProtein(recipe) === 'egg';
 }
 
 function hasHighCarb(recipe) {
@@ -63,8 +68,7 @@ function hasHighCarb(recipe) {
 }
 
 function hasGlutenSignal(recipe) {
-  const tags = inferRecipeExcludeTags(recipe);
-  return tags.includes('gluten') || /\b(gluten|wheat|weizen|pasta|bread|brot|flour|mehl)\b/i.test(recipeHaystack(recipe));
+  return hasInferredTags(recipe, ['gluten']);
 }
 
 function matchesVegetarian(recipe) {
@@ -91,13 +95,8 @@ function matchesGlutenFree(recipe) {
   return !hasGlutenSignal(recipe);
 }
 
-const DAIRY_ONLY =
-  /\b(milk|milch|cream|sahne|cheese|käse|kaese|butter|yogurt|joghurt|parmesan|mozzarella|cheddar|feta|ricotta|mascarpone|ghee|buttermilk|sour\s*cream)\b/i;
-
 function matchesDairyFree(recipe) {
-  const tags = inferRecipeExcludeTags(recipe);
-  if (tags.includes('dairy')) return false;
-  return !DAIRY_ONLY.test(recipeHaystack(recipe));
+  return !hasInferredTags(recipe, ['dairy']);
 }
 
 const DIET_MATCHERS = {

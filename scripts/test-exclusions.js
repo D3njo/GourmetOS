@@ -89,6 +89,14 @@ async function main() {
     isRecipeAllowed(stubCurry, { presetTags: ['shellfish'] }),
     'stub without ingredients may pass name-only'
   );
+  assert(
+    isRecipeAllowed(stubCurry, { dietPreferences: ['vegetarian'] }),
+    'stub curry may pass vegetarian on name alone'
+  );
+
+  const seaBass = { name: 'Sea bass with ginger', ingredients: [], exclude_tags: [] };
+  assert(!recipeMatchesDietPreferences(seaBass, ['vegetarian']), 'sea bass blocked for vegetarian');
+  assert(!isRecipeAllowed(seaBass, { dietPreferences: ['vegetarian'] }), 'isRecipeAllowed sea bass');
 
   const fullCurry = {
     name: 'Thai Green Curry',
@@ -96,6 +104,7 @@ async function main() {
     exclude_tags: []
   };
   assert(!isRecipeAllowed(fullCurry, { presetTags: ['fish', 'shellfish'] }), 'full recipe blocked');
+  assert(!isRecipeAllowed(fullCurry, { dietPreferences: ['vegetarian'] }), 'full curry blocked vegetarian');
 
   assert(ingredientViolatesExclusions('Raw King Prawns', { presetTags: ['shellfish'] }), 'ingredient prawn');
   const filtered = filterAllowedIngredients(fullCurry.ingredients, { presetTags: ['shellfish'] });
