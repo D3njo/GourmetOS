@@ -5,9 +5,9 @@ import { recipeMatchesDietPreferences, getActiveDietPreferences } from './diet-p
 
 /** Preset checkbox id → pattern on recipe name / ingredients (EN + DE). */
 const PRESET_PATTERNS = {
-  fish: /\b(fish|fisch|salmon|lachs|tuna|thunfisch|cod|kabeljau|trout|forelle|anchov|sardine|mackerel|hering|eel|aal|halibut|seezunge|fish\s*sauce|fischsauce)\b/i,
+  fish: /\b(fish|fisch|salmon|lachs|tuna|thunfisch|cod|kabeljau|trout|forelle|anchov|sardine|mackerel|hering|eel|aal|halibut|seezunge|fish\s*sauce|fischsauce|fish\s*stock|fischfond)\b/i,
   shellfish:
-    /\b(shellfish|prawn|prawns|shrimp|shrimps|garnelen|garnele|crab|crabs|krabbe|lobster|hummer|mussel|muschel|clam|squid|calamari|oyster|austern|scallop|jakobsmuschel|langoustine|crayfish|king\s+prawn|king\s+prawns)\b/i,
+    /\b(shellfish|seafood|krustentiere|prawn|prawns|shrimp|shrimps|garnelen|garnele|crab|crabs|krabbe|lobster|hummer|mussel|muschel|clam|squid|calamari|oyster|austern|scallop|jakobsmuschel|langoustine|crayfish|scampi|gamba|surimi|king\s+prawns?|raw\s+king\s+prawns?)\b/i,
   beef: /\b(beef|rind|rindfleisch|steak|fillet|mince|brisket|veal|kalb|burger\s*patty|entrecôte|entrecote)\b/i,
   pork: /\b(pork|schwein|schweinefleisch|bacon|speck|ham|schinken|sausage|wurst|chorizo|pancetta|prosciutto|salami|guanciale)\b/i,
   duck: /\b(duck|ente|duck\s*breast|entenbrust|canard)\b/i,
@@ -26,6 +26,23 @@ export function getAllExcludedTerms() {
   return {
     presetTags: prefs.excludedTags || [],
     customTerms: (prefs.customExclusions || []).map((t) => t.toLowerCase().trim()).filter(Boolean)
+  };
+}
+
+/** True when planning must use full ingredient data (allergen-first, not offline stubs). */
+export function hasStrictFilterActive() {
+  const { presetTags, customTerms } = getAllExcludedTerms();
+  const diets = getActiveDietPreferences();
+  return presetTags.length > 0 || customTerms.length > 0 || diets.length > 0;
+}
+
+/** Single source for allergen + diet context (allergen checks use this). */
+export function getActiveExclusionContext(overrides = {}) {
+  const { presetTags, customTerms } = getAllExcludedTerms();
+  return {
+    presetTags: overrides.presetTags ?? presetTags,
+    customTerms: overrides.customTerms ?? customTerms,
+    dietPreferences: overrides.dietPreferences ?? getActiveDietPreferences()
   };
 }
 
@@ -89,11 +106,30 @@ export function recipeMatchesExclusions(recipe, presetTags = null, customTerms =
   return !terms.some((term) => term.length > 0 && haystack.includes(term));
 }
 
+/** True when a single ingredient name violates active allergen/custom rules. */
+export function ingredientViolatesExclusions(name, options = {}) {
+  const ctx = getActiveExclusionContext(options);
+  const trimmed = (name || '').trim();
+  if (!trimmed) return false;
+
+  const fakeRecipe = {
+    name: trimmed,
+    ingredients: [{ name: trimmed }],
+    exclude_tags: []
+  };
+  return !recipeMatchesExclusions(fakeRecipe, ctx.presetTags, ctx.customTerms);
+}
+
+/** Filter ingredient list to allergen-safe items only. */
+export function filterAllowedIngredients(ingredients, options = {}) {
+  return (ingredients || []).filter((ing) => !ingredientViolatesExclusions(ing.name, options));
+}
+
 /** Alias — allergen + diet gate used across plan + UI. */
 export function isRecipeAllowed(recipe, options = {}) {
-  const { presetTags = null, customTerms = null, dietPreferences = null } = options;
-  if (!recipeMatchesExclusions(recipe, presetTags, customTerms)) return false;
-  if (!recipeMatchesDietPreferences(recipe, dietPreferences)) return false;
+  const ctx = getActiveExclusionContext(options);
+  if (!recipeMatchesExclusions(recipe, ctx.presetTags, ctx.customTerms)) return false;
+  if (!recipeMatchesDietPreferences(recipe, ctx.dietPreferences)) return false;
   return true;
 }
 
@@ -116,7 +152,11 @@ export function sanitizePlanSelections(selections, options = {}) {
     out[dayKey] = ids.filter((id) => {
       const recipe = recipesById?.get?.(id) ?? recipesById?.[id];
       if (!recipe) return true;
-      return isRecipeAllowed(recipe, { presetTags, customTerms });
+      return isRecipeAllowed(recipe, {
+        presetTags,
+        customTerms,
+        dietPreferences: options.dietPreferences
+      });
     });
   }
 

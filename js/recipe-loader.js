@@ -14,6 +14,7 @@ import { enrichRecipeComplexity } from './recipe-complexity.js';
 import { enrichEditorial } from './editorial-recipe.js';
 import { mapSpoonacularRecipe } from './spoonacular-api.js';
 import { getSpoonacularApiKey } from './storage.js';
+import { hasStrictFilterActive, isRecipeAllowed } from './exclusions.js';
 
 let indexCache = null;
 let indexById = null;
@@ -222,15 +223,60 @@ export async function resolveRecipe(id) {
   return stubFromIndexEntry(entry);
 }
 
-/** Build planning pool: merge index metadata with IDB full recipes */
-export async function getPlanningPool() {
+const RESOLVE_BATCH_SIZE = 10;
+
+function canResolveFromNetwork(recipe) {
+  if (!recipe?.id) return false;
+  if (recipe.idMeal) return true;
+  if (recipe.id.startsWith('spoon-') && getSpoonacularApiKey()) return true;
+  return false;
+}
+
+/** Resolve stub entries so allergen/diet filters see real ingredients (network required). */
+async function resolveStubsForStrictPool(pool) {
+  const stubs = pool.filter((r) => !r.ingredients?.length && canResolveFromNetwork(r));
+  if (!stubs.length) return pool;
+
+  const byId = new Map(pool.map((r) => [r.id, r]));
+
+  for (let i = 0; i < stubs.length; i += RESOLVE_BATCH_SIZE) {
+    const chunk = stubs.slice(i, i + RESOLVE_BATCH_SIZE);
+    const settled = await Promise.all(
+      chunk.map(async (stub) => {
+        try {
+          const full = await resolveRecipe(stub.id);
+          return full ? [stub.id, full] : null;
+        } catch {
+          return null;
+        }
+      })
+    );
+    for (const item of settled) {
+      if (item) byId.set(item[0], item[1]);
+    }
+  }
+
+  return [...byId.values()];
+}
+
+function filterPoolForStrictMode(pool) {
+  return pool.filter((r) => r?.ingredients?.length && isRecipeAllowed(r));
+}
+
+/**
+ * Build planning pool: merge index metadata with IDB full recipes.
+ * When exclusions/diet filters are active, stubs are resolved via API first —
+ * allergen accuracy over offline planning on empty ingredient lists.
+ */
+export async function getPlanningPool(options = {}) {
+  const strict = options.allergenStrict ?? hasStrictFilterActive();
   await ensureIndexLoaded();
 
   const { getAllRecipes } = await import('./recipe-idb.js');
   const stored = await getAllRecipes();
   const storedById = new Map(stored.map((r) => [r.id, r]));
 
-  const pool = indexCache.entries.map((entry) => {
+  let pool = indexCache.entries.map((entry) => {
     const full = storedById.get(entry.id);
     if (full?.ingredients?.length) {
       return finalizeRecipe(
@@ -249,6 +295,11 @@ export async function getPlanningPool() {
     if (!indexById.has(r.id)) {
       pool.push(enrichRecipeComplexity(r));
     }
+  }
+
+  if (strict) {
+    pool = await resolveStubsForStrictPool(pool);
+    pool = filterPoolForStrictMode(pool);
   }
 
   return pool;

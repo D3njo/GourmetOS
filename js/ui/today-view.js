@@ -10,6 +10,7 @@ import { invalidateRecipeCache, loadRecipes } from '../recipes.js';
 import { isOnlineOnly } from '../recipe-loader.js';
 import { scaleIngredients, scaleSteps, formatAmount } from '../portions.js';
 import { formatIngredientDisplayName } from '../ingredient-normalize.js';
+import { filterAllowedIngredients } from '../exclusions.js';
 import { recipeImageUrl } from '../recipe-loader.js';
 import {
   setManualWeather,
@@ -588,22 +589,32 @@ export function renderIngredients() {
     return;
   }
 
-  const scaled = scaleIngredients(
-    state.recipe.ingredients,
-    state.recipe.base_portions,
-    state.portions
-  );
+  const total = state.recipe.ingredients?.length || 0;
+  const allowed = filterAllowedIngredients(state.recipe.ingredients || []);
+  const scaled = scaleIngredients(allowed, state.recipe.base_portions, state.portions);
 
-  list.innerHTML = scaled
-    .map(
-      (ing) => `
+  if (!scaled.length && total > 0) {
+    list.innerHTML = `<p class="text-muted text-sm m-0">${escapeHtml(t('ingredientsAllExcluded'))}</p>`;
+    return;
+  }
+
+  const hiddenNote =
+    total > allowed.length
+      ? `<p class="text-muted text-xs mb-2">${escapeHtml(t('ingredientsHiddenByExclusions'))}</p>`
+      : '';
+
+  list.innerHTML =
+    hiddenNote +
+    scaled
+      .map(
+        (ing) => `
       <div class="ingredient-row">
         <span>${escapeHtml(formatIngredientDisplayName(ing.name))}</span>
         <span class="ingredient-amount">${escapeHtml(formatAmount(ing.amount, ing.unit))}</span>
       </div>
     `
-    )
-    .join('');
+      )
+      .join('');
 }
 
 export function renderSteps() {

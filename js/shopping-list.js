@@ -3,15 +3,21 @@ import { getShoppingListState, saveShoppingListState, getPreferences } from './s
 import { enrichShoppingGroups, normalizeIngredientName } from './ingredient-normalize.js';
 import { getLocale } from './i18n.js';
 import { isNumericAmount } from './measure-parse.js';
+import { isRecipeAllowed, filterAllowedIngredients } from './exclusions.js';
 
 const CATEGORY_ORDER = ['produce', 'butchery', 'dry_goods', 'spices'];
 
 export function aggregateIngredients(recipeEntries) {
   const merged = new Map();
+  let hiddenCount = 0;
 
   for (const entry of recipeEntries) {
     const { recipe, portions = recipe.base_portions } = entry;
-    const scaled = scaleIngredients(recipe.ingredients, recipe.base_portions, portions);
+    if (!recipe || !isRecipeAllowed(recipe)) continue;
+
+    const allowed = filterAllowedIngredients(recipe.ingredients || []);
+    hiddenCount += (recipe.ingredients?.length || 0) - allowed.length;
+    const scaled = scaleIngredients(allowed, recipe.base_portions, portions);
 
     for (const ing of scaled) {
       const normalizedName = normalizeIngredientName(ing.name);
@@ -27,7 +33,7 @@ export function aggregateIngredients(recipeEntries) {
     }
   }
 
-  return Array.from(merged.values());
+  return { ingredients: Array.from(merged.values()), hiddenCount };
 }
 
 export function groupByCategory(ingredients, categoryMeta = {}) {
@@ -67,13 +73,14 @@ export function buildShoppingListFromPlan(weeklyPlan, portions, categoryMeta, op
 
   for (const day of days) {
     for (const recipe of day.recipes) {
-      if (recipe) entries.push({ recipe, portions });
+      if (recipe && isRecipeAllowed(recipe)) entries.push({ recipe, portions });
     }
   }
 
-  const ingredients = aggregateIngredients(entries);
+  const { ingredients, hiddenCount } = aggregateIngredients(entries);
   const hidePantry = options.hidePantry ?? !!getPreferences().hidePantryBasics;
-  return enrichShoppingGroups(groupByCategory(ingredients, categoryMeta), { hidePantry });
+  const groups = enrichShoppingGroups(groupByCategory(ingredients, categoryMeta), { hidePantry });
+  return { groups, hiddenCount };
 }
 
 export function getItemKey(groupId, name, unit) {

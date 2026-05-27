@@ -99,7 +99,7 @@ export function renderShoppingList() {
 
   if (!state.weeklyPlan) return;
 
-  const groups = buildShoppingListFromPlan(
+  const { groups, hiddenCount } = buildShoppingListFromPlan(
     state.weeklyPlan,
     state.portions,
     state.categories,
@@ -109,7 +109,11 @@ export function renderShoppingList() {
   containers.forEach(({ list, suffix }) => {
     const el = $(list);
     if (!el) return;
-    el.innerHTML = buildShoppingHtml(groups, suffix);
+    const hint =
+      hiddenCount > 0
+        ? `<p class="text-muted text-xs mb-2">${escapeHtml(t('shoppingIngredientsHidden'))}</p>`
+        : '';
+    el.innerHTML = hint + buildShoppingHtml(groups, suffix);
     el.querySelectorAll('.shop-item-input').forEach((input) => {
       input.addEventListener('change', () => {
         const key = input.dataset.key;

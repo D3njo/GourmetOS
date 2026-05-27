@@ -7,6 +7,8 @@ import {
 } from '../storage.js';
 import { isOnlineOnly, recipeImageUrl } from '../recipe-loader.js';
 import { scaleIngredients, formatAmount } from '../portions.js';
+import { filterAllowedIngredients } from '../exclusions.js';
+import { formatIngredientDisplayName } from '../ingredient-normalize.js';
 import { getMealCount, setMealCount } from '../meal-plan.js';
 import { cycleSlotAlternative } from '../plan-engine.js';
 import { t, weatherLabelKey } from '../i18n.js';
@@ -45,17 +47,31 @@ function renderSlotIngredients(recipe) {
     `;
   }
 
-  const scaled = scaleIngredients(recipe.ingredients, recipe.base_portions, state.portions);
-  return scaled
-    .map(
-      (ing) => `
+  const total = recipe.ingredients?.length || 0;
+  const allowed = filterAllowedIngredients(recipe.ingredients || []);
+  const scaled = scaleIngredients(allowed, recipe.base_portions, state.portions);
+  const hiddenNote =
+    total > allowed.length
+      ? `<p class="text-muted text-xs m-0 mb-2">${escapeHtml(t('ingredientsHiddenByExclusions'))}</p>`
+      : '';
+
+  if (!scaled.length && total > 0) {
+    return `<p class="text-muted text-sm m-0">${escapeHtml(t('ingredientsAllExcluded'))}</p>`;
+  }
+
+  return (
+    hiddenNote +
+    scaled
+      .map(
+        (ing) => `
     <div class="ingredient-row">
-      <span>${escapeHtml(ing.name)}</span>
+      <span>${escapeHtml(formatIngredientDisplayName(ing.name))}</span>
       <span class="ingredient-amount">${escapeHtml(formatAmount(ing.amount, ing.unit))}</span>
     </div>
   `
-    )
-    .join('');
+      )
+      .join('')
+  );
 }
 
 export function renderWeekView() {
@@ -96,6 +112,12 @@ export function renderWeekView() {
           const expandKey = slotExpandKey(day.dayKey, slot.slotIndex);
           const isExpanded = state.expandedSlots.has(expandKey);
           const r = slot.selected;
+          if (!r) {
+            return `
+          <div class="meal-slot-card glass-inner">
+            <p class="text-muted text-sm m-0">${escapeHtml(t('ingredientsAllExcluded'))}</p>
+          </div>`;
+          }
 
           return `
           <div class="meal-slot-card glass-inner">

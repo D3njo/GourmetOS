@@ -115,6 +115,62 @@ function resolveDaySelections(
 
 export { DAY_KEYS };
 
+/**
+ * After API resolve: re-validate full recipes (stubs may lack ingredients).
+ * Replaces blocked selections with allowed options; filters alternatives.
+ */
+function enforceAllergenSafetyOnSlot(slot, day, dayIndex, allRecipes, excludedTags, diversity) {
+  const allowOpts = { presetTags: excludedTags };
+
+  const pickReplacement = () => {
+    const options = getRecipeOptions(allRecipes, {
+      weatherTag: day.weatherTag,
+      mealType: slot.mealType,
+      effortLevel: day.effortLevel,
+      excludedTags,
+      limit: 5,
+      dayIndex,
+      usedIds: diversity?.usedIds,
+      usedCuisines: diversity?.usedCuisines,
+      usedProteins: diversity?.usedProteins,
+      usedTastes: diversity?.usedTastes,
+      usedTechniques: diversity?.usedTechniques
+    });
+    return options.find((r) => isRecipeAllowed(r, allowOpts)) ?? null;
+  };
+
+  let selected = slot.selected;
+  if (selected && !isRecipeAllowed(selected, allowOpts)) {
+    selected = pickReplacement();
+  }
+
+  let alternatives = (slot.alternatives || [])
+    .map((a) => (isRecipeAllowed(a, allowOpts) ? a : null))
+    .filter(Boolean);
+
+  if (selected?.id) {
+    if (!alternatives.some((a) => a.id === selected.id)) {
+      alternatives = [selected, ...alternatives].slice(0, 3);
+    } else {
+      alternatives = [selected, ...alternatives.filter((a) => a.id !== selected.id)].slice(0, 3);
+    }
+  } else {
+    selected = alternatives[0] ?? null;
+  }
+
+  if (selected) {
+    trackRecipeDiversity(selected, diversity);
+  }
+
+  return {
+    ...slot,
+    selected,
+    alternatives,
+    recipeId: selected?.id ?? null,
+    allergenBlocked: !selected
+  };
+}
+
 export function getTodayDayKey() {
   const weekDates = getCurrentWeekDates();
   const todayStr = toDateKey();
@@ -211,23 +267,31 @@ export async function buildWeeklyPlan(forecast, excludedTags = []) {
     };
   });
 
-  savePlanSelectionsForMode(modeKey, updatedSelections);
-
   const allIds = days.flatMap((d) => d.slots.flatMap((s) => [s.recipeId, ...s.alternatives.map((a) => a.id)]));
   const resolvedMap = await resolveRecipesForSlots(allIds);
 
-  return days.map((day) => {
-    const slots = day.slots.map((slot) => ({
-      ...slot,
-      selected: resolvedMap.get(slot.recipeId) || slot.selected,
-      alternatives: slot.alternatives.map((a) => resolvedMap.get(a.id) || a)
-    }));
+  const safeDays = days.map((day, index) => {
+    const slots = day.slots.map((slot) => {
+      const resolved = {
+        ...slot,
+        selected: resolvedMap.get(slot.recipeId) || slot.selected,
+        alternatives: slot.alternatives.map((a) => resolvedMap.get(a.id) || a)
+      };
+      return enforceAllergenSafetyOnSlot(resolved, day, index, db.recipes, excludedTags, diversity);
+    });
+
+    updatedSelections[day.dayKey] = slots.map((s) => s.recipeId).filter(Boolean);
+
     return {
       ...day,
       slots,
-      recipes: slots.map((s) => s.selected)
+      recipes: slots.map((s) => s.selected).filter(Boolean)
     };
   });
+
+  savePlanSelectionsForMode(modeKey, updatedSelections);
+
+  return safeDays;
 }
 
 export function setSlotSelection(dayKey, slotIndex, recipeId) {
@@ -305,7 +369,18 @@ export async function refreshSlotInPlan(weeklyPlan, dayKey, slotIndex, recipeId)
     const db = await loadRecipes();
     recipe = getRecipeById(db.recipes, recipeId);
   }
-  if (!recipe || !isRecipeAllowed(recipe)) return;
+  if (!recipe || !isRecipeAllowed(recipe)) {
+    const ring = buildAlternativeRing(slot.selected, slot.alternatives);
+    const allowed = ring.find((r) => r.id !== recipeId && isRecipeAllowed(r));
+    if (!allowed) return;
+    recipeId = allowed.id;
+    setSlotSelection(dayKey, slotIndex, recipeId);
+    recipe = allowed;
+    if (!recipe.ingredients?.length) {
+      recipe = await resolveRecipe(recipeId);
+    }
+    if (!recipe || !isRecipeAllowed(recipe)) return;
+  }
 
   slot.selected = prepareRecipe(recipe, context);
   slot.recipeId = slot.selected.id;

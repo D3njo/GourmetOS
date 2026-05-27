@@ -4,7 +4,7 @@ import {
   saveSpoonacularApiKey,
   clearPlanSelections
 } from '../storage.js';
-import { clearRecipePool, refreshRecipeCatalog, getSyncStatus } from '../recipes.js';
+import { clearRecipePool, refreshRecipeCatalog, getSyncStatus, invalidateRecipeCache } from '../recipes.js';
 import { getSpoonacularQuota } from '../spoonacular-api.js';
 import { getExcludeOptions, getDietPreferenceOptions, t } from '../i18n.js';
 import { getLocale as getStoredLocale } from '../storage.js';
@@ -41,6 +41,7 @@ function renderDietPreferences(prefs) {
         (el) => el.dataset.diet
       );
       savePreferences({ dietPreferences: diets });
+      invalidateRecipeCache();
       await bridge.refreshPlan();
     });
   });
@@ -75,6 +76,7 @@ export async function renderPreferences() {
         (el) => el.dataset.tag
       );
       savePreferences({ excludedTags: tags });
+      invalidateRecipeCache();
       await bridge.refreshPlan();
     });
   });

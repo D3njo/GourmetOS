@@ -34,7 +34,9 @@ async function main() {
     recipeMatchesExclusions,
     isRecipeAllowed,
     sanitizePlanSelections,
-    EXCLUSION_PRESET_IDS
+    EXCLUSION_PRESET_IDS,
+    ingredientViolatesExclusions,
+    filterAllowedIngredients
   } = await loadEsm('js/exclusions.js');
   const { recipeMatchesDietPreferences } = await loadEsm('js/diet-preferences.js');
 
@@ -79,8 +81,25 @@ async function main() {
   assert(!isRecipeAllowed(beef, { presetTags: [], dietPreferences: ['vegetarian'] }), 'diet+allowed gate');
   assert(
     isRecipeAllowed(veg, { presetTags: ['fish'], dietPreferences: ['vegetarian'] }),
-  'veg vegetarian still ok without fish tag'
+    'veg vegetarian still ok without fish tag'
   );
+
+  const stubCurry = { name: 'Thai Green Curry', ingredients: [], exclude_tags: [] };
+  assert(
+    isRecipeAllowed(stubCurry, { presetTags: ['shellfish'] }),
+    'stub without ingredients may pass name-only'
+  );
+
+  const fullCurry = {
+    name: 'Thai Green Curry',
+    ingredients: [{ name: 'Raw King Prawns' }, { name: 'Jasmine Rice' }],
+    exclude_tags: []
+  };
+  assert(!isRecipeAllowed(fullCurry, { presetTags: ['fish', 'shellfish'] }), 'full recipe blocked');
+
+  assert(ingredientViolatesExclusions('Raw King Prawns', { presetTags: ['shellfish'] }), 'ingredient prawn');
+  const filtered = filterAllowedIngredients(fullCurry.ingredients, { presetTags: ['shellfish'] });
+  assert(filtered.length === 1 && filtered[0].name.includes('Rice'), 'filter keeps rice');
 
   console.log('test-exclusions: all passed');
 }

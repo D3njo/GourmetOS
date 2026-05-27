@@ -198,6 +198,12 @@ const STRINGS = {
     statusOffline: 'Offline — cached recipes available',
     statusOnline: 'Back online',
     emptyShoppingList: 'No ingredients for this scope — try Week view or add meals.',
+    ingredientsHiddenByExclusions:
+      'Some ingredients are hidden because of your exclusion settings in Preferences.',
+    ingredientsAllExcluded:
+      'All ingredients for this dish conflict with your exclusions — open Preferences or swap the recipe.',
+    shoppingIngredientsHidden:
+      'Some shopping items were hidden due to your allergen exclusions.',
     altReason_faster: 'Faster',
     altReason_lighter: 'Lighter',
     altReason_richer: 'Richer',
