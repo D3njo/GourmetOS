@@ -10,15 +10,83 @@ import {
   formatInventoryChipLabel
 } from '../home-inventory.js';
 import { invalidateRecipeCache } from '../recipes.js';
+import { scanHomeInventoryPhoto } from '../inventory-photo-scan.js';
+import { shouldAutoSelectScanCandidate } from '../inventory-scan-normalize.js';
 import { t } from '../i18n.js';
 import { bridge } from '../app-bridge.js';
 import { $, escapeHtml, escapeAttr } from './dom.js';
+
+let scanReviewItems = [];
+let activePreviewUrl = null;
+let activeScanToken = 0;
 
 function parseIngredientLines(text) {
   return text
     .split(/[\n,;]+/)
     .map((line) => line.trim())
     .filter(Boolean);
+}
+
+function setPhotoScanStatus(message, state = 'idle') {
+  const el = $('#home-inventory-scan-status');
+  if (!el) return;
+  el.textContent = message || '';
+  el.dataset.state = state;
+  el.hidden = !message;
+}
+
+function renderScanResults() {
+  const list = $('#home-inventory-scan-results');
+  if (!list) return;
+
+  if (!scanReviewItems.length) {
+    list.innerHTML = '';
+    return;
+  }
+
+  list.innerHTML = scanReviewItems
+    .map((item) => {
+      const label = t('photoScanCandidate')
+        .replace('{name}', item.name)
+        .replace('{confidence}', String(Math.round(item.confidence * 100)));
+      return `
+        <button type="button"
+          class="scan-result-chip ${item.selected ? 'selected' : ''} ${item.confidence < 0.6 ? 'maybe' : ''}"
+          data-scan-id="${escapeAttr(item.id)}"
+          aria-pressed="${item.selected ? 'true' : 'false'}">
+          ${escapeHtml(label)}
+        </button>
+      `;
+    })
+    .join('');
+
+  list.querySelectorAll('[data-scan-id]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const item = scanReviewItems.find((candidate) => candidate.id === btn.dataset.scanId);
+      if (!item) return;
+      item.selected = !item.selected;
+      renderScanResults();
+    });
+  });
+}
+
+function clearPhotoScanState() {
+  scanReviewItems = [];
+  activeScanToken += 1;
+  setPhotoScanStatus('', 'idle');
+  renderScanResults();
+}
+
+function clearPhotoPreview() {
+  const preview = $('#home-inventory-photo-preview');
+  if (activePreviewUrl) {
+    URL.revokeObjectURL(activePreviewUrl);
+    activePreviewUrl = null;
+  }
+  if (preview) {
+    preview.removeAttribute('src');
+    preview.hidden = true;
+  }
 }
 
 function renderInventoryChips() {
@@ -74,15 +142,61 @@ async function addFromPaste() {
   await bridge.refreshPlan();
 }
 
-function renderPhotoReview() {
+function renderPhotoReview(options = {}) {
+  const { resetManualInput = true } = options;
   const panel = $('#home-inventory-photo-review');
   if (!panel) return;
   panel.hidden = false;
   const preview = $('#home-inventory-photo-preview');
   const area = $('#home-inventory-photo-lines');
-  if (area) area.value = '';
+  if (area && resetManualInput) area.value = '';
   if (preview && !preview.src) {
     preview.alt = t('scanFridgePhoto');
+  }
+}
+
+async function startPhotoScan(file) {
+  const token = activeScanToken + 1;
+  activeScanToken = token;
+  scanReviewItems = [];
+  renderScanResults();
+  setPhotoScanStatus(t('photoScanLoading'), 'running');
+
+  try {
+    const result = await scanHomeInventoryPhoto(file, {
+      onProgress(progress) {
+        if (token !== activeScanToken) return;
+        if (progress.phase === 'loading') {
+          setPhotoScanStatus(t('photoScanLoading'), 'running');
+          return;
+        }
+        const base = t('photoScanScanning');
+        const percent = progress.percent != null ? ` ${progress.percent}%` : '';
+        setPhotoScanStatus(`${base}${percent}`, 'running');
+      }
+    });
+
+    if (token !== activeScanToken) return;
+
+    scanReviewItems = result.candidates.map((candidate, index) => ({
+      ...candidate,
+      id: `scan-${index}-${candidate.normalizedName}`,
+      selected: shouldAutoSelectScanCandidate(candidate)
+    }));
+    renderScanResults();
+
+    if (scanReviewItems.length) {
+      setPhotoScanStatus(
+        t('photoScanFound').replace('{n}', String(scanReviewItems.length)),
+        'success'
+      );
+    } else {
+      setPhotoScanStatus(t('photoScanNone'), 'warning');
+    }
+  } catch (err) {
+    if (token !== activeScanToken) return;
+    console.warn('[inventory-scan] photo scan failed', err);
+    setPhotoScanStatus(t('photoScanFailed'), 'error');
   }
 }
 
@@ -152,6 +266,8 @@ export function renderHomeInventorySection() {
     <div id="home-inventory-photo-review" class="home-inventory-photo-review mt-3" hidden>
       <p class="text-muted text-xs mb-2">${escapeHtml(t('photoReviewHint'))}</p>
       <img id="home-inventory-photo-preview" class="home-inventory-preview" alt="" hidden>
+      <p id="home-inventory-scan-status" class="home-inventory-scan-status text-xs mt-2 mb-2" role="status" hidden></p>
+      <div id="home-inventory-scan-results" class="scan-result-list mt-2"></div>
       <textarea id="home-inventory-photo-lines" class="pref-input pref-textarea mt-2" rows="3" placeholder="${escapeAttr(t('photoReviewPlaceholder'))}"></textarea>
       <button type="button" id="btn-inventory-photo-confirm" class="slot-swap-btn mt-2">${escapeHtml(t('addFromPhotoReview'))}</button>
       <button type="button" id="btn-inventory-photo-cancel" class="slot-swap-btn mt-2">${escapeHtml(t('cancelPhotoReview'))}</button>
@@ -201,27 +317,29 @@ export function bindHomeInventory() {
     const file = e.target.files?.[0];
     if (!file) return;
     const preview = $('#home-inventory-photo-preview');
+    clearPhotoPreview();
+    activePreviewUrl = URL.createObjectURL(file);
     if (preview) {
-      preview.src = URL.createObjectURL(file);
+      preview.src = activePreviewUrl;
       preview.hidden = false;
     }
     renderPhotoReview();
+    startPhotoScan(file);
     e.target.value = '';
   });
 
   $('#btn-inventory-photo-confirm')?.addEventListener('click', async () => {
     const area = $('#home-inventory-photo-lines');
-    if (!area?.value.trim()) return;
-    addHomeInventoryItems(parseIngredientLines(area.value), 'photo');
-    area.value = '';
+    const detected = scanReviewItems.filter((item) => item.selected).map((item) => item.name);
+    const manual = parseIngredientLines(area?.value || '');
+    const names = [...detected, ...manual];
+    if (!names.length) return;
+    addHomeInventoryItems(names, 'photo');
+    if (area) area.value = '';
     const panel = $('#home-inventory-photo-review');
     if (panel) panel.hidden = true;
-    const preview = $('#home-inventory-photo-preview');
-    if (preview?.src?.startsWith('blob:')) {
-      URL.revokeObjectURL(preview.src);
-      preview.removeAttribute('src');
-      preview.hidden = true;
-    }
+    clearPhotoScanState();
+    clearPhotoPreview();
     renderInventoryChips();
     invalidateRecipeCache();
     await bridge.refreshPlan();
@@ -230,12 +348,8 @@ export function bindHomeInventory() {
   $('#btn-inventory-photo-cancel')?.addEventListener('click', () => {
     const panel = $('#home-inventory-photo-review');
     if (panel) panel.hidden = true;
-    const preview = $('#home-inventory-photo-preview');
-    if (preview?.src?.startsWith('blob:')) URL.revokeObjectURL(preview.src);
-    if (preview) {
-      preview.removeAttribute('src');
-      preview.hidden = true;
-    }
+    clearPhotoScanState();
+    clearPhotoPreview();
     const area = $('#home-inventory-photo-lines');
     if (area) area.value = '';
   });

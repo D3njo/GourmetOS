@@ -1339,6 +1339,47 @@ button:focus:not(:focus-visible),
   object-fit: cover;
 }
 
+.home-inventory-scan-status {
+  color: var(--color-text-muted);
+}
+
+.home-inventory-scan-status[data-state="success"] {
+  color: var(--color-matcha);
+}
+
+.home-inventory-scan-status[data-state="warning"],
+.home-inventory-scan-status[data-state="error"] {
+  color: var(--color-saffron, #d4a017);
+}
+
+.scan-result-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.scan-result-chip {
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-text);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 11px;
+}
+
+.scan-result-chip.selected {
+  border-color: var(--color-matcha);
+  background: var(--color-matcha-dim);
+  color: var(--color-matcha);
+}
+
+.scan-result-chip.maybe:not(.selected) {
+  opacity: 0.72;
+}
+
 .shop-item-at-home .shop-item-label {
   opacity: 0.75;
 }
