@@ -111,7 +111,7 @@ async function syncTheMealDb({ index, onProgress, existingIds, target = 637 }) {
           const meal = await fetchMealById(entry.idMeal);
           const meta = overrides[entry.idMeal] || buildMetaFromMeal(meal, discovery);
           if (entry.tier === 'premium') meta.tier = 'premium';
-          const recipe = mapMealToRecipe(meal, { ...meta, slug: entry.id }, 'en');
+          const recipe = mapMealToRecipe(meal, { ...meta, slug: entry.id });
           return {
             ...recipe,
             tier: entry.tier,
@@ -160,8 +160,10 @@ async function syncSpoonacular({ onProgress, existingIds, startOffset = 0 }) {
           ...r,
           tier: r.rating >= 4 ? 'premium' : 'standard',
           qualityScore: (r.rating || 0) / 2,
-          hasFullData: true,
-          onlineOnly: false
+          ingredients: [],
+          steps: [],
+          hasFullData: false,
+          onlineOnly: true
         }));
         await putRecipes(enriched);
         for (const r of enriched) {

@@ -176,7 +176,7 @@ function mealToIndexEntry(meal, catalogOverrides = {}, fineDining = {}, usedSlug
     id,
     idMeal: meal.idMeal,
     name: override.name_en || meal.strMeal,
-    description: override.description_en || meal.strInstructions?.slice(0, 160) || meal.strMeal,
+    description: override.description_en || null,
     image: meal.strMealThumb,
     technique: override.technique_en || category,
     weather_tags: weather,
@@ -210,58 +210,49 @@ function mealToIndexEntry(meal, catalogOverrides = {}, fineDining = {}, usedSlug
 
   const editorial = enrichEditorialFields(baseEntry, { weatherTag: weather_primary, effortLevel: effort });
   const description = ensureDescription(
-    { ...baseEntry, description: baseEntry.description },
+    { ...baseEntry, description: override.description_en || baseEntry.name },
     { weatherTag: weather_primary, effortLevel: effort }
   );
   return { ...baseEntry, ...editorial, description, technique: editorial.technique || baseEntry.technique };
 }
 
-function parseMeasure(raw) {
-  const text = (raw || '').trim();
-  if (!text) return { amount: 1, unit: 'pcs' };
-  const match = text.match(/^([\d./\s]+)\s*(.*)$/);
-  if (match) {
-    const amountPart = match[1].trim();
-    const unit = match[2].trim();
-    const numeric = amountPart.includes('/')
-      ? amountPart
-      : parseFloat(amountPart.replace(',', '.'));
-    return {
-      amount: Number.isFinite(numeric) ? numeric : amountPart || 1,
-      unit: unit || 'pcs'
-    };
-  }
-  return { amount: text, unit: 'pcs' };
-}
-
-function mealToFullRecipe(meal, entry) {
-  const ingredients = [];
-  for (let i = 1; i <= 20; i++) {
-    const name = meal[`strIngredient${i}`];
-    if (!name?.trim()) continue;
-    const { amount, unit } = parseMeasure(meal[`strMeasure${i}`]);
-    ingredients.push({
-      name: name.trim(),
-      amount,
-      unit: unit || 'pcs',
-      category: 'produce'
-    });
-  }
-  const steps = (meal.strInstructions || '')
-    .split(/\r?\n+/)
-    .map((s) => s.trim())
-    .filter(Boolean)
-    .map((text, i) => ({ text, time_minutes: 10 + i * 5, video: null }));
-
+/** Metadata-only stub for offline planning — no ingredients or instructions in the repo. */
+function entryToBundledStub(entry) {
   return {
-    ...entry,
-    description: entry.description || entry.name,
-    flavor_profile: (meal.strTags || '').replace(/,/g, ', ') || meal.strArea || '',
+    id: entry.id,
+    idMeal: entry.idMeal,
+    name: entry.name,
+    description: entry.description,
+    image: entry.image,
+    technique: entry.technique,
+    weather_tags: entry.weather_tags,
+    weather_primary: entry.weather_primary,
+    meal_type: entry.meal_type,
+    exclude_tags: entry.exclude_tags || [],
+    effort: entry.effort,
+    ingredientCount: entry.ingredientCount,
+    totalMinutes: entry.totalMinutes,
+    rating: entry.rating,
+    tier: entry.tier,
+    qualityScore: entry.qualityScore,
+    chef: entry.chef,
+    cuisine: entry.cuisine,
+    fineDiningMeta: entry.fineDiningMeta,
+    taste_profile: entry.taste_profile,
+    why_this_works: entry.why_this_works,
+    chef_move: entry.chef_move,
+    occasion: entry.occasion,
+    skill_focus: entry.skill_focus,
+    mise_en_place: entry.mise_en_place,
+    weather_mood: entry.weather_mood,
+    source: entry.source,
+    flavor_profile: entry.cuisine || '',
     base_portions: 2,
-    ingredients,
-    steps: steps.length ? steps : [{ text: meal.strInstructions || '', time_minutes: 15, video: null }],
-    youtube: meal.strYoutube || null,
-    hasFullData: true
+    ingredients: [],
+    steps: [],
+    hasFullData: false,
+    onlineOnly: true,
+    external: true
   };
 }
 
@@ -306,11 +297,7 @@ async function main() {
     ...indexEntries.filter((e) => e.tier === 'premium'),
     ...indexEntries.filter((e) => e.tier !== 'premium')
   ].slice(0, BUNDLED_COUNT);
-  const bundledRecipes = [];
-  for (const entry of bundledEntries) {
-    const meal = meals.find((m) => m.idMeal === entry.idMeal);
-    if (meal) bundledRecipes.push(mealToFullRecipe(meal, entry));
-  }
+  const bundledRecipes = bundledEntries.map((entry) => entryToBundledStub(entry));
   fs.writeFileSync(
     path.join(ROOT, 'data/recipes-bundled.json'),
     JSON.stringify({ version: indexOut.version, recipes: bundledRecipes }, null, 2),

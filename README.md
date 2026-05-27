@@ -27,7 +27,7 @@ GourmetOS/
 └── data/
     ├── recipe-catalog.json       # Curated premium seeds
     ├── recipe-index.json         # Metadata index
-    └── recipes-bundled.json      # Top offline full recipes
+    └── recipes-bundled.json      # Offline metadata stubs (no full instructions)
 ```
 
 ## Recipe pool
@@ -35,8 +35,8 @@ GourmetOS/
 | Source | Role |
 |--------|------|
 | **recipe-index.json** | Planning metadata (637+ entries) |
-| **recipes-bundled.json** | Offline fallback with full recipes |
-| **IndexedDB** | Full bodies after background sync |
+| **recipes-bundled.json** | Offline metadata stubs (planning only) |
+| **IndexedDB** | Full bodies after online sync (TheMealDB API) |
 | **Spoonacular** (optional) | Extended pool with API key |
 
 Premium recipes are ranked via `tier`, `qualityScore`, `chef`, and `fineDiningMeta`. Online-only entries show a badge and link to the source recipe.
@@ -52,7 +52,7 @@ Premium recipes are ranked via `tier`, `qualityScore`, `chef`, and `fineDiningMe
 
 ```bash
 npm run test:syntax    # ES module syntax check
-npm run test:data      # Validate JSON data files
+npm run test:data      # Validate JSON data + compliance rules
 npm run build:data     # Rebuild index + bundled from TheMealDB
 npm run curate:catalog # Curate premium catalog seeds
 ```
@@ -77,6 +77,16 @@ Manual checks after changes:
 5. **Refresh recipes** updates pool sync status
 6. Offline reload works after the service worker installs
 
+## Deployment (GitHub Pages)
+
+Public deployments should follow [TheMealDB terms of use](https://www.themealdb.com/terms_of_use.php): attribute the data source in the app, use official API endpoints, and consider a [Patreon supporter key](https://www.patreon.com/themealdb) for production traffic.
+
+Live demo: [https://d3njo.github.io/GourmetOS/](https://d3njo.github.io/GourmetOS/)
+
 ## License
 
-MIT
+GourmetOS application code is licensed under **GNU GPL v3.0 or later** — see [LICENSE](LICENSE).
+
+Recipe metadata in `data/` is planning information with links to original publishers; full instructions are fetched at runtime via the TheMealDB API. Third-party components are listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+Automated compliance checks do not replace legal advice.

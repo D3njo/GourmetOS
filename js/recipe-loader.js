@@ -144,7 +144,7 @@ export async function resolveRecipe(id) {
       const override = (catalog.meals || []).find((m) => m.idMeal === entry.idMeal);
       const meal = await fetchMealById(entry.idMeal);
       const meta = override || buildMetaFromMeal(meal, catalog.discovery || {});
-      recipe = mapMealToRecipe(meal, { ...meta, slug: entry.id }, 'en');
+      recipe = mapMealToRecipe(meal, { ...meta, slug: entry.id });
       recipe = {
         ...recipe,
         tier: entry.tier,

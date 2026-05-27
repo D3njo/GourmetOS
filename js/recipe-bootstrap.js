@@ -12,8 +12,10 @@ export async function bootstrapFromBundledIfEmpty() {
     const data = await res.json();
     const recipes = (data.recipes || []).map((r) => ({
       ...r,
-      hasFullData: true,
-      onlineOnly: false
+      ingredients: [],
+      steps: [],
+      hasFullData: false,
+      onlineOnly: true
     }));
     if (recipes.length) await putRecipes(recipes);
     return recipes.length;

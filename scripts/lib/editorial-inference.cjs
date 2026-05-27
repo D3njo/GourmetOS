@@ -121,6 +121,42 @@ const GENERIC_DESCRIPTION_PATTERNS = [
   'restaurant-level plating'
 ];
 
+const INSTRUCTION_DESCRIPTION_PATTERNS = [
+  /^step\s*\d/i,
+  /^for the /i,
+  /^heat\s/i,
+  /^preheat/i,
+  /^adjust oven/i,
+  /^rinse the /i,
+  /^slice\s/i,
+  /^place them in a bowl/i,
+  /^cook\s/i,
+  /^break\s/i,
+  /^mix\s/i,
+  /^stir\s/i,
+  /^grill\s/i,
+  /^bake\s/i,
+  /^boil\s/i,
+  /^simmer\s/i,
+  /^whisk\s/i,
+  /^season\s/i,
+  /^\d+\.\s/
+];
+
+function looksLikeInstruction(description) {
+  const text = (description || '').trim();
+  if (!text) return false;
+  if (text.length > 200) return true;
+  if (/\r?\n/.test(text)) return true;
+  const firstLine = text.split(/\r?\n/)[0].trim();
+  if (INSTRUCTION_DESCRIPTION_PATTERNS.some((re) => re.test(firstLine))) return true;
+  if (/^in a\s/i.test(firstLine) || /^take a\s/i.test(firstLine) || /^\d+\)/.test(firstLine)) {
+    return true;
+  }
+  if (/heat the oil|preheat oven|preheat the oven|preheat oven/i.test(text)) return true;
+  return false;
+}
+
 function isGenericDescription(description) {
   const text = (description || '').trim().toLowerCase();
   return GENERIC_DESCRIPTION_PATTERNS.some((pattern) => text.includes(pattern));
@@ -138,6 +174,7 @@ function buildPremiumDescription(recipe) {
 function ensureDescription(recipe, context = {}) {
   const name = (recipe.name || recipe.name_en || '').trim();
   let description = (recipe.description || recipe.description_en || '').trim();
+  if (looksLikeInstruction(description)) description = '';
   if (!description || description === name || isGenericDescription(description)) {
     const editorial = enrichEditorialFields(recipe, context);
     description = editorial.why_this_works || buildPremiumDescription({ ...recipe, ...editorial });
@@ -165,5 +202,6 @@ module.exports = {
   enrichEditorialFields,
   inferTechnique,
   buildPremiumDescription,
-  ensureDescription
+  ensureDescription,
+  looksLikeInstruction
 };

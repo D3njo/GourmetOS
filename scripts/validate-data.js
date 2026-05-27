@@ -6,6 +6,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { looksLikeInstruction } = require('./lib/editorial-inference.cjs');
 
 const ROOT = path.join(__dirname, '..');
 const errors = [];
@@ -77,7 +78,10 @@ function validateIndex(index) {
     if (!e.id) fail(`Index entry missing id (${e.name})`);
     if (!e.name) fail(`Index entry ${e.id} missing name`);
     if (!e.image) warn(`Index entry ${e.id} missing image`);
-    if (!e.source?.url) warn(`Index entry ${e.id} missing source.url`);
+    if (!e.source?.url) fail(`Index entry ${e.id} missing source.url (compliance)`);
+    if (e.description && looksLikeInstruction(e.description)) {
+      fail(`Index entry ${e.id} description looks like copied instructions`);
+    }
     if (!e.weather_tags?.length) warn(`Index entry ${e.id} missing weather_tags`);
     if (!e.meal_type?.length) warn(`Index entry ${e.id} missing meal_type`);
     if (!e.tier) warn(`Index entry ${e.id} missing tier`);
@@ -143,13 +147,21 @@ function validateBundled(data) {
   for (const r of data.recipes || []) {
     if (!r.id) fail('Bundled recipe missing id');
     if (!r.weather_primary) fail(`Bundled recipe ${r.id} missing weather_primary`);
+    if (!r.source?.url) fail(`Bundled recipe ${r.id} missing source.url (compliance)`);
+    if (r.onlineOnly !== true) fail(`Bundled recipe ${r.id} must have onlineOnly: true`);
+    if (r.hasFullData !== false) fail(`Bundled recipe ${r.id} must have hasFullData: false`);
+    if (r.ingredients?.length) fail(`Bundled recipe ${r.id} must not ship ingredients in repo`);
+    if (r.steps?.length) fail(`Bundled recipe ${r.id} must not ship steps in repo`);
+    for (const step of r.steps || []) {
+      if (step.text && step.text.length > 40) {
+        fail(`Bundled recipe ${r.id} contains instruction text in steps`);
+      }
+    }
+    if (r.description && looksLikeInstruction(r.description)) {
+      fail(`Bundled recipe ${r.id} description looks like copied instructions`);
+    }
     if (!r.taste_profile) warn(`Bundled recipe ${r.id} missing taste_profile`);
     if (!r.why_this_works) warn(`Bundled recipe ${r.id} missing why_this_works`);
-    if (!r.ingredients?.length) fail(`Bundled recipe ${r.id} missing ingredients`);
-    if (!r.steps?.length) fail(`Bundled recipe ${r.id} missing steps`);
-    for (const ing of r.ingredients || []) {
-      if (ing.unit === 'Stk') warn(`Bundled recipe ${r.id} uses German unit Stk`);
-    }
   }
 }
 
