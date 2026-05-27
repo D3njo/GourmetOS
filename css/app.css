@@ -1362,8 +1362,28 @@ button:focus:not(:focus-visible),
   resize: vertical;
 }
 
+.shop-item-at-home {
+  cursor: default;
+  opacity: 0.88;
+  pointer-events: none;
+}
+
 .shop-item-at-home .shop-item-label {
-  opacity: 0.75;
+  opacity: 0.85;
+}
+
+.shop-at-home-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--color-matcha-dim);
+  color: var(--color-matcha);
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
 }
 
 .inventory-tag {

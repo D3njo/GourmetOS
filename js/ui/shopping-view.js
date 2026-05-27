@@ -6,7 +6,7 @@ import {
   toggleItemChecked,
   isItemChecked
 } from '../shopping-list.js';
-import { t } from '../i18n.js';
+import { t, tFmt } from '../i18n.js';
 import { state } from '../app-state.js';
 import { $, escapeHtml, escapeAttr } from './dom.js';
 
@@ -27,20 +27,32 @@ function buildShoppingHtml(groups, idSuffix) {
         ${group.items
           .map((item) => {
             const key = getItemKey(group.id, item.name, item.unit);
-            const checked = isItemChecked(key);
+            const userChecked = isItemChecked(key);
             const inputId = `shop-${key.replace(/[^a-z0-9_-]/gi, '-')}${idSuffix}`;
             const atHome = item.atHome;
+            const displayName = item.displayName || item.name;
+            if (atHome) {
+              return `
+              <div class="shop-item shop-item-at-home" role="group" aria-label="${escapeAttr(tFmt('shoppingAtHomeItem', { name: displayName }))}">
+                <span class="shop-at-home-mark" aria-hidden="true">✓</span>
+                <span class="shop-item-label">${escapeHtml(displayName)}</span>
+                <span class="shop-item-meta">
+                  <span class="buy-timing buy-timing-pantry">${escapeHtml(t('shoppingAtHome'))}</span>
+                  <span class="ingredient-amount">${escapeHtml(formatAmount(item.amount, item.unit))}</span>
+                </span>
+              </div>
+            `;
+            }
             return `
-              <label class="shop-item ${checked ? 'checked' : ''} ${atHome ? 'shop-item-at-home' : ''}" for="${escapeAttr(inputId)}">
-                <input type="checkbox" id="${escapeAttr(inputId)}" class="shop-item-input" data-key="${escapeAttr(key)}" ${checked || atHome ? 'checked' : ''}>
+              <label class="shop-item ${userChecked ? 'checked' : ''}" for="${escapeAttr(inputId)}">
+                <input type="checkbox" id="${escapeAttr(inputId)}" class="shop-item-input" data-key="${escapeAttr(key)}" ${userChecked ? 'checked' : ''}>
                 <div class="shop-checkbox" aria-hidden="true">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
                     <polyline points="20 6 9 17 4 12"/>
                   </svg>
                 </div>
-                <span class="shop-item-label">${escapeHtml(item.displayName || item.name)}</span>
+                <span class="shop-item-label">${escapeHtml(displayName)}</span>
                 <span class="shop-item-meta">
-                  ${atHome ? `<span class="buy-timing buy-timing-pantry">${escapeHtml(t('shoppingAtHome'))}</span>` : ''}
                   ${item.buyTiming ? `<span class="buy-timing buy-timing-${escapeAttr(item.buyTiming)}">${escapeHtml(t(`buyTiming_${item.buyTiming}`))}</span>` : ''}
                   <span class="ingredient-amount">${escapeHtml(formatAmount(item.amount, item.unit))}</span>
                 </span>
@@ -116,7 +128,7 @@ export function renderShoppingList() {
         ? `<p class="text-muted text-xs mb-2">${escapeHtml(t('shoppingIngredientsHidden'))}</p>`
         : '';
     el.innerHTML = hint + buildShoppingHtml(groups, suffix);
-    el.querySelectorAll('.shop-item-input').forEach((input) => {
+    el.querySelectorAll('.shop-item-input:not(:disabled)').forEach((input) => {
       input.addEventListener('change', () => {
         const key = input.dataset.key;
         const desired = input.checked;

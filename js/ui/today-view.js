@@ -20,7 +20,7 @@ import {
   refreshForecast
 } from '../weather.js';
 import { getTodayDay, getTodayDayKey, cycleSlotAlternative } from '../plan-engine.js';
-import { t, effortLabelKey, weatherLabelKey } from '../i18n.js';
+import { t, tFmt, effortLabelKey, weatherLabelKey } from '../i18n.js';
 import { formatTemperature as formatTempUnits } from '../units.js';
 import {
   isFavorite,
@@ -420,7 +420,7 @@ export function renderCustomExclusions() {
       (term) => `
     <span class="exclusion-chip">
       ${escapeHtml(term)}
-      <button type="button" class="exclusion-chip-remove" data-term="${escapeAttr(term)}" aria-label="${escapeAttr(t('removeExclusion'))}">×</button>
+      <button type="button" class="exclusion-chip-remove" data-term="${escapeAttr(term)}" aria-label="${escapeAttr(tFmt('removeExclusionNamed', { name: term }))}">×</button>
     </span>
   `
     )
@@ -530,10 +530,13 @@ export function renderTodayAlternatives() {
           const reason = compareAlternativeReason(slot.selected, r);
           const reasonText = reasonLabel(reason);
           const name = r.name.length > 24 ? r.name.slice(0, 22) + '…' : r.name;
+          const isActive = r.id === slot.selected.id;
           return `
-        <button type="button" class="pill alt-pill ${r.id === slot.selected.id ? 'active' : ''}"
+        <button type="button" class="pill alt-pill ${isActive ? 'active' : ''}"
           data-recipe-id="${escapeAttr(r.id)}" data-day="${escapeAttr(getTodayDayKey())}" data-slot="${slot.slotIndex}"
-          title="${escapeAttr(`${name} — ${reasonText}`)}">
+          aria-pressed="${isActive ? 'true' : 'false'}"
+          aria-label="${escapeAttr(tFmt('selectAlternative', { name: r.name, reason: reasonText }))}"
+          title="${escapeAttr(`${r.name} — ${reasonText}`)}">
           <span class="alt-pill-reason">${escapeHtml(reasonText)}</span>
           <span class="alt-pill-name">${escapeHtml(name)}</span>
         </button>

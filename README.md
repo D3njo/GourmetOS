@@ -82,7 +82,7 @@ python3 -m http.server 8080
 # open http://localhost:8080
 ```
 
-After a service worker update, hard-reload the page (current cache version in `js/config.js`, e.g. **v20**). First launch runs a background sync to fill IndexedDB.
+After a service worker update, hard-reload the page (current cache version in `js/config.js`, e.g. **v32**). First launch runs a background sync to fill IndexedDB.
 
 ## Browser smoke test
 

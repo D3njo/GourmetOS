@@ -10,7 +10,7 @@ import {
   formatInventoryChipLabel
 } from '../home-inventory.js';
 import { invalidateRecipeCache } from '../recipes.js';
-import { t } from '../i18n.js';
+import { t, tFmt } from '../i18n.js';
 import { bridge } from '../app-bridge.js';
 import { $, escapeHtml, escapeAttr } from './dom.js';
 
@@ -36,7 +36,7 @@ function renderInventoryChips() {
       (item) => `
     <span class="exclusion-chip">
       ${escapeHtml(formatInventoryChipLabel(item))}
-      <button type="button" class="exclusion-chip-remove" data-inventory-id="${escapeAttr(item.id)}" aria-label="${escapeAttr(t('removeInventoryItem'))}">×</button>
+      <button type="button" class="exclusion-chip-remove" data-inventory-id="${escapeAttr(item.id)}" aria-label="${escapeAttr(tFmt('removeInventoryItemNamed', { name: formatInventoryChipLabel(item) }))}">×</button>
     </span>
   `
     )

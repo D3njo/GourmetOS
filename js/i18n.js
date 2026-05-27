@@ -124,6 +124,10 @@ const STRINGS = {
     addFromPaste: 'Add from list',
     quickAddIngredients: 'Quick add',
     removeInventoryItem: 'Remove',
+    removeInventoryItemNamed: 'Remove {name}',
+    removeExclusionNamed: 'Remove {name}',
+    selectAlternative: 'Select {name}: {reason}',
+    shoppingAtHomeItem: '{name} — already at home',
     ingredientsAtHome: 'At home',
     ingredientsAtHomeCount: '{n} of {total} ingredients at home',
     missingIngredientsCount: 'Only {n} to buy',
@@ -186,7 +190,8 @@ const STRINGS = {
     saveRecipe: 'Save',
     restoreDefault: 'Restore default',
     recipeSource: 'Recipe sources',
-    recipeSourceInfo: 'Curated from BBC Good Food, Gordon Ramsay and other top sources via TheMealDB — each photo matches its dish.',
+    recipeSourceInfo:
+      'Recipes from TheMealDB (BBC Good Food, Gordon Ramsay, and more) with optional Spoonacular. Dish images match each recipe.',
     sourceCurated: 'Curated',
     sourceExternal: 'Original recipe',
     sourceCustomized: 'Customized',
@@ -219,7 +224,6 @@ const STRINGS = {
     clearPool: 'Clear pool',
     clearPoolHint: 'Removes all locally stored recipe bodies from IndexedDB',
     clearPoolConfirm: 'Clear the recipe pool? Offline recipes must be synced again.',
-    recipeSourceInfo: 'Dynamic from TheMealDB (BBC Good Food, Gordon Ramsay …) + optional Spoonacular. Photos match each dish.',
     themealdbAttribution: 'Recipe data and images from ',
     editorName: 'Name',
     editorDescription: 'Description',
@@ -254,6 +258,14 @@ export function onLocaleChange(fn) {
 /** Translate a UI string key */
 export function t(key) {
   return STRINGS[key] ?? key;
+}
+
+/** Translate with `{var}` placeholders replaced */
+export function tFmt(key, vars = {}) {
+  return Object.entries(vars).reduce(
+    (text, [name, value]) => text.replaceAll(`{${name}}`, String(value)),
+    t(key)
+  );
 }
 
 export function getDayLabels() {
