@@ -1,5 +1,5 @@
-const CACHE_CORE = 'gourmetos-core-v13';
-const CACHE_DATA = 'gourmetos-data-v13';
+const CACHE_CORE = 'gourmetos-core-v16';
+const CACHE_DATA = 'gourmetos-data-v16';
 
 const CORE_URLS = [
   './',
@@ -46,8 +46,11 @@ const CORE_URLS = [
   './js/shopping-list.js',
   './js/i18n.js',
   './js/units.js',
+  './assets/icons/favicon-32.png',
   './assets/icons/icon-192.png',
-  './assets/icons/icon-512.png'
+  './assets/icons/icon-512.png',
+  './assets/icons/icon-maskable-512.png',
+  './assets/icons/apple-touch-icon.png'
 ];
 
 const DATA_URLS = [

@@ -1,7 +1,7 @@
 /** Shared runtime configuration */
 
 export const APP_VERSION = '1.1.0';
-export const SW_CACHE_VERSION = 'v12';
+export const SW_CACHE_VERSION = 'v16';
 export const DEFAULT_LOCALE = 'en';
 export const TARGET_POOL = 1000;
 export const BUNDLED_COUNT = 120;

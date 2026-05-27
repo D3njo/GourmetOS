@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="GourmetOS — Fine Dining Edition">
+  <defs>
+    <!-- Background radial gradient -->
+    <radialGradient id="bg" cx="50%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#24221d"/>
+      <stop offset="60%" stop-color="#0f0e0c"/>
+      <stop offset="100%" stop-color="#050505"/>
+    </radialGradient>
+    
+    <!-- Metallic Gold Gradient -->
+    <linearGradient id="gold" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8e6a18"/>
+      <stop offset="20%" stop-color="#d4af37"/>
+      <stop offset="40%" stop-color="#f3e5ab"/>
+      <stop offset="60%" stop-color="#d4af37"/>
+      <stop offset="80%" stop-color="#f3e5ab"/>
+      <stop offset="100%" stop-color="#8e6a18"/>
+    </linearGradient>
+
+    <!-- Sharp Gold Outline Gradient -->
+    <linearGradient id="goldEdge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFF9D0"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#AA7C11"/>
+    </linearGradient>
+
+    <!-- Vibrant Matcha Green Gradient -->
+    <linearGradient id="matcha" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#C5E1A5"/>
+      <stop offset="50%" stop-color="#7CB342"/>
+      <stop offset="100%" stop-color="#33691E"/>
+    </linearGradient>
+
+    <!-- Sauce reduction glossy gradient -->
+    <linearGradient id="sauceGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFEB3B"/>
+      <stop offset="50%" stop-color="#FF9800"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+
+    <!-- Porcelain plate gradient -->
+    <radialGradient id="porcelain" cx="50%" cy="30%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="75%" stop-color="#F9F8F6"/>
+      <stop offset="100%" stop-color="#E0DCD3"/>
+    </radialGradient>
+
+    <!-- Glass cloche gradient -->
+    <linearGradient id="glass" x1="0.3" y1="0" x2="0.7" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.28"/>
+      <stop offset="40%" stop-color="#ffffff" stop-opacity="0.06"/>
+      <stop offset="80%" stop-color="#ffd54f" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#ffd54f" stop-opacity="0.18"/>
+    </linearGradient>
+
+    <!-- Soft Glow Filter -->
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="0 0 0 0 0.96  0 0 0 0 0.70  0 0 0 0 0.22  0 0 0 0.4 0"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Plate Shadow Filter -->
+    <filter id="plateShadow" x="-20%" y="-10%" width="140%" height="130%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#000000" flood-opacity="0.65"/>
+    </filter>
+  </defs>
+
+  <!-- App Background Card -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  
+  <!-- Elegant gold border -->
+  <rect x="18" y="16" width="476" height="480" rx="98" fill="none" stroke="url(#goldEdge)" stroke-width="1.2" stroke-opacity="0.25"/>
+
+  <!-- Ambient pass lighting glow -->
+  <ellipse cx="256" cy="240" rx="160" ry="130" fill="#f4a900" opacity="0.06" filter="url(#glow)"/>
+
+  <!-- Star of Excellence / Michelin star motif in the background -->
+  <g transform="translate(256 160)" opacity="0.15">
+    <path d="M 0 -110 L 14 -35 L 94 -35 L 25 10 L 52 85 L 0 45 L -52 85 L -25 10 L -94 -35 L -14 -35 Z" fill="url(#gold)"/>
+  </g>
+
+  <!-- The Porcelain Plate -->
+  <g filter="url(#plateShadow)">
+    <!-- Plate Rim -->
+    <ellipse cx="256" cy="310" rx="172" ry="52" fill="url(#porcelain)" stroke="url(#goldEdge)" stroke-width="4"/>
+    
+    <!-- Inner shadow / Plate depth -->
+    <ellipse cx="256" cy="310" rx="146" ry="43" fill="none" stroke="#cfc9be" stroke-width="1.5" stroke-opacity="0.7"/>
+    
+    <!-- Golden concentric band -->
+    <ellipse cx="256" cy="310" rx="138" ry="40" fill="none" stroke="url(#gold)" stroke-width="1.2" stroke-opacity="0.4"/>
+    
+    <!-- Plate Center Base -->
+    <ellipse cx="256" cy="310" rx="116" ry="32" fill="#FAF9F6"/>
+  </g>
+
+  <!-- EXQUISITE PLATING (The Fine Dining Dish) -->
+  
+  <!-- 1. Rich Saffron-Gold Culinary Swoop -->
+  <path d="M 160 312 Q 220 286, 275 296 T 345 314 Q 285 330, 215 326 Z" fill="url(#sauceGrad)"/>
+  
+  <!-- 2. Plating Dots (Sauce Droplets) -->
+  <circle cx="178" cy="324" r="4.5" fill="#3E2723" opacity="0.85"/> <!-- Dark Balsamic -->
+  <circle cx="192" cy="328" r="3.2" fill="#E65100"/>               <!-- Saffron dot -->
+  <circle cx="316" cy="304" r="4" fill="url(#matcha)"/>            <!-- Herb oil -->
+  <circle cx="332" cy="312" r="2.5" fill="url(#matcha)"/>          <!-- Herb oil small -->
+
+  <!-- 3. Micro-Herb Sprig -->
+  <!-- Stem -->
+  <path d="M 235 292 Q 215 278, 192 288" fill="none" stroke="#2E7D32" stroke-width="2" stroke-linecap="round"/>
+  <!-- Leaves -->
+  <path d="M 192 288 Q 182 278, 187 273 Q 199 278, 192 288 Z" fill="url(#matcha)"/>
+  <path d="M 212 283 Q 206 268, 214 265 Q 218 278, 212 283 Z" fill="url(#matcha)"/>
+  <path d="M 226 288 Q 224 274, 231 273 Q 232 284, 226 288 Z" fill="url(#matcha)"/>
+
+  <!-- 4. Beautiful Edible Flower (The Michelin Touch) -->
+  <!-- Petals -->
+  <ellipse cx="270" cy="298" rx="8.5" ry="7.5" fill="#4A148C"/> <!-- Dark Purple -->
+  <ellipse cx="286" cy="298" rx="8.5" ry="7.5" fill="#4A148C"/> <!-- Dark Purple -->
+  <ellipse cx="268" cy="311" rx="8.5" ry="7.5" fill="#AB47BC"/> <!-- Orchid Pink -->
+  <ellipse cx="288" cy="311" rx="8.5" ry="7.5" fill="#AB47BC"/> <!-- Orchid Pink -->
+  <ellipse cx="278" cy="316" rx="9" ry="8.5" fill="#FFEB3B"/>   <!-- Yellow Base -->
+  <!-- Flower Center -->
+  <circle cx="278" cy="305" r="3" fill="#FFF59D" stroke="#E040FB" stroke-width="0.5"/>
+
+  <!-- THE GLASS CLOCHE (DOME COVER) -->
+  <g>
+    <!-- Semi-transparent dome -->
+    <path d="M 136 300 C 136 150, 186 100, 256 100 C 326 100, 376 150, 376 300 Z" fill="url(#glass)"/>
+    
+    <!-- Golden Outlines -->
+    <!-- Main Dome Outline -->
+    <path d="M 136 300 C 136 150, 186 100, 256 100 C 326 100, 376 150, 376 300" fill="none" stroke="url(#goldEdge)" stroke-width="3" stroke-linecap="round" stroke-opacity="0.9"/>
+    
+    <!-- Base Rim / Lip of Cloche -->
+    <path d="M 128 300 L 384 300 C 388 300, 388 306, 384 306 L 128 306 C 124 306, 124 300, 128 300 Z" fill="url(#gold)" stroke="url(#goldEdge)" stroke-width="1.5" stroke-linejoin="round"/>
+    
+    <!-- Polished Glass Highlights -->
+    <path d="M 158 250 C 158 175, 186 130, 230 118" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-opacity="0.45"/>
+    <path d="M 172 265 C 172 215, 192 180, 216 168" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-opacity="0.25"/>
+
+    <!-- CLOCHE SUN HANDLE (Weather Motif) -->
+    <!-- Knob Base -->
+    <rect x="246" y="94" width="20" height="6" rx="3" fill="url(#goldEdge)"/>
+    <!-- Ring Handle -->
+    <circle cx="256" cy="80" r="14" fill="none" stroke="url(#goldEdge)" stroke-width="4.5"/>
+    <!-- Center glowing sun core -->
+    <circle cx="256" cy="80" r="6" fill="#FFF9C4" filter="url(#glow)"/>
+  </g>
+
+  <!-- WEATHER WIND ORBIT (Adaptive Ribbon) -->
+  <!-- Behind cloche breeze line -->
+  <path d="M 80 240 Q 180 180, 280 220" fill="none" stroke="url(#goldEdge)" stroke-width="1.2" stroke-opacity="0.35" stroke-dasharray="4,4"/>
+  
+  <!-- Front wrapping weather currents -->
+  <!-- 1. Champagne Gold Wave -->
+  <path d="M 110 320 C 160 360, 352 360, 412 280" fill="none" stroke="url(#gold)" stroke-width="3" stroke-linecap="round" stroke-opacity="0.85" filter="url(#glow)"/>
+  
+  <!-- 2. Matcha Green Wave (Freshness/Nature) -->
+  <path d="M 130 335 C 180 372, 342 372, 395 300" fill="none" stroke="url(#matcha)" stroke-width="2.2" stroke-linecap="round" stroke-opacity="0.9"/>
+
+  <!-- Distinctive Matcha Brand Accent (Bottom Left corner) -->
+  <rect x="96" y="416" width="56" height="5" rx="2.5" fill="#7cb342" opacity="0.9"/>
+  <rect x="96" y="426" width="32" height="3" rx="1.5" fill="#7cb342" opacity="0.45"/>
+</svg>
