@@ -1,0 +1,6 @@
+{
+  "image": "fridge_003.jpg",
+  "contains": ["yogurt", "berries", "bread"],
+  "optional": ["butter"],
+  "notes": "top shelf dairy and fruit"
+}

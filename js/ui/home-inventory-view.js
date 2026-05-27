@@ -11,7 +11,12 @@ import {
 } from '../home-inventory.js';
 import { invalidateRecipeCache } from '../recipes.js';
 import { scanHomeInventoryPhoto } from '../inventory-photo-scan.js';
-import { shouldAutoSelectScanCandidate } from '../inventory-scan-normalize.js';
+import { shouldAutoSelectScanCandidate } from '../inventory-scan-fusion.js';
+import {
+  CONFIDENCE_TIER,
+  groupScanCandidatesByTier,
+  scanConfidenceTier
+} from '../inventory-scan-confidence.js';
 import { t } from '../i18n.js';
 import { bridge } from '../app-bridge.js';
 import { $, escapeHtml, escapeAttr } from './dom.js';
@@ -19,6 +24,11 @@ import { $, escapeHtml, escapeAttr } from './dom.js';
 let scanReviewItems = [];
 let activePreviewUrl = null;
 let activeScanToken = 0;
+let activeScanBboxes = [];
+
+const DEBUG_SCAN_PROVIDERS =
+  typeof window !== 'undefined' &&
+  new URLSearchParams(window.location.search).get('debugScan') === '1';
 
 function parseIngredientLines(text) {
   return text
@@ -35,6 +45,36 @@ function setPhotoScanStatus(message, state = 'idle') {
   el.hidden = !message;
 }
 
+function scanChipLabel(item) {
+  const template = DEBUG_SCAN_PROVIDERS ? t('photoScanCandidateDebug') : t('photoScanCandidate');
+  return template
+    .replace('{name}', item.name)
+    .replace('{confidence}', String(Math.round(item.confidence * 100)))
+    .replace('{provider}', item.providerLabel || item.provider || 'local');
+}
+
+function renderScanChip(item) {
+  const tier = item.tier || scanConfidenceTier(item);
+  return `
+    <button type="button"
+      class="scan-result-chip tier-${tier} ${item.selected ? 'selected' : ''} ${tier === CONFIDENCE_TIER.low ? 'maybe' : ''}"
+      data-scan-id="${escapeAttr(item.id)}"
+      aria-pressed="${item.selected ? 'true' : 'false'}">
+      ${escapeHtml(scanChipLabel(item))}
+    </button>
+  `;
+}
+
+function renderScanTierSection(title, items) {
+  if (!items.length) return '';
+  return `
+    <div class="scan-tier-section">
+      <p class="scan-tier-label text-muted text-xs m-0 mb-1">${escapeHtml(title)}</p>
+      <div class="scan-tier-chips">${items.map((item) => renderScanChip(item)).join('')}</div>
+    </div>
+  `;
+}
+
 function renderScanResults() {
   const list = $('#home-inventory-scan-results');
   if (!list) return;
@@ -44,21 +84,12 @@ function renderScanResults() {
     return;
   }
 
-  list.innerHTML = scanReviewItems
-    .map((item) => {
-      const label = t('photoScanCandidate')
-        .replace('{name}', item.name)
-        .replace('{confidence}', String(Math.round(item.confidence * 100)));
-      return `
-        <button type="button"
-          class="scan-result-chip ${item.selected ? 'selected' : ''} ${item.confidence < 0.6 ? 'maybe' : ''}"
-          data-scan-id="${escapeAttr(item.id)}"
-          aria-pressed="${item.selected ? 'true' : 'false'}">
-          ${escapeHtml(label)}
-        </button>
-      `;
-    })
-    .join('');
+  const groups = groupScanCandidatesByTier(scanReviewItems);
+  list.innerHTML = [
+    renderScanTierSection(t('photoScanHighConfidence'), groups[CONFIDENCE_TIER.high]),
+    renderScanTierSection(t('photoScanMediumConfidence'), groups[CONFIDENCE_TIER.medium]),
+    renderScanTierSection(t('photoScanMaybe'), groups[CONFIDENCE_TIER.low])
+  ].join('');
 
   list.querySelectorAll('[data-scan-id]').forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -66,15 +97,51 @@ function renderScanResults() {
       if (!item) return;
       item.selected = !item.selected;
       renderScanResults();
+      renderScanBboxOverlay();
     });
   });
 }
 
+function renderScanBboxOverlay() {
+  const canvas = $('#home-inventory-scan-overlay');
+  const preview = $('#home-inventory-photo-preview');
+  if (!canvas || !preview || preview.hidden || !preview.naturalWidth) {
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      ctx?.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    return;
+  }
+
+  const selected = scanReviewItems.filter((item) => item.selected && item.bbox);
+  const width = preview.clientWidth;
+  const height = preview.clientHeight;
+  canvas.width = width;
+  canvas.height = height;
+  canvas.hidden = !selected.length;
+
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, width, height);
+  if (!selected.length) return;
+
+  const scaleX = width / preview.naturalWidth;
+  const scaleY = height / preview.naturalHeight;
+
+  for (const item of selected) {
+    const { xmin, ymin, xmax, ymax } = item.bbox;
+    ctx.strokeStyle = 'rgba(124, 179, 66, 0.95)';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(xmin * scaleX, ymin * scaleY, (xmax - xmin) * scaleX, (ymax - ymin) * scaleY);
+  }
+}
+
 function clearPhotoScanState() {
   scanReviewItems = [];
+  activeScanBboxes = [];
   activeScanToken += 1;
   setPhotoScanStatus('', 'idle');
   renderScanResults();
+  renderScanBboxOverlay();
 }
 
 function clearPhotoPreview() {
@@ -163,14 +230,31 @@ async function startPhotoScan(file) {
   setPhotoScanStatus(t('photoScanLoading'), 'running');
 
   try {
+    setPhotoScanStatus(t('photoScanOnDevice'), 'running');
     const result = await scanHomeInventoryPhoto(file, {
       onProgress(progress) {
         if (token !== activeScanToken) return;
-        if (progress.phase === 'loading') {
-          setPhotoScanStatus(t('photoScanLoading'), 'running');
+        if (progress.phase === 'loading-grocery-model') {
+          setPhotoScanStatus(t('photoScanLoadingModel'), 'running');
           return;
         }
-        const base = t('photoScanScanning');
+        if (progress.phase === 'grocery-detection') {
+          setPhotoScanStatus(t('photoScanScanningLocal'), 'running');
+          return;
+        }
+        if (progress.phase === 'loading-local-vision' || progress.phase === 'loading-model') {
+          setPhotoScanStatus(t('photoScanLoadingLocal'), 'running');
+          return;
+        }
+        if (progress.phase === 'local-object-detection' || progress.phase === 'local-zero-shot') {
+          setPhotoScanStatus(t('photoScanScanningLocal'), 'running');
+          return;
+        }
+        if (progress.phase === 'loading-ocr') {
+          setPhotoScanStatus(t('photoScanLoadingOcr'), 'running');
+          return;
+        }
+        const base = t('photoScanScanningOcr');
         const percent = progress.percent != null ? ` ${progress.percent}%` : '';
         setPhotoScanStatus(`${base}${percent}`, 'running');
       }
@@ -181,17 +265,23 @@ async function startPhotoScan(file) {
     scanReviewItems = result.candidates.map((candidate, index) => ({
       ...candidate,
       id: `scan-${index}-${candidate.normalizedName}`,
+      tier: scanConfidenceTier(candidate),
       selected: shouldAutoSelectScanCandidate(candidate)
     }));
+    activeScanBboxes = scanReviewItems.filter((item) => item.bbox);
     renderScanResults();
+    renderScanBboxOverlay();
 
     if (scanReviewItems.length) {
+      const hint = scanReviewItems.some((item) => item.tier === CONFIDENCE_TIER.low)
+        ? ` ${t('photoScanLowConfidenceHint')}`
+        : '';
       setPhotoScanStatus(
-        t('photoScanFound').replace('{n}', String(scanReviewItems.length)),
+        `${t('photoScanFound').replace('{n}', String(scanReviewItems.length))}${hint}`,
         'success'
       );
     } else {
-      setPhotoScanStatus(t('photoScanNone'), 'warning');
+      setPhotoScanStatus(`${t('photoScanNone')} ${t('photoScanTryAgainHint')}`, 'warning');
     }
   } catch (err) {
     if (token !== activeScanToken) return;
@@ -265,7 +355,10 @@ export function renderHomeInventorySection() {
 
     <div id="home-inventory-photo-review" class="home-inventory-photo-review mt-3" hidden>
       <p class="text-muted text-xs mb-2">${escapeHtml(t('photoReviewHint'))}</p>
-      <img id="home-inventory-photo-preview" class="home-inventory-preview" alt="" hidden>
+      <div class="home-inventory-preview-wrap">
+        <img id="home-inventory-photo-preview" class="home-inventory-preview" alt="" hidden>
+        <canvas id="home-inventory-scan-overlay" class="home-inventory-scan-overlay" hidden aria-hidden="true"></canvas>
+      </div>
       <p id="home-inventory-scan-status" class="home-inventory-scan-status text-xs mt-2 mb-2" role="status" hidden></p>
       <div id="home-inventory-scan-results" class="scan-result-list mt-2"></div>
       <textarea id="home-inventory-photo-lines" class="pref-input pref-textarea mt-2" rows="3" placeholder="${escapeAttr(t('photoReviewPlaceholder'))}"></textarea>
@@ -322,6 +415,7 @@ export function bindHomeInventory() {
     if (preview) {
       preview.src = activePreviewUrl;
       preview.hidden = false;
+      preview.onload = () => renderScanBboxOverlay();
     }
     renderPhotoReview();
     startPhotoScan(file);

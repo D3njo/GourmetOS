@@ -132,8 +132,4 @@ export function extractInventoryScanCandidates(input = {}) {
     .sort((a, b) => b.confidence - a.confidence || a.name.localeCompare(b.name));
 }
 
-export function shouldAutoSelectScanCandidate(candidate) {
-  return (candidate?.confidence || 0) >= 0.55;
-}
-
 export { SCAN_INGREDIENTS };

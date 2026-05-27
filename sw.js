@@ -1,5 +1,5 @@
-const CACHE_CORE = 'gourmetos-core-v27';
-const CACHE_DATA = 'gourmetos-data-v27';
+const CACHE_CORE = 'gourmetos-core-v29';
+const CACHE_DATA = 'gourmetos-data-v29';
 
 const CORE_URLS = [
   './',
@@ -44,6 +44,13 @@ const CORE_URLS = [
   './js/protein-preferences.js',
   './js/home-inventory.js',
   './js/inventory-scan-normalize.js',
+  './js/inventory-scan-fusion.js',
+  './js/inventory-grocery-classes.js',
+  './js/inventory-yolo-postprocess.js',
+  './js/inventory-grocery-detector.js',
+  './js/inventory-scan-confidence.js',
+  './js/inventory-vision-labels.js',
+  './js/inventory-vision-local.js',
   './js/inventory-photo-scan.js',
   './js/ui/home-inventory-view.js',
   './js/plan-engine.js',
@@ -138,7 +145,11 @@ self.addEventListener('fetch', (event) => {
   if (
     url.hostname === 'api.open-meteo.com' ||
     url.hostname === 'www.themealdb.com' ||
-    url.hostname === 'api.spoonacular.com'
+    url.hostname === 'api.spoonacular.com' ||
+    url.hostname === 'cdn.jsdelivr.net' ||
+    url.hostname === 'huggingface.co' ||
+    url.hostname.endsWith('.huggingface.co') ||
+    url.hostname.endsWith('.hf.co')
   ) {
     event.respondWith(
       fetch(request)

@@ -1,4 +1,10 @@
 import { extractInventoryScanCandidates } from './inventory-scan-normalize.js';
+import {
+  detectGroceryIngredients,
+  isGroceryDetectorAvailable
+} from './inventory-grocery-detector.js';
+import { detectLocalVisionIngredients } from './inventory-vision-local.js';
+import { fuseScanCandidates } from './inventory-scan-fusion.js';
 
 const TESSERACT_URL = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
 const MAX_SCAN_DIMENSION = 1600;
@@ -79,31 +85,75 @@ function progressPercent(message) {
 export async function scanHomeInventoryPhoto(file, options = {}) {
   if (!file) throw new Error('No image selected.');
   const { onProgress = () => {} } = options;
+  const providerResults = [];
 
-  onProgress({ phase: 'loading', percent: 0 });
-  const [Tesseract, image] = await Promise.all([loadTesseract(), prepareImageForOcr(file)]);
+  let groceryAvailable = false;
+  try {
+    groceryAvailable = await isGroceryDetectorAvailable();
+  } catch {
+    groceryAvailable = false;
+  }
 
-  onProgress({ phase: 'scanning', percent: 0 });
-  const result = await Tesseract.recognize(image, 'eng', {
-    logger(message) {
-      const percent = progressPercent(message);
-      if (message?.status || percent != null) {
-        onProgress({ phase: 'scanning', status: message.status, percent });
-      }
+  if (groceryAvailable) {
+    onProgress({ phase: 'loading-grocery-model', percent: 0 });
+    try {
+      providerResults.push(
+        await detectGroceryIngredients(file, {
+          onProgress(progress) {
+            onProgress({ ...progress, percent: progress.percent ?? null });
+          }
+        })
+      );
+    } catch (err) {
+      console.warn('[inventory-scan] grocery detector failed', err);
     }
-  });
+  }
 
-  const text = result?.data?.text || '';
-  const words = result?.data?.words || [];
-  const candidates = extractInventoryScanCandidates({ text, words }).map((candidate) => ({
-    ...candidate,
-    source: 'photo',
-    provider: 'tesseract'
-  }));
+  onProgress({ phase: 'loading-local-vision', percent: 0 });
+  try {
+    providerResults.push(
+      await detectLocalVisionIngredients(file, {
+        onProgress(progress) {
+          onProgress({ ...progress, percent: progress.percent ?? null });
+        }
+      })
+    );
+  } catch (err) {
+    console.warn('[inventory-scan] local vision provider failed', err);
+  }
+
+  onProgress({ phase: 'loading-ocr', percent: 0 });
+  try {
+    const [Tesseract, image] = await Promise.all([loadTesseract(), prepareImageForOcr(file)]);
+
+    onProgress({ phase: 'ocr-scanning', percent: 0 });
+    const result = await Tesseract.recognize(image, 'eng', {
+      logger(message) {
+        const percent = progressPercent(message);
+        if (message?.status || percent != null) {
+          onProgress({ phase: 'ocr-scanning', status: message.status, percent });
+        }
+      }
+    });
+
+    const text = result?.data?.text || '';
+    const words = result?.data?.words || [];
+    providerResults.push(
+      extractInventoryScanCandidates({ text, words }).map((candidate) => ({
+        ...candidate,
+        source: 'photo',
+        provider: 'tesseract'
+      }))
+    );
+  } catch (err) {
+    console.warn('[inventory-scan] OCR provider failed', err);
+  }
+
+  const candidates = fuseScanCandidates(providerResults);
 
   return {
-    provider: 'tesseract',
-    text,
+    provider: groceryAvailable ? 'grocery-v2' : 'hybrid-local',
+    groceryDetector: groceryAvailable,
     candidates,
     createdAt: Date.now()
   };
