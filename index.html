@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#7CB342">
+  <meta name="description" content="GourmetOS — Weather-adaptive haute cuisine meal planner">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>GourmetOS</title>
+
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="./assets/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="./assets/icons/icon-192.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./css/app.css">
+</head>
+<body class="no-scrollbar">
+  <div class="app-bg" aria-hidden="true"></div>
+
+  <div class="app-shell">
+    <header class="app-header glass" style="border-radius: 0 0 24px 24px; margin: 0 -1px;">
+      <div class="flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="accent-bar"></div>
+          <div class="min-w-0">
+            <p class="text-[11px] uppercase tracking-[0.14em] text-muted m-0 font-semibold" data-i18n="appVersion">GourmetOS v1.0</p>
+            <h1 class="font-serif text-xl font-semibold m-0 tracking-tight truncate" data-i18n="appTitle">Live-Simulator</h1>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <span id="weather-temp" class="weather-badge">—</span>
+          <button id="theme-toggle" class="toggle theme-toggle" type="button" role="switch" aria-checked="true" aria-label="Switch to light mode">
+            <span class="toggle-icon toggle-icon-sun" aria-hidden="true">☀️</span>
+            <span class="toggle-thumb" aria-hidden="true"></span>
+            <span class="toggle-icon toggle-icon-moon" aria-hidden="true">🌙</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div id="app-status" class="app-status" role="status" aria-live="polite" hidden></div>
+
+    <main class="app-main no-scrollbar">
+      <section id="view-today" class="view active" aria-label="Today">
+        <p class="text-muted text-sm mb-4 leading-relaxed" data-i18n="todayIntro"></p>
+
+        <div class="card glass mb-3" style="padding:14px 18px">
+          <p id="weather-status" class="m-0 text-sm font-semibold accent-matcha" data-i18n="weatherLocating">…</p>
+          <p class="m-0 text-muted text-xs mt-1" data-i18n="weatherAutoHint"></p>
+        </div>
+
+        <p class="text-[11px] uppercase tracking-widest text-muted font-bold mb-2" data-i18n="weatherOverride"></p>
+        <div class="weather-pills weather-pills-grid">
+          <button type="button" class="pill ripple-host active" data-weather="auto" data-i18n="tagAuto">Auto</button>
+          <button type="button" class="pill ripple-host" data-weather="mild">⛅ <span data-i18n="weatherMild"></span></button>
+          <button type="button" class="pill ripple-host" data-weather="hot">☀️ <span data-i18n="weatherHot"></span></button>
+          <button type="button" class="pill ripple-host" data-weather="cold">🌧️ <span data-i18n="weatherCold"></span></button>
+        </div>
+
+        <article class="hero-card glass">
+          <img id="hero-image" class="hero-image skeleton" src="" alt="" loading="lazy">
+          <div class="hero-overlay">
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span id="weather-badge" class="weather-badge">—</span>
+              <span class="text-[11px] uppercase tracking-widest text-muted font-semibold" data-i18n="chefSelection"></span>
+            </div>
+            <h2 id="hero-title" class="font-serif text-2xl font-semibold m-0 mb-2 leading-tight">…</h2>
+            <p id="hero-desc" class="text-muted text-sm m-0 mb-3 leading-relaxed"></p>
+            <div id="hero-tags"></div>
+            <div class="hero-actions mt-3 flex flex-wrap gap-2 items-center">
+              <button type="button" id="btn-favorite" class="fav-btn ripple-host" aria-label="Favorite">♡</button>
+              <button type="button" id="btn-edit-recipe" class="edit-recipe-btn ripple-host" style="display:none" data-i18n="editRecipe"></button>
+              <button type="button" id="recipe-source-badge" class="tag saffron source-badge-btn" hidden></button>
+            </div>
+          </div>
+        </article>
+
+        <div id="chef-rationale" class="chef-rationale card glass mb-3" hidden></div>
+
+        <div id="today-slot-picker" class="slot-picker mb-3"></div>
+        <div id="today-alternatives" class="mb-3"></div>
+
+        <div class="card glass mt-3">
+          <button type="button" id="btn-start-cook-mode" class="slot-swap-btn ripple-host w-full" data-i18n="startCookMode"></button>
+        </div>
+
+        <div class="card glass">
+          <div class="portion-control">
+            <span class="font-semibold text-sm" data-i18n="changePortions"></span>
+            <div class="flex items-center gap-3">
+              <button id="portion-minus" type="button" class="portion-btn ripple-host" data-i18n="lessPortions" data-i18n-attr="aria-label">−</button>
+              <span id="portion-value" class="portion-value">2</span>
+              <button id="portion-plus" type="button" class="portion-btn ripple-host" data-i18n="morePortions" data-i18n-attr="aria-label">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card glass">
+          <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="panel-ingredients">
+            <span data-i18n="ingredients"></span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div id="panel-ingredients" class="accordion-panel">
+            <div id="ingredients-list"></div>
+          </div>
+
+          <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="panel-steps">
+            <span data-i18n="preparation"></span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div id="panel-steps" class="accordion-panel">
+            <div id="steps-list"></div>
+          </div>
+
+          <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="panel-shopping">
+            <span data-i18n="shoppingList"></span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div id="panel-shopping" class="accordion-panel">
+            <div id="shopping-scope-toggle" class="mb-3"></div>
+            <div id="shopping-list" class="pt-2"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-week" class="view" aria-label="Week">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="accent-bar"></div>
+          <h2 class="section-title m-0" data-i18n="weekTitle"></h2>
+        </div>
+        <p class="text-muted text-sm mb-4" data-i18n="weekIntro"></p>
+        <div id="week-story" class="week-story card glass mb-3" hidden></div>
+        <div class="card glass">
+          <div id="week-matrix"></div>
+        </div>
+
+        <div class="card glass mt-4">
+          <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="panel-shopping-week">
+            <span data-i18n="shoppingList"></span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div id="panel-shopping-week" class="accordion-panel">
+            <div id="shopping-scope-toggle-week" class="mb-3 pt-2"></div>
+            <div id="shopping-list-week"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-preferences" class="view" aria-label="Preferences">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="accent-bar"></div>
+          <h2 class="section-title m-0" data-i18n="prefsTitle"></h2>
+        </div>
+        <p class="text-muted text-sm mb-4" data-i18n="prefsIntro"></p>
+
+        <div class="card glass">
+          <div class="pref-row">
+            <span class="font-semibold text-sm" data-i18n="units"></span>
+            <select id="unit-select" class="pref-select">
+              <option value="metric" data-i18n="unitsMetric">Metric</option>
+              <option value="imperial" data-i18n="unitsImperial">Imperial</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="card glass mt-4">
+          <div class="pref-row" style="border-bottom:none">
+            <div>
+              <p class="m-0 font-semibold text-sm" data-i18n="resetMenu"></p>
+              <p class="m-0 text-muted text-xs mt-1" data-i18n="resetMenuHint"></p>
+            </div>
+            <button type="button" id="btn-reset-menu" class="slot-swap-btn ripple-host" data-i18n="resetMenu"></button>
+          </div>
+        </div>
+
+        <div class="card glass mt-4">
+          <p class="text-[12px] uppercase tracking-widest font-bold accent-saffron m-0 mb-2" data-i18n="excludeTags"></p>
+          <div id="exclude-tags"></div>
+        </div>
+
+        <div class="card glass mt-4">
+          <p class="text-[12px] uppercase tracking-widest font-bold accent-saffron m-0 mb-2" data-i18n="customExclusions"></p>
+          <p class="text-muted text-xs mb-3" data-i18n="customExclusionPlaceholder"></p>
+          <div class="custom-exclusion-form">
+            <input type="text" id="custom-exclusion-input" class="pref-input" data-i18n="customExclusionPlaceholder" data-i18n-attr="placeholder">
+            <button type="button" id="btn-add-exclusion" class="slot-swap-btn" data-i18n="addExclusion"></button>
+          </div>
+          <div id="custom-exclusion-list" class="exclusion-chips mt-3"></div>
+        </div>
+
+        <div class="card glass mt-4">
+          <p class="text-[12px] uppercase tracking-widest font-bold accent-saffron m-0 mb-2" data-i18n="favorites"></p>
+          <div id="favorites-list"></div>
+        </div>
+
+        <div class="card glass mt-4">
+          <p class="text-[12px] uppercase tracking-widest font-bold accent-saffron m-0 mb-2" data-i18n="recipeSource"></p>
+          <p class="text-muted text-xs mb-3" data-i18n="recipeSourceInfo"></p>
+          <div class="pref-row">
+            <div>
+              <p class="m-0 font-semibold text-sm" data-i18n="spoonacularKey"></p>
+              <p class="m-0 text-muted text-xs mt-1" data-i18n="spoonacularKeyHint"></p>
+            </div>
+            <input type="password" id="spoonacular-key" class="pref-input pref-input-wide" autocomplete="off" placeholder="…">
+          </div>
+          <p id="spoonacular-quota" class="text-muted text-xs mt-2"></p>
+          <label class="pref-row mt-2" style="cursor:pointer">
+            <div>
+              <span class="font-semibold text-sm" data-i18n="preferExotic"></span>
+              <p class="m-0 text-muted text-xs mt-1" data-i18n="preferExoticHint"></p>
+            </div>
+            <input type="checkbox" id="prefer-exotic" style="width:20px;height:20px;accent-color:var(--color-matcha)">
+          </label>
+          <div class="pref-row mt-2" style="border-bottom:none">
+            <div>
+              <p class="m-0 font-semibold text-sm" data-i18n="refreshRecipes"></p>
+              <p class="m-0 text-muted text-xs mt-1" data-i18n="refreshRecipesHint"></p>
+              <p id="recipe-pool-info" class="m-0 text-muted text-xs mt-1"></p>
+              <div id="pool-sync-wrap" class="pool-sync-wrap mt-2" hidden>
+                <div class="pool-sync-bar" aria-hidden="true"><div id="pool-sync-fill" class="pool-sync-fill"></div></div>
+                <p id="pool-sync-text" class="m-0 text-muted text-xs mt-1"></p>
+              </div>
+            </div>
+            <button type="button" id="btn-refresh-recipes" class="slot-swap-btn ripple-host" data-i18n="refreshRecipes"></button>
+          </div>
+          <div class="pref-row mt-2" style="border-bottom:none">
+            <div>
+              <p class="m-0 font-semibold text-sm" data-i18n="clearPool"></p>
+              <p class="m-0 text-muted text-xs mt-1" data-i18n="clearPoolHint"></p>
+            </div>
+            <button type="button" id="btn-clear-pool" class="slot-swap-btn ripple-host" data-i18n="clearPool"></button>
+          </div>
+        </div>
+
+        <div class="card glass mt-4">
+          <div class="pref-row">
+            <div>
+              <p class="m-0 font-semibold text-sm" data-i18n="locationWeather"></p>
+              <p class="m-0 text-muted text-xs mt-1" data-i18n="locationWeatherHint"></p>
+            </div>
+            <span class="tag" data-i18n="tagAuto">Auto</span>
+          </div>
+          <div class="pref-row" style="border-bottom:none">
+            <div>
+              <p class="m-0 font-semibold text-sm" data-i18n="offlineMode"></p>
+              <p class="m-0 text-muted text-xs mt-1" data-i18n="offlineHint"></p>
+            </div>
+            <span class="tag saffron" data-i18n="tagPwa">PWA</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <nav class="bottom-dock glass" data-i18n="navAria" data-i18n-attr="aria-label">
+    <div class="dock-nav">
+      <button type="button" class="dock-btn active ripple-host" data-view="today" aria-current="page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+        <span data-i18n="navToday"></span>
+      </button>
+      <button type="button" class="dock-btn ripple-host" data-view="week">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+          <rect x="3" y="4" width="18" height="18" rx="2"/>
+          <path d="M16 2v4M8 2v4M3 10h18"/>
+        </svg>
+        <span data-i18n="navWeek"></span>
+      </button>
+      <button type="button" class="dock-btn ripple-host" data-view="preferences">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+          <line x1="4" y1="21" x2="4" y2="14"/>
+          <line x1="4" y1="10" x2="4" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="12"/>
+          <line x1="12" y1="8" x2="12" y2="3"/>
+          <line x1="20" y1="21" x2="20" y2="16"/>
+          <line x1="20" y1="12" x2="20" y2="3"/>
+          <circle cx="4" cy="12" r="2"/>
+          <circle cx="12" cy="10" r="2"/>
+          <circle cx="20" cy="14" r="2"/>
+        </svg>
+        <span data-i18n="navPreferences"></span>
+      </button>
+    </div>
+  </nav>
+
+  <div id="cook-mode" class="cook-mode" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="cook-mode-title">
+    <div class="cook-mode-panel glass">
+      <div class="cook-mode-header">
+        <h3 id="cook-mode-title" class="font-serif m-0"></h3>
+        <button type="button" id="cook-mode-close" class="editor-close" data-i18n="closeCookMode" data-i18n-attr="aria-label">×</button>
+      </div>
+      <p id="cook-mode-phase" class="cook-mode-phase m-0"></p>
+      <div id="cook-mode-body" class="cook-mode-body"></div>
+      <div class="cook-mode-actions">
+        <button type="button" id="cook-mode-prev" class="slot-expand-btn" data-i18n="cookPrev"></button>
+        <button type="button" id="cook-mode-next" class="slot-swap-btn" data-i18n="cookNext"></button>
+      </div>
+    </div>
+  </div>
+
+  <div id="recipe-editor-modal" class="editor-modal" hidden aria-hidden="true">
+    <div class="editor-backdrop" data-close-editor></div>
+    <div class="editor-panel glass" role="dialog" aria-labelledby="editor-title">
+      <div class="editor-header">
+        <h3 id="editor-title" class="font-serif m-0" data-i18n="editRecipe"></h3>
+        <button type="button" class="editor-close" data-close-editor data-i18n="closeEditor" data-i18n-attr="aria-label">×</button>
+      </div>
+      <form id="recipe-editor-form" class="editor-form">
+        <input type="hidden" id="editor-recipe-id">
+        <label class="editor-label"><span data-i18n="editorName"></span>
+          <input type="text" id="editor-name" class="pref-input w-full">
+        </label>
+        <label class="editor-label"><span data-i18n="editorDescription"></span>
+          <textarea id="editor-description" class="pref-input w-full" rows="2"></textarea>
+        </label>
+        <label class="editor-label"><span data-i18n="editorIngredients"></span>
+          <textarea id="editor-ingredients" class="pref-input w-full" rows="5"></textarea>
+        </label>
+        <label class="editor-label"><span data-i18n="editorSteps"></span>
+          <textarea id="editor-steps" class="pref-input w-full" rows="5"></textarea>
+        </label>
+        <div class="editor-actions">
+          <button type="button" id="btn-restore-recipe" class="slot-expand-btn" data-i18n="restoreDefault"></button>
+          <button type="submit" class="slot-swap-btn" data-i18n="saveRecipe"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,403 @@
+/** UI string catalog — English app copy */
+
+const STRINGS = {
+  de: {
+    appVersion: 'GourmetOS v1.0',
+    appTitle: 'Live-Simulator',
+    navToday: 'Heute',
+    navWeek: 'Woche',
+    navPreferences: 'Präferenzen',
+    navAria: 'Hauptnavigation',
+    viewToday: 'Heute',
+    viewWeek: 'Woche',
+    viewPreferences: 'Präferenzen',
+    todayIntro:
+      'Teste Kernfunktionen: Wetter wird automatisch vom Standort gelesen, Portionen skalieren — Menü und Berechnungen reagieren automatisch.',
+    weatherAuto: 'Standort-Wetter',
+    weatherAutoHint: 'Open-Meteo · 7-Tage-Prognose · Auto passt sich dem Standort an',
+    weatherAutoResolved: 'Auto',
+    weatherUsingFallback: 'Standard-Standort (Berlin)',
+    weatherUsingSaved: 'Gespeicherter Standort',
+    weatherHot: 'Sonne / Hitze',
+    weatherCold: 'Regen / Kälte',
+    weatherMild: 'Gemäßigt',
+    weatherOverride: 'Wetter-Modus',
+    weatherLocating: 'Standort wird ermittelt…',
+    weatherUnavailable: 'Wetter nicht verfügbar',
+    chefSelection: "Chef's Selection",
+    recipeLoading: 'Rezept lädt…',
+    changePortions: 'Portionen ändern',
+    lessPortions: 'Weniger Portionen',
+    morePortions: 'Mehr Portionen',
+    ingredients: 'Zutaten (Mise en Place)',
+    preparation: 'Zubereitung',
+    shoppingList: 'Einkaufsliste (Abhaken)',
+    weekTitle: 'Planungs-Matrix',
+    weekIntro:
+      'Mahlzeiten-Dichte und Aufwand pro Tag — Rezepte passen sich Wetter und Komplexität (Mo–Fr schnell, Sa/So aufwendig) an.',
+    meals: 'Mahlzeiten',
+    less: 'Weniger',
+    more: 'Mehr',
+    prefsTitle: 'Präferenzen',
+    prefsIntro:
+      'Sprache, Maßeinheiten, Intoleranzen — der Algorithmus filtert Rezepte in Millisekunden.',
+    excludeTags: 'Ausschlüsse',
+    language: 'Sprache',
+    languageDe: 'Deutsch',
+    languageEn: 'English',
+    units: 'Maßeinheiten',
+    unitsMetric: 'Metrisch (g, kg, ml, l)',
+    unitsImperial: 'Imperial (oz, lb, fl oz, cup)',
+    locationWeather: 'Standort-Wetter',
+    locationWeatherHint: 'Automatisch via Geolocation',
+    offlineMode: 'Offline-Modus',
+    offlineHint: 'Service Worker aktiv',
+    darkMode: 'Dark Mode',
+    themeSwitchToLight: 'Zu hellem Modus wechseln',
+    themeSwitchToDark: 'Zu dunklem Modus wechseln',
+    forecastDay: 'Prognose',
+    noForecast: 'Keine Prognose',
+    pastDay: 'Vergangen',
+    weatherHotLabel: 'Sonne & Hitze',
+    weatherColdLabel: 'Regen & Kälte',
+    weatherMildLabel: 'Gemäßigt',
+    excludeFish: 'Fisch',
+    excludeShellfish: 'Schalentiere',
+    excludeBeef: 'Rind',
+    excludePork: 'Schwein',
+    excludeDuck: 'Ente',
+    excludeGluten: 'Gluten',
+    excludeDairy: 'Milchprodukte',
+    excludeEggs: 'Eier',
+    excludeCoriander: 'Koriander',
+    tagAuto: 'Auto',
+    tagPwa: 'PWA',
+    shoppingScopeDay: 'Tageseinkauf',
+    shoppingScopeWeek: 'Wocheneinkauf',
+    swapRecipe: 'Wechseln',
+    mealSlot: 'Mahlzeit',
+    viewIngredients: 'Zutaten',
+    todayHighlight: 'Heute',
+    mealType_breakfast: 'Frühstück',
+    mealType_lunch: 'Mittagessen',
+    mealType_dinner: 'Abendessen',
+    mealType_snack: 'Snack',
+    mealType_brunch: 'Brunch',
+    alternativeRecipes: 'Alternativen',
+    slotOf: 'Mahlzeit {n} von {total}',
+    customExclusions: 'Eigene Ausschlüsse',
+    customExclusionPlaceholder: 'z.B. Nüsse, Sellerie…',
+    addExclusion: 'Hinzufügen',
+    removeExclusion: 'Entfernen',
+    favorites: 'Favoriten',
+    noFavorites: 'Noch keine Favoriten — Herz auf einem Rezept tippen.',
+    addFavorite: 'Zu Favoriten',
+    removeFavorite: 'Aus Favoriten',
+    editRecipe: 'Rezept anpassen',
+    saveRecipe: 'Speichern',
+    restoreDefault: 'Standard wiederherstellen',
+    recipeSource: 'Rezeptquellen',
+    sourceCurated: 'Kuratiert',
+    sourceExternal: 'Original-Rezept',
+    sourceCustomized: 'Angepasst',
+    openSourceRecipe: 'Original-Rezept öffnen',
+    effortQuick: 'Schnell',
+    effortMedium: 'Mittel',
+    effortElaborate: 'Aufwendig',
+    effortLabel: 'Aufwand',
+    effortMinutes: 'Min',
+    effortIngredients: 'Zutaten',
+    refreshRecipes: 'Rezepte aktualisieren',
+    refreshRecipesHint: 'Lädt neue Gerichte von TheMealDB & Spoonacular',
+    refreshingRecipes: 'Rezepte werden geladen…',
+    recipesRefreshed: 'Rezeptpool aktualisiert',
+    spoonacularKey: 'Spoonacular API-Key',
+    spoonacularKeyHint: 'Optional — nur lokal gespeichert, für persönliche Nutzung',
+    spoonacularQuota: 'Spoonacular-Kontingent',
+    spoonacularQuotaLeft: '{n} Anfragen übrig',
+    preferExotic: 'Ausgefallene Zutaten bevorzugen',
+    preferExoticHint: 'Mehr exotische Zutaten wie bei Jamie Oliver',
+    recipePoolInfo: '{n} Rezepte im Pool',
+    recipePoolOffline: '{n} Rezepte verfügbar (offline) · Ziel: {target}',
+    recipePoolStats: '{offline} offline · {index} im Index · {premium} Premium · Ziel {target}',
+    recipePoolNoSpoonacular: 'TheMealDB-Modus (ohne Spoonacular)',
+    recipePoolUpdated: 'Zuletzt aktualisiert: {date}',
+    poolSyncProgress: '{n}/{target} Rezepte geladen',
+    onlineOnlyRecipe: 'Vollständiges Rezept online',
+    openFullRecipe: 'Original auf {source} öffnen',
+    premiumBadge: 'Premium',
+    clearPool: 'Pool leeren',
+    clearPoolHint: 'Entfernt alle lokal gespeicherten Rezeptkörper aus IndexedDB',
+    clearPoolConfirm: 'Rezept-Pool wirklich leeren? Offline-Rezepte müssen neu synchronisiert werden.',
+    recipeSourceInfo: 'Dynamisch von TheMealDB (BBC Good Food, Gordon Ramsay …) + optional Spoonacular. Bilder passen zum Gericht.',
+    editorName: 'Name',
+    editorDescription: 'Beschreibung',
+    editorIngredients: 'Zutaten (eine pro Zeile: Menge Einheit Name)',
+    editorSteps: 'Schritte (eine pro Zeile)',
+    closeEditor: 'Schließen'
+  },
+  en: {
+    appVersion: 'GourmetOS v1.0',
+    appTitle: "Today's Menu",
+    navToday: 'Today',
+    navWeek: 'Week',
+    navPreferences: 'Preferences',
+    navAria: 'Main navigation',
+    viewToday: 'Today',
+    viewWeek: 'Week',
+    viewPreferences: 'Preferences',
+    todayIntro:
+      'Dishes matched to today\'s weather — adjust portions and check off ingredients as you shop.',
+    weatherAuto: 'Location weather',
+    weatherAutoHint: 'Open-Meteo · 7-day forecast · Auto adapts to your location',
+    weatherAutoResolved: 'Auto',
+    weatherUsingFallback: 'Default location (Berlin)',
+    weatherUsingSaved: 'Saved location',
+    weatherHot: 'Sun / Heat',
+    weatherCold: 'Rain / Cold',
+    weatherMild: 'Mild',
+    weatherOverride: 'Weather mode',
+    weatherLocating: 'Locating…',
+    weatherUnavailable: 'Weather unavailable',
+    chefSelection: "Chef's Selection",
+    chefRationaleTitle: 'Why this dish',
+    chefRationaleWhyNow: 'Why now',
+    chefRationaleTaste: 'Taste arc',
+    chefRationaleMove: 'Chef move',
+    chefRationaleOccasion: 'Occasion',
+    chefRationaleSkill: 'Skill focus',
+    chefRationaleMise: 'Mise en place',
+    taste_bright: 'Bright',
+    taste_rich: 'Rich',
+    taste_fresh: 'Fresh',
+    taste_smoky: 'Smoky',
+    taste_comforting: 'Comforting',
+    taste_clean: 'Clean',
+    taste_umami: 'Umami',
+    occasion_solo: 'Solo night',
+    'occasion_date_night': 'Date night',
+    occasion_family: 'Family dinner',
+    'occasion_rainy_evening': 'Rainy evening',
+    'occasion_summer_lunch': 'Summer lunch',
+    skill_searing: 'Searing',
+    skill_braising: 'Braising',
+    skill_plating: 'Plating',
+    'skill_knife_work': 'Knife work',
+    recipeLoading: 'Loading recipe…',
+    appLoading: 'Planning your menu…',
+    statusSyncing: 'Syncing recipe library…',
+    statusOffline: 'Offline — cached recipes available',
+    statusOnline: 'Back online',
+    emptyShoppingList: 'No ingredients for this scope — try Week view or add meals.',
+    altReason_faster: 'Faster',
+    altReason_lighter: 'Lighter',
+    altReason_richer: 'Richer',
+    altReason_chefier: 'Chefier',
+    altReason_differentProtein: 'Different protein',
+    altReason_differentMood: 'Different mood',
+    altReason_swap: 'Try this instead',
+    weekCompositionSummary: 'Composition {score}/100 · {proteins} proteins · {cuisines} cuisines · {tastes} taste profiles',
+    hidePantryBasics: 'Hide pantry basics (salt, oil, flour)',
+    buyTiming_fresh: 'Buy fresh',
+    buyTiming_now: 'Buy now',
+    buyTiming_pantry: 'Pantry',
+    startCookMode: 'Start Cook Mode',
+    closeCookMode: 'Close',
+    cookPrev: 'Back',
+    cookNext: 'Next step',
+    cookStartSteps: 'Start cooking',
+    cookFinish: 'Finish & plate',
+    cookPhaseMise: 'Mise en place',
+    cookPhaseStep: 'Step {n} of {total}',
+    cookPhaseFinish: 'Finish & plate',
+    cookFinishHint: 'Rest the dish briefly, add fresh herbs or acid, and serve while aromas are still rising.',
+    cookTimerCue: 'Timing cue: ~{min} min for this step',
+    changePortions: 'Adjust portions',
+    lessPortions: 'Fewer portions',
+    morePortions: 'More portions',
+    ingredients: 'Ingredients (Mise en Place)',
+    preparation: 'Preparation',
+    shoppingList: 'Shopping list (check off)',
+    weekTitle: 'Planning matrix',
+    weekIntro:
+      'Meals per day and effort level — recipes adapt to weather and complexity (Mon–Fri quick, Sat/Sun elaborate).',
+    meals: 'Meals',
+    less: 'Less',
+    more: 'More',
+    prefsTitle: 'Preferences',
+    prefsIntro:
+      'Language, units, exclusions — the algorithm filters recipes in milliseconds.',
+    excludeTags: 'Exclusions',
+    language: 'Language',
+    languageDe: 'Deutsch',
+    languageEn: 'English',
+    units: 'Units',
+    unitsMetric: 'Metric (g, kg, ml, l)',
+    unitsImperial: 'Imperial (oz, lb, fl oz, cup)',
+    locationWeather: 'Location weather',
+    locationWeatherHint: 'Automatic via geolocation',
+    offlineMode: 'Offline mode',
+    offlineHint: 'Service worker active',
+    darkMode: 'Dark mode',
+    themeSwitchToLight: 'Switch to light mode',
+    themeSwitchToDark: 'Switch to dark mode',
+    forecastDay: 'Forecast',
+    noForecast: 'No forecast',
+    pastDay: 'Past',
+    weatherHotLabel: 'Sun & heat',
+    weatherColdLabel: 'Rain & cold',
+    weatherMildLabel: 'Mild',
+    excludeFish: 'Fish',
+    excludeShellfish: 'Shellfish',
+    excludeBeef: 'Beef',
+    excludePork: 'Pork',
+    excludeDuck: 'Duck',
+    excludeGluten: 'Gluten',
+    excludeDairy: 'Dairy',
+    excludeEggs: 'Eggs',
+    excludeCoriander: 'Coriander',
+    tagAuto: 'Auto',
+    tagPwa: 'PWA',
+    shoppingScopeDay: 'Today\'s shop',
+    shoppingScopeWeek: 'Weekly shop',
+    swapRecipe: 'Swap',
+    mealSlot: 'Meal',
+    viewIngredients: 'Ingredients',
+    todayHighlight: 'Today',
+    mealType_breakfast: 'Breakfast',
+    mealType_lunch: 'Lunch',
+    mealType_dinner: 'Dinner',
+    mealType_snack: 'Snack',
+    mealType_brunch: 'Brunch',
+    alternativeRecipes: 'Alternatives',
+    slotOf: 'Meal {n} of {total}',
+    customExclusions: 'Custom exclusions',
+    customExclusionPlaceholder: 'e.g. nuts, celery…',
+    addExclusion: 'Add',
+    removeExclusion: 'Remove',
+    favorites: 'Favorites',
+    noFavorites: 'No favorites yet — tap the heart on any recipe.',
+    addFavorite: 'Add to favorites',
+    removeFavorite: 'Remove from favorites',
+    editRecipe: 'Customize recipe',
+    saveRecipe: 'Save',
+    restoreDefault: 'Restore default',
+    recipeSource: 'Recipe sources',
+    recipeSourceInfo: 'Curated from BBC Good Food, Gordon Ramsay and other top sources via TheMealDB — each photo matches its dish.',
+    sourceCurated: 'Curated',
+    sourceExternal: 'Original recipe',
+    sourceCustomized: 'Customized',
+    openSourceRecipe: 'Open original recipe',
+    effortQuick: 'Quick',
+    effortMedium: 'Medium',
+    effortElaborate: 'Elaborate',
+    effortLabel: 'Effort',
+    effortMinutes: 'min',
+    effortIngredients: 'ingredients',
+    refreshRecipes: 'Refresh recipes',
+    refreshRecipesHint: 'Loads new dishes from TheMealDB & Spoonacular',
+    refreshingRecipes: 'Loading recipes…',
+    recipesRefreshed: 'Recipe pool updated',
+    spoonacularKey: 'Spoonacular API key',
+    spoonacularKeyHint: 'Optional — stored locally only, for personal use',
+    spoonacularQuota: 'Spoonacular quota',
+    spoonacularQuotaLeft: '{n} requests left',
+    preferExotic: 'Prefer exotic ingredients',
+    preferExoticHint: 'More unusual ingredients, Jamie Oliver style',
+    recipePoolInfo: '{n} recipes in pool',
+    recipePoolOffline: '{n} recipes available (offline) · target: {target}',
+    recipePoolStats: '{offline} offline · {index} in index · {premium} premium · target {target}',
+    recipePoolNoSpoonacular: 'TheMealDB mode (no Spoonacular)',
+    recipePoolUpdated: 'Last updated: {date}',
+    poolSyncProgress: '{n}/{target} recipes loaded',
+    onlineOnlyRecipe: 'Full recipe online only',
+    openFullRecipe: 'Open original on {source}',
+    premiumBadge: 'Premium',
+    clearPool: 'Clear pool',
+    clearPoolHint: 'Removes all locally stored recipe bodies from IndexedDB',
+    clearPoolConfirm: 'Clear the recipe pool? Offline recipes must be synced again.',
+    recipeSourceInfo: 'Dynamic from TheMealDB (BBC Good Food, Gordon Ramsay …) + optional Spoonacular. Photos match each dish.',
+    editorName: 'Name',
+    editorDescription: 'Description',
+    editorIngredients: 'Ingredients (one per line: amount unit name)',
+    editorSteps: 'Steps (one per line)',
+    closeEditor: 'Close',
+    resetMenu: 'Reset menu',
+    resetMenuHint: 'Pick new dishes for your plan now (does not re-sync the recipe pool)',
+    resetMenuDone: 'Menu reset'
+  }
+};
+
+const DAY_LABELS = {
+  en: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+};
+
+let locale = 'en';
+const listeners = new Set();
+
+export function getLocale() {
+  return 'en';
+}
+
+export function setLocale(_next) {
+  locale = 'en';
+  document.documentElement.lang = 'en';
+  listeners.forEach((fn) => fn('en'));
+}
+
+export function onLocaleChange(fn) {
+  listeners.add(fn);
+  return () => listeners.delete(fn);
+}
+
+/** Translate a UI string key */
+export function t(key) {
+  return STRINGS.en[key] ?? key;
+}
+
+export function getDayLabels() {
+  return DAY_LABELS.en;
+}
+
+export function getExcludeOptions() {
+  return [
+    { id: 'fish', labelKey: 'excludeFish' },
+    { id: 'shellfish', labelKey: 'excludeShellfish' },
+    { id: 'beef', labelKey: 'excludeBeef' },
+    { id: 'pork', labelKey: 'excludePork' },
+    { id: 'duck', labelKey: 'excludeDuck' },
+    { id: 'gluten', labelKey: 'excludeGluten' },
+    { id: 'dairy', labelKey: 'excludeDairy' },
+    { id: 'eggs', labelKey: 'excludeEggs' },
+    { id: 'coriander', labelKey: 'excludeCoriander' }
+  ];
+}
+
+export function weatherLabelKey(tag) {
+  if (tag === 'hot') return 'weatherHotLabel';
+  if (tag === 'cold') return 'weatherColdLabel';
+  return 'weatherMildLabel';
+}
+
+export function effortLabelKey(effort) {
+  if (effort === 'quick') return 'effortQuick';
+  if (effort === 'elaborate') return 'effortElaborate';
+  return 'effortMedium';
+}
+
+/** Apply data-i18n attributes in the static shell */
+export function applyStaticI18n(root = document) {
+  root.querySelectorAll('[data-i18n]').forEach((el) => {
+    const key = el.dataset.i18n;
+    const value = t(key);
+    if (el.dataset.i18nAttr) {
+      el.setAttribute(el.dataset.i18nAttr, value);
+    } else {
+      el.textContent = value;
+    }
+  });
+
+  root.querySelectorAll('option[data-i18n]').forEach((el) => {
+    el.textContent = t(el.dataset.i18n);
+  });
+}

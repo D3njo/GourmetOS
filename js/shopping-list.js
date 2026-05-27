@@ -1,0 +1,90 @@
+import { scaleIngredients, formatAmount } from './portions.js';
+import { getShoppingListState, saveShoppingListState, getPreferences } from './storage.js';
+import { enrichShoppingGroups, normalizeIngredientName } from './ingredient-normalize.js';
+import { getLocale } from './i18n.js';
+
+const CATEGORY_ORDER = ['produce', 'butchery', 'dry_goods', 'spices'];
+
+export function aggregateIngredients(recipeEntries) {
+  const merged = new Map();
+
+  for (const entry of recipeEntries) {
+    const { recipe, portions = recipe.base_portions } = entry;
+    const scaled = scaleIngredients(recipe.ingredients, recipe.base_portions, portions);
+
+    for (const ing of scaled) {
+      const normalizedName = normalizeIngredientName(ing.name);
+      const key = `${normalizedName}|${ing.unit}|${ing.category}`;
+      if (merged.has(key)) {
+        merged.get(key).amount += ing.amount;
+      } else {
+        merged.set(key, { ...ing, name: ing.name, normalizedName });
+      }
+    }
+  }
+
+  return Array.from(merged.values());
+}
+
+export function groupByCategory(ingredients, categoryMeta = {}) {
+  const groups = {};
+  const locale = getLocale();
+
+  for (const cat of CATEGORY_ORDER) {
+    groups[cat] = [];
+  }
+
+  for (const ing of ingredients) {
+    const cat = ing.category || 'dry_goods';
+    if (!groups[cat]) groups[cat] = [];
+    groups[cat].push(ing);
+  }
+
+  return CATEGORY_ORDER.filter((c) => groups[c]?.length).map((cat) => ({
+    id: cat,
+    label: categoryMeta[cat]?.label || cat,
+    emoji: categoryMeta[cat]?.emoji || '📦',
+    items: groups[cat].sort((a, b) => a.name.localeCompare(b.name, locale))
+  }));
+}
+
+/**
+ * Build shopping list from weekly plan.
+ * @param {object} options - { scope: 'day'|'week', dateStr: ISO date for day scope }
+ */
+export function buildShoppingListFromPlan(weeklyPlan, portions, categoryMeta, options = {}) {
+  const { scope = 'week', dateStr } = options;
+  const entries = [];
+
+  const days =
+    scope === 'day'
+      ? weeklyPlan.filter((d) => d.dateStr === (dateStr || new Date().toISOString().slice(0, 10)))
+      : weeklyPlan;
+
+  for (const day of days) {
+    for (const recipe of day.recipes) {
+      if (recipe) entries.push({ recipe, portions });
+    }
+  }
+
+  const ingredients = aggregateIngredients(entries);
+  const hidePantry = options.hidePantry ?? !!getPreferences().hidePantryBasics;
+  return enrichShoppingGroups(groupByCategory(ingredients, categoryMeta), { hidePantry });
+}
+
+export function getItemKey(groupId, name, unit) {
+  return `${groupId}::${name}::${unit}`;
+}
+
+export function toggleItemChecked(key) {
+  const state = getShoppingListState();
+  state[key] = !state[key];
+  saveShoppingListState(state);
+  return state[key];
+}
+
+export function isItemChecked(key) {
+  return !!getShoppingListState()[key];
+}
+
+export { CATEGORY_ORDER };

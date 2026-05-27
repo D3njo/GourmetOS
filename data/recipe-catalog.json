@@ -1,0 +1,3411 @@
+{
+  "version": 5,
+  "provider": "TheMealDB",
+  "fineDining": {
+    "qualityDomains": [
+      "bbcgoodfood.com",
+      "goodtoknow.co.uk",
+      "jamieoliver.com",
+      "seriouseats.com"
+    ],
+    "cuisineBoost": [
+      "French",
+      "British",
+      "Japanese",
+      "Italian",
+      "Spanish"
+    ],
+    "spoonacularQueries": [
+      "gourmet",
+      "fine dining",
+      "Michelin",
+      "haute cuisine"
+    ]
+  },
+  "discovery": {
+    "preferredSourceDomains": [
+      "bbcgoodfood.com",
+      "goodtoknow.co.uk",
+      "jamieoliver.com"
+    ],
+    "categories": {
+      "hot": [
+        "Seafood",
+        "Starter",
+        "Vegetarian",
+        "Chicken"
+      ],
+      "cold": [
+        "Beef",
+        "Lamb",
+        "Soup",
+        "Pasta",
+        "Pork"
+      ],
+      "mild": [
+        "Chicken",
+        "Pasta",
+        "Side",
+        "Breakfast"
+      ]
+    },
+    "randomBatchSize": 6,
+    "maxPoolSize": 1200,
+    "categorySamplePerGroup": 4
+  },
+  "meals": [
+    {
+      "idMeal": "52803",
+      "slug": "beef-wellington",
+      "rating": 4.9,
+      "source_label_de": "Gordon Ramsay · GoodtoKnow",
+      "source_label_en": "Gordon Ramsay · GoodtoKnow",
+      "technique_de": "Pastete & Ofen",
+      "technique_en": "Pastry & Roast",
+      "weather_tags": [
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [
+        "beef",
+        "gluten",
+        "eggs"
+      ],
+      "name_de": "Beef Wellington nach Gordon Ramsay",
+      "name_en": "Gordon Ramsay's Beef Wellington",
+      "description_de": "Klassiker der britischen Haute Cuisine — Rinderfilet in Pilz-Duxelles und Parma-Schinken, in Blätterteig gebacken.",
+      "description_en": "British haute cuisine classic — fillet wrapped in mushroom duxelles, Parma ham and puff pastry.",
+      "tier": "premium",
+      "chef": "Gordon Ramsay",
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "tasting-menu"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via pastry & roast, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "date-night",
+      "skill_focus": "braising",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "52904",
+      "slug": "beef-bourguignon",
+      "rating": 4.8,
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Schmoren & Rotwein",
+      "technique_en": "Braise & Red Wine",
+      "weather_tags": [
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [
+        "beef",
+        "gluten"
+      ],
+      "name_de": "Bœuf Bourguignon",
+      "name_en": "Beef Bourguignon",
+      "description_de": "Französischer Schmorbraten mit Rotwein — tief, reich, ideal für regnerische Abende.",
+      "description_en": "French red-wine braise — deep, rich comfort for rainy evenings.",
+      "tier": "premium",
+      "chef": "BBC Good Food",
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "tasting-menu"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via braise & red wine, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "date-night",
+      "skill_focus": "braising",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "52907",
+      "slug": "duck-confit",
+      "rating": 4.8,
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Confit & Schmoren",
+      "technique_en": "Confit & Braise",
+      "weather_tags": [
+        "mild",
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [
+        "duck"
+      ],
+      "name_de": "Enten-Confit",
+      "name_en": "Duck Confit",
+      "description_de": "Langsam in Entenfett gegarte Keule — knusprige Haut, zartes Fleisch.",
+      "description_en": "Leg slowly cooked in duck fat — crisp skin, tender meat.",
+      "tier": "premium",
+      "chef": "BBC Good Food",
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "tasting-menu"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via confit & braise, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "date-night",
+      "skill_focus": "braising",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "52962",
+      "slug": "eggs-benedict",
+      "rating": 4.8,
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Brunch & Hollandaise",
+      "technique_en": "Brunch & Hollandaise",
+      "weather_tags": [
+        "rain",
+        "cold",
+        "mild"
+      ],
+      "meal_type": [
+        "brunch",
+        "breakfast"
+      ],
+      "exclude_tags": [
+        "eggs",
+        "gluten",
+        "dairy"
+      ],
+      "name_de": "Eggs Benedict mit Lachs",
+      "name_en": "Salmon Eggs Benedict",
+      "description_de": "Pochierte Eier, Hollandaise und Lachs — Sonntags-Brunch-Klassiker.",
+      "description_en": "Poached eggs, hollandaise and salmon — Sunday brunch classic.",
+      "tier": "premium",
+      "chef": "BBC Good Food",
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "tasting-menu"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via brunch & hollandaise, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "date-night",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "52903",
+      "slug": "french-onion-soup",
+      "rating": 4.8,
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Zwiebel & Käse",
+      "technique_en": "Onion & Cheese",
+      "weather_tags": [
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "lunch",
+        "dinner"
+      ],
+      "exclude_tags": [
+        "dairy",
+        "gluten"
+      ],
+      "name_de": "Französische Zwiebelsuppe",
+      "name_en": "French Onion Soup",
+      "description_de": "Karamellisierte Zwiebeln, Brühe, überbackener Käse — Pariser Klassiker.",
+      "description_en": "Caramelized onions, broth, gratinéed cheese — Parisian classic.",
+      "tier": "premium",
+      "chef": "BBC Good Food",
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "tasting-menu"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via onion & cheese, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "date-night",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53151",
+      "slug": "paella",
+      "rating": 4.8,
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Reis & Safran",
+      "technique_en": "Rice & Saffron",
+      "weather_tags": [
+        "mild",
+        "hot",
+        "sunny"
+      ],
+      "meal_type": [
+        "dinner",
+        "lunch"
+      ],
+      "exclude_tags": [
+        "shellfish"
+      ],
+      "name_de": "Paella",
+      "name_en": "Paella",
+      "description_de": "Spanischer Safranreis mit Meeresfrüchten — festlich und aromatisch.",
+      "description_en": "Spanish saffron rice with seafood — festive and aromatic.",
+      "tier": "premium",
+      "chef": "BBC Good Food",
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "tasting-menu"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via rice & saffron, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "date-night",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "52832",
+      "slug": "coq-au-vin",
+      "rating": 4.7,
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Schmoren & Rotwein",
+      "technique_en": "Braise & Red Wine",
+      "weather_tags": [
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [
+        "gluten"
+      ],
+      "name_de": "Coq au Vin",
+      "name_en": "Coq au Vin",
+      "description_de": "Huhn langsam in Rotwein geschmort — rustikale französische Meisterklasse.",
+      "description_en": "Chicken slowly braised in red wine — rustic French masterclass.",
+      "tier": "premium",
+      "chef": "BBC Good Food",
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "tasting-menu"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via braise & red wine, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "date-night",
+      "skill_focus": "braising",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53383",
+      "slug": "ramen-noodles",
+      "rating": 4.7,
+      "source_label_de": "TheMealDB · Community",
+      "source_label_en": "TheMealDB · Community",
+      "technique_de": "Brühe & Nudeln",
+      "technique_en": "Broth & Noodles",
+      "weather_tags": [
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "lunch",
+        "dinner"
+      ],
+      "exclude_tags": [
+        "eggs",
+        "gluten"
+      ],
+      "name_de": "Ramen mit Ei",
+      "name_en": "Ramen Noodles with Boiled Egg",
+      "description_de": "Aromatische Brühe und Nudeln — Wärme für kalte Regentage.",
+      "description_en": "Aromatic broth and noodles — warmth for cold rainy days.",
+      "tier": "premium",
+      "chef": null,
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "tasting-menu"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via broth & noodles, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "date-night",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53065",
+      "slug": "sushi",
+      "rating": 4.7,
+      "source_label_de": "TheMealDB · Community",
+      "source_label_en": "TheMealDB · Community",
+      "technique_de": "Roh & Reis",
+      "technique_en": "Raw & Rice",
+      "weather_tags": [
+        "hot",
+        "sunny",
+        "mild"
+      ],
+      "meal_type": [
+        "lunch",
+        "dinner"
+      ],
+      "exclude_tags": [
+        "fish"
+      ],
+      "name_de": "Sushi-Platte",
+      "name_en": "Sushi",
+      "description_de": "Frischer Fisch und Reis — leicht und kühlend.",
+      "description_en": "Fresh fish and rice — light and cooling.",
+      "tier": "premium",
+      "chef": null,
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "tasting-menu"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via raw & rice, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "date-night",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "52802",
+      "slug": "fish-pie",
+      "rating": 4.7,
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Auflauf & Kartoffel",
+      "technique_en": "Pie & Potato",
+      "weather_tags": [
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "dinner",
+        "lunch"
+      ],
+      "exclude_tags": [
+        "fish",
+        "dairy",
+        "gluten"
+      ],
+      "name_de": "Fish Pie",
+      "name_en": "Fish Pie",
+      "description_de": "Cremiger Fisch unter Kartoffelhaube — britischer Wohlfühlklassiker.",
+      "description_en": "Creamy fish under a potato crust — British comfort classic.",
+      "tier": "premium",
+      "chef": "BBC Good Food",
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "tasting-menu"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via pie & potato, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "date-night",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53238",
+      "slug": "beef-pho",
+      "rating": 4.7,
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Brühe & Kräuter",
+      "technique_en": "Broth & Herbs",
+      "weather_tags": [
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "lunch",
+        "dinner"
+      ],
+      "exclude_tags": [
+        "beef",
+        "gluten"
+      ],
+      "name_de": "Beef Pho",
+      "name_en": "Beef Pho",
+      "description_de": "Vietnamesische Rinderbrühe mit Reisnudeln und Kräutern.",
+      "description_en": "Vietnamese beef broth with rice noodles and herbs.",
+      "tier": "premium",
+      "chef": "BBC Good Food",
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "tasting-menu"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via broth & herbs, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "date-night",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "52836",
+      "slug": "seafood-fideua",
+      "rating": 4.7,
+      "source_label_de": "TheMealDB · Community",
+      "source_label_en": "TheMealDB · Community",
+      "technique_de": "Paella & Meeresfrüchte",
+      "technique_en": "Paella & Seafood",
+      "weather_tags": [
+        "mild",
+        "hot"
+      ],
+      "meal_type": [
+        "dinner",
+        "lunch"
+      ],
+      "exclude_tags": [
+        "shellfish",
+        "fish"
+      ],
+      "name_de": "Seafood Fideuà",
+      "name_en": "Seafood Fideuà",
+      "description_de": "Valencianische Nudel-Paella mit Meeresfrüchten.",
+      "description_en": "Valencian noodle paella with seafood.",
+      "tier": "premium",
+      "chef": null,
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "tasting-menu"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via paella & seafood, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "date-night",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53006",
+      "slug": "moussaka",
+      "rating": 4.7,
+      "source_label_de": "TheMealDB · Community",
+      "source_label_en": "TheMealDB · Community",
+      "technique_de": "Auflauf & Aubergine",
+      "technique_en": "Bake & Aubergine",
+      "weather_tags": [
+        "rain",
+        "cold",
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [
+        "dairy",
+        "eggs"
+      ],
+      "name_de": "Moussaka",
+      "name_en": "Moussaka",
+      "description_de": "Griechischer Schichtauflauf mit Hack und Béchamel.",
+      "description_en": "Greek layered bake with mince and béchamel.",
+      "tier": "premium",
+      "chef": null,
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "tasting-menu"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via bake & aubergine, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "date-night",
+      "skill_focus": "plating",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "52881",
+      "slug": "steak-kidney-pie",
+      "rating": 4.7,
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Pastete & Schmorbraten",
+      "technique_en": "Pie & Braise",
+      "weather_tags": [
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [
+        "beef",
+        "gluten"
+      ],
+      "name_de": "Steak & Kidney Pie",
+      "name_en": "Steak and Kidney Pie",
+      "description_de": "Herzhafte britische Pastete — tief und deftig.",
+      "description_en": "Hearty British pie — deep and satisfying.",
+      "tier": "premium",
+      "chef": "BBC Good Food",
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "tasting-menu"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via pie & braise, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "date-night",
+      "skill_focus": "braising",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "52823",
+      "slug": "salmon-prawn-risotto",
+      "rating": 4.6,
+      "source_label_de": "Rangemaster",
+      "source_label_en": "Rangemaster",
+      "technique_de": "Risotto & Meeresfrüchte",
+      "technique_en": "Risotto & Seafood",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner",
+        "lunch"
+      ],
+      "exclude_tags": [
+        "fish",
+        "shellfish",
+        "dairy"
+      ],
+      "name_de": "Lachs-Garnelen-Risotto",
+      "name_en": "Salmon Prawn Risotto",
+      "description_de": "Cremiges Risotto mit Lachs und Garnelen — ausgewogen und elegant.",
+      "description_en": "Creamy risotto with salmon and prawns — balanced and elegant.",
+      "tier": "premium",
+      "chef": null,
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "tasting-menu"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via risotto & seafood, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "date-night",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53173",
+      "slug": "quick-gazpacho",
+      "rating": 4.6,
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Kalte Suppe",
+      "technique_en": "Cold Soup",
+      "weather_tags": [
+        "hot",
+        "sunny"
+      ],
+      "meal_type": [
+        "lunch",
+        "snack"
+      ],
+      "exclude_tags": [
+        "gluten"
+      ],
+      "name_de": "Schnelle Gazpacho",
+      "name_en": "Quick Gazpacho",
+      "description_de": "Kalte spanische Tomatensuppe — erfrischend bei Hitze.",
+      "description_en": "Chilled Spanish tomato soup — refreshing in the heat.",
+      "tier": "premium",
+      "chef": "BBC Good Food",
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "tasting-menu"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via cold soup, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "date-night",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53194",
+      "slug": "tom-yum",
+      "rating": 4.6,
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Suppe & Zitrus",
+      "technique_en": "Soup & Citrus",
+      "weather_tags": [
+        "hot",
+        "mild"
+      ],
+      "meal_type": [
+        "lunch",
+        "dinner"
+      ],
+      "exclude_tags": [
+        "shellfish"
+      ],
+      "name_de": "Tom Yum mit Garnelen",
+      "name_en": "Tom Yum Soup with Prawns",
+      "description_de": "Thailändische Sauer-Scharf-Suppe — lebhaft und aromatisch.",
+      "description_en": "Thai hot-and-sour soup — vibrant and aromatic.",
+      "tier": "premium",
+      "chef": "BBC Good Food",
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "tasting-menu"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via soup & citrus, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "date-night",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "52946",
+      "slug": "kung-po-prawns",
+      "rating": 4.6,
+      "source_label_de": "TheMealDB · Community",
+      "source_label_en": "TheMealDB · Community",
+      "technique_de": "Wok & Chili",
+      "technique_en": "Wok & Chili",
+      "weather_tags": [
+        "hot",
+        "mild"
+      ],
+      "meal_type": [
+        "dinner",
+        "lunch"
+      ],
+      "exclude_tags": [
+        "shellfish"
+      ],
+      "name_de": "Kung Pao Garnelen",
+      "name_en": "Kung Po Prawns",
+      "description_de": "Wok-geschwenkte Garnelen mit Erdnüssen und Chili.",
+      "description_en": "Wok-fried prawns with peanuts and chili.",
+      "tier": "premium",
+      "chef": null,
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "tasting-menu"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via wok & chili, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "date-night",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "52852",
+      "slug": "tuna-nicoise",
+      "rating": 4.6,
+      "source_label_de": "TheMealDB · Community",
+      "source_label_en": "TheMealDB · Community",
+      "technique_de": "Salat & Nicoise",
+      "technique_en": "Salad & Niçoise",
+      "weather_tags": [
+        "hot",
+        "sunny"
+      ],
+      "meal_type": [
+        "lunch",
+        "snack"
+      ],
+      "exclude_tags": [
+        "fish",
+        "eggs"
+      ],
+      "name_de": "Thunfisch Salade Niçoise",
+      "name_en": "Tuna Nicoise",
+      "description_de": "Französischer Salat mit Thunfisch, Ei und Bohnen — leicht und kühl.",
+      "description_en": "French salad with tuna, egg and beans — light and cool.",
+      "tier": "premium",
+      "chef": null,
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "tasting-menu"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via salad & niçoise, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "date-night",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "52821",
+      "slug": "laksa",
+      "rating": 4.6,
+      "source_label_de": "TheMealDB · Community",
+      "source_label_en": "TheMealDB · Community",
+      "technique_de": "Curry & Nudeln",
+      "technique_en": "Curry & Noodles",
+      "weather_tags": [
+        "hot",
+        "mild"
+      ],
+      "meal_type": [
+        "lunch",
+        "dinner"
+      ],
+      "exclude_tags": [
+        "shellfish",
+        "fish"
+      ],
+      "name_de": "Laksa mit King Prawns",
+      "name_en": "Laksa King Prawn Noodles",
+      "description_de": "Malaysische Kokos-Curry-Nudelsuppe — würzig und aromatisch.",
+      "description_en": "Malaysian coconut curry noodle soup — spicy and aromatic.",
+      "tier": "premium",
+      "chef": null,
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "tasting-menu"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via curry & noodles, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "date-night",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "52840",
+      "slug": "clam-chowder",
+      "rating": 4.6,
+      "source_label_de": "TheMealDB · Community",
+      "source_label_en": "TheMealDB · Community",
+      "technique_de": "Cremesuppe",
+      "technique_en": "Cream Soup",
+      "weather_tags": [
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "lunch",
+        "dinner"
+      ],
+      "exclude_tags": [
+        "shellfish",
+        "dairy"
+      ],
+      "name_de": "Clam Chowder",
+      "name_en": "Clam Chowder",
+      "description_de": "Cremige Muschelsuppe — New-England-Klassiker für kalte Tage.",
+      "description_en": "Creamy clam soup — New England classic for cold days.",
+      "tier": "premium",
+      "chef": null,
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "a-la-carte"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via cream soup, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "52959",
+      "slug": "baked-salmon-fennel",
+      "rating": 4.5,
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Ofen & Fenchel",
+      "technique_en": "Roast & Fennel",
+      "weather_tags": [
+        "hot",
+        "mild",
+        "sunny"
+      ],
+      "meal_type": [
+        "lunch",
+        "dinner"
+      ],
+      "exclude_tags": [
+        "fish"
+      ],
+      "name_de": "Gebackener Lachs mit Fenchel & Tomaten",
+      "name_en": "Baked Salmon with Fennel & Tomatoes",
+      "description_de": "Leichtes Ofengericht — perfekt für warme Tage.",
+      "description_en": "Light oven bake — perfect for warm days.",
+      "tier": "premium",
+      "chef": "BBC Good Food",
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "a-la-carte"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via roast & fennel, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "braising",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "52835",
+      "slug": "fettuccine-alfredo",
+      "rating": 4.5,
+      "source_label_de": "TheMealDB · Community",
+      "source_label_en": "TheMealDB · Community",
+      "technique_de": "Pasta & Sahne",
+      "technique_en": "Pasta & Cream",
+      "weather_tags": [
+        "mild",
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "dinner",
+        "lunch"
+      ],
+      "exclude_tags": [
+        "dairy",
+        "gluten"
+      ],
+      "name_de": "Fettuccine Alfredo",
+      "name_en": "Fettuccine Alfredo",
+      "description_de": "Seidige Pasta in Parmesansauce — deftig und ausgewogen.",
+      "description_en": "Silky pasta in parmesan cream — hearty yet balanced.",
+      "tier": "premium",
+      "chef": null,
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "classic",
+        "service": "a-la-carte"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via pasta & cream, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53239",
+      "slug": "bang-bang-prawn-salad",
+      "rating": 4.5,
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Salat & Chili-Mayo",
+      "technique_en": "Salad & Chili Mayo",
+      "weather_tags": [
+        "hot",
+        "sunny"
+      ],
+      "meal_type": [
+        "lunch",
+        "snack"
+      ],
+      "exclude_tags": [
+        "shellfish",
+        "eggs"
+      ],
+      "name_de": "Bang Bang Garnelen-Salat",
+      "name_en": "Bang Bang Prawn Salad",
+      "description_de": "Knackiger Salat mit scharfer Mayo — frisch bei Sommerhitze.",
+      "description_en": "Crisp salad with spicy mayo — fresh for summer heat.",
+      "tier": "premium",
+      "chef": "BBC Good Food",
+      "cuisine": "European",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "a-la-carte"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via salad & chili mayo, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "52834",
+      "slug": "beef-stroganoff",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Russian",
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Beef",
+      "technique_en": "Beef",
+      "weather_tags": [
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Beef stroganoff",
+      "name_en": "Beef stroganoff",
+      "description_de": "Beef stroganoff",
+      "description_en": "Balanced and versatile for everyday cooking — rich flavors via sear & braise, suited to medium effort.",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "a-la-carte"
+      },
+      "taste_profile": "rich",
+      "why_this_works": "Balanced and versatile for everyday cooking — rich flavors via sear & braise, suited to medium effort.",
+      "chef_move": "Sear protein deeply before adding liquid — color equals flavor.",
+      "occasion": "family",
+      "skill_focus": "searing",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "52824",
+      "slug": "beef-sunday-roast",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "British",
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Beef",
+      "technique_en": "Beef",
+      "weather_tags": [
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Beef Sunday Roast",
+      "name_en": "Beef Sunday Roast",
+      "description_de": "Beef Sunday Roast",
+      "description_en": "Balanced and versatile for everyday cooking — rich flavors via sear & braise, suited to medium effort.",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "a-la-carte"
+      },
+      "taste_profile": "rich",
+      "why_this_works": "Balanced and versatile for everyday cooking — rich flavors via sear & braise, suited to medium effort.",
+      "chef_move": "Sear protein deeply before adding liquid — color equals flavor.",
+      "occasion": "family",
+      "skill_focus": "searing",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53279",
+      "slug": "baklava-with-spiced-nuts-ricotta-chocola",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Turkish",
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Dessert",
+      "technique_en": "Dessert",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Baklava with spiced nuts, ricotta & chocolate",
+      "name_en": "Baklava with spiced nuts, ricotta & chocolate",
+      "description_de": "Baklava with spiced nuts, ricotta & chocolate",
+      "description_en": "Balanced and versatile for everyday cooking — rich flavors via bake & set, suited to medium effort.",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "a-la-carte"
+      },
+      "taste_profile": "rich",
+      "why_this_works": "Balanced and versatile for everyday cooking — rich flavors via bake & set, suited to medium effort.",
+      "chef_move": "Cool slightly before serving so textures set beautifully.",
+      "occasion": "family",
+      "skill_focus": "plating",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53169",
+      "slug": "ajo-blanco",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Spanish",
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Starter",
+      "technique_en": "Starter",
+      "weather_tags": [
+        "hot",
+        "mild"
+      ],
+      "meal_type": [
+        "dinner",
+        "snack"
+      ],
+      "exclude_tags": [],
+      "name_de": "Ajo blanco",
+      "name_en": "Ajo blanco",
+      "description_de": "Ajo blanco",
+      "description_en": "Balanced and versatile for everyday cooking — clean flavors via quick sear, suited to medium effort.",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "a-la-carte"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via quick sear, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "searing",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53103",
+      "slug": "barramundi-with-moroccan-spices",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Australian",
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Seafood",
+      "technique_en": "Seafood",
+      "weather_tags": [
+        "hot",
+        "mild",
+        "sunny"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Barramundi with Moroccan spices",
+      "name_en": "Barramundi with Moroccan spices",
+      "description_de": "Barramundi with Moroccan spices",
+      "description_en": "Balanced and versatile for everyday cooking — fresh flavors via sear & butter, suited to medium effort.",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "a-la-carte"
+      },
+      "taste_profile": "fresh",
+      "why_this_works": "Balanced and versatile for everyday cooking — fresh flavors via sear & butter, suited to medium effort.",
+      "chef_move": "Baste with butter in the last minute for gloss and aroma.",
+      "occasion": "family",
+      "skill_focus": "searing",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "52848",
+      "slug": "bean-sausage-hotpot",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "British",
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Miscellaneous",
+      "technique_en": "Miscellaneous",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Bean & Sausage Hotpot",
+      "name_en": "Bean & Sausage Hotpot",
+      "description_de": "Bean & Sausage Hotpot",
+      "description_en": "Balanced and versatile for everyday cooking — clean flavors via classic technique, suited to medium effort.",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "a-la-carte"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via classic technique, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53242",
+      "slug": "barbecue-pork-buns",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Vietnamese",
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Pork",
+      "technique_en": "Pork",
+      "weather_tags": [
+        "rain",
+        "cold",
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Barbecue pork buns",
+      "name_en": "Barbecue pork buns",
+      "description_de": "Barbecue pork buns",
+      "description_en": "Balanced and versatile for everyday cooking — clean flavors via roast & glaze, suited to medium effort.",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "a-la-carte"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via roast & glaze, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "braising",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53147",
+      "slug": "arroz-con-gambas-y-calamar",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Spanish",
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Seafood",
+      "technique_en": "Seafood",
+      "weather_tags": [
+        "hot",
+        "mild",
+        "sunny"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Arroz con gambas y calamar",
+      "name_en": "Arroz con gambas y calamar",
+      "description_de": "Arroz con gambas y calamar",
+      "description_en": "Balanced and versatile for everyday cooking — fresh flavors via sear & butter, suited to medium effort.",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "a-la-carte"
+      },
+      "taste_profile": "fresh",
+      "why_this_works": "Balanced and versatile for everyday cooking — fresh flavors via sear & butter, suited to medium effort.",
+      "chef_move": "Baste with butter in the last minute for gloss and aroma.",
+      "occasion": "family",
+      "skill_focus": "searing",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53156",
+      "slug": "arroz-al-horno-baked-rice",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Spanish",
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Pork",
+      "technique_en": "Pork",
+      "weather_tags": [
+        "rain",
+        "cold",
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Arroz al horno (baked rice)",
+      "name_en": "Arroz al horno (baked rice)",
+      "description_de": "Arroz al horno (baked rice)",
+      "description_en": "Balanced and versatile for everyday cooking — clean flavors via roast & glaze, suited to medium effort.",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "a-la-carte"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via roast & glaze, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "braising",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53276",
+      "slug": "apricot-turkish-delight-mess",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Turkish",
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Dessert",
+      "technique_en": "Dessert",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Apricot & Turkish delight mess",
+      "name_en": "Apricot & Turkish delight mess",
+      "description_de": "Apricot & Turkish delight mess",
+      "description_en": "Balanced and versatile for everyday cooking — rich flavors via bake & set, suited to medium effort.",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "a-la-carte"
+      },
+      "taste_profile": "rich",
+      "why_this_works": "Balanced and versatile for everyday cooking — rich flavors via bake & set, suited to medium effort.",
+      "chef_move": "Cool slightly before serving so textures set beautifully.",
+      "occasion": "family",
+      "skill_focus": "plating",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "52894",
+      "slug": "battenberg-cake",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "British",
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Dessert",
+      "technique_en": "Dessert",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Battenberg Cake",
+      "name_en": "Battenberg Cake",
+      "description_de": "Battenberg Cake",
+      "description_en": "Balanced and versatile for everyday cooking — rich flavors via bake & set, suited to medium effort.",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "a-la-carte"
+      },
+      "taste_profile": "rich",
+      "why_this_works": "Balanced and versatile for everyday cooking — rich flavors via bake & set, suited to medium effort.",
+      "chef_move": "Cool slightly before serving so textures set beautifully.",
+      "occasion": "family",
+      "skill_focus": "plating",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53158",
+      "slug": "air-fryer-patatas-bravas",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Spanish",
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Vegetarian",
+      "technique_en": "Vegetarian",
+      "weather_tags": [
+        "hot",
+        "mild",
+        "sunny"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Air fryer patatas bravas",
+      "name_en": "Air fryer patatas bravas",
+      "description_de": "Air fryer patatas bravas",
+      "description_en": "Balanced and versatile for everyday cooking — clean flavors via roast & herb, suited to medium effort.",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "a-la-carte"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via roast & herb, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "braising",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53262",
+      "slug": "adana-kebab",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Turkish",
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Lamb",
+      "technique_en": "Lamb",
+      "weather_tags": [
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Adana kebab",
+      "name_en": "Adana kebab",
+      "description_de": "Adana kebab",
+      "description_en": "Balanced and versatile for everyday cooking — rich flavors via slow roast, suited to medium effort.",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "a-la-carte"
+      },
+      "taste_profile": "rich",
+      "why_this_works": "Balanced and versatile for everyday cooking — rich flavors via slow roast, suited to medium effort.",
+      "chef_move": "Rest the protein before slicing to keep juices inside.",
+      "occasion": "family",
+      "skill_focus": "braising",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53278",
+      "slug": "aubergine-hummus-grills",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Turkish",
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Vegetarian",
+      "technique_en": "Vegetarian",
+      "weather_tags": [
+        "hot",
+        "mild",
+        "sunny"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Aubergine & hummus grills",
+      "name_en": "Aubergine & hummus grills",
+      "description_de": "Aubergine & hummus grills",
+      "description_en": "Balanced and versatile for everyday cooking — clean flavors via roast & herb, suited to medium effort.",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "a-la-carte"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via roast & herb, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "braising",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53267",
+      "slug": "aubergine-couscous-salad",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Turkish",
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Vegetarian",
+      "technique_en": "Vegetarian",
+      "weather_tags": [
+        "hot",
+        "mild",
+        "sunny"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Aubergine couscous salad",
+      "name_en": "Aubergine couscous salad",
+      "description_de": "Aubergine couscous salad",
+      "description_en": "Balanced and versatile for everyday cooking — clean flavors via roast & herb, suited to medium effort.",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "service": "a-la-carte"
+      },
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via roast & herb, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "braising",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53099",
+      "slug": "aussie-burgers",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Australian",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Australian"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Aussie Burgers",
+      "name_en": "Aussie Burgers",
+      "description_de": "Aussie Burgers",
+      "description_en": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53307",
+      "slug": "beetroot-red-cabbage-sauerkraut",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Polish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Polish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "hot",
+        "mild",
+        "sunny"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Beetroot & red cabbage sauerkraut",
+      "name_en": "Beetroot & red cabbage sauerkraut",
+      "description_de": "Beetroot & red cabbage sauerkraut",
+      "description_en": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53300",
+      "slug": "bigos-polish-hunter-s-stew",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Polish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Polish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Bigos (Polish hunter's stew)",
+      "name_en": "Bigos (Polish hunter's stew)",
+      "description_de": "Bigos (Polish hunter's stew)",
+      "description_en": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53100",
+      "slug": "blueberry-lemon-friands",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Australian",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Australian"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Blueberry & lemon friands",
+      "name_en": "Blueberry & lemon friands",
+      "description_de": "Blueberry & lemon friands",
+      "description_en": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53311",
+      "slug": "borsch",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Ukrainian",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Ukrainian"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Borsch",
+      "name_en": "Borsch",
+      "description_de": "Borsch",
+      "description_en": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53036",
+      "slug": "boxty-breakfast",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Irish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Irish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "rain",
+        "cold",
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Boxty Breakfast",
+      "name_en": "Boxty Breakfast",
+      "description_de": "Boxty Breakfast",
+      "description_en": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53256",
+      "slug": "cacik",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Turkish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Turkish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Cacik",
+      "name_en": "Cacik",
+      "description_de": "Cacik",
+      "description_en": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53310",
+      "slug": "challah",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Polish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Polish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Challah",
+      "name_en": "Challah",
+      "description_de": "Challah",
+      "description_en": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53161",
+      "slug": "chicken-chorizo-rice-pot",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Spanish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Spanish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Chicken & chorizo rice pot",
+      "name_en": "Chicken & chorizo rice pot",
+      "description_de": "Chicken & chorizo rice pot",
+      "description_en": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53186",
+      "slug": "chicken-with-saffron-raisins-pine-nuts",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Spanish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Spanish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Chicken with saffron, raisins & pine nuts",
+      "name_en": "Chicken with saffron, raisins & pine nuts",
+      "description_de": "Chicken with saffron, raisins & pine nuts",
+      "description_en": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "53101",
+      "slug": "chocolate-coconut-squares",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Australian",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Australian"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Chocolate Coconut Squares",
+      "name_en": "Chocolate Coconut Squares",
+      "description_de": "Chocolate Coconut Squares",
+      "description_en": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "taste_profile": "clean",
+      "why_this_works": "Balanced and versatile for everyday cooking — clean flavors via classic, suited to medium effort.",
+      "chef_move": "Season in layers — salt early, acid and herbs at the finish.",
+      "occasion": "family",
+      "skill_focus": "knife-work",
+      "mise_en_place": [
+        "Read through all steps once before starting"
+      ],
+      "weather_mood": "mild-balanced"
+    },
+    {
+      "idMeal": "52990",
+      "slug": "christmas-cake",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "British",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · British"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Christmas cake",
+      "name_en": "Christmas cake",
+      "description_de": "Christmas cake",
+      "description_en": "Christmas cake"
+    },
+    {
+      "idMeal": "53153",
+      "slug": "churros",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Spanish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Spanish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Churros",
+      "name_en": "Churros",
+      "description_de": "Churros",
+      "description_en": "Churros"
+    },
+    {
+      "idMeal": "52988",
+      "slug": "classic-christmas-pudding",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "British",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · British"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Classic Christmas pudding",
+      "name_en": "Classic Christmas pudding",
+      "description_de": "Classic Christmas pudding",
+      "description_en": "Classic Christmas pudding"
+    },
+    {
+      "idMeal": "53148",
+      "slug": "crema-catalana",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Spanish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Spanish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Crema Catalana",
+      "name_en": "Crema Catalana",
+      "description_de": "Crema Catalana",
+      "description_en": "Crema Catalana"
+    },
+    {
+      "idMeal": "53098",
+      "slug": "cumberland-pie",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "British",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · British"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Cumberland Pie",
+      "name_en": "Cumberland Pie",
+      "description_de": "Cumberland Pie",
+      "description_en": "Cumberland Pie"
+    },
+    {
+      "idMeal": "52899",
+      "slug": "dundee-cake",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "British",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · British"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Dundee cake",
+      "name_en": "Dundee cake",
+      "description_de": "Dundee cake",
+      "description_en": "Dundee cake"
+    },
+    {
+      "idMeal": "53149",
+      "slug": "ensaimada",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Spanish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Spanish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Ensaimada",
+      "name_en": "Ensaimada",
+      "description_de": "Ensaimada",
+      "description_en": "Ensaimada"
+    },
+    {
+      "idMeal": "52918",
+      "slug": "fish-stew-with-rouille",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "France",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · France"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "hot",
+        "mild",
+        "sunny"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Fish Stew with Rouille",
+      "name_en": "Fish Stew with Rouille",
+      "description_de": "Fish Stew with Rouille",
+      "description_en": "Fish Stew with Rouille"
+    },
+    {
+      "idMeal": "53179",
+      "slug": "ham-croquetas",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Spanish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Spanish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "rain",
+        "cold",
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Ham croquetas",
+      "name_en": "Ham croquetas",
+      "description_de": "Ham croquetas",
+      "description_en": "Ham croquetas"
+    },
+    {
+      "idMeal": "53035",
+      "slug": "ham-hock-colcannon",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Irish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Irish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "rain",
+        "cold",
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Ham hock colcannon",
+      "name_en": "Ham hock colcannon",
+      "description_de": "Ham hock colcannon",
+      "description_en": "Ham hock colcannon"
+    },
+    {
+      "idMeal": "53253",
+      "slug": "imam-bayildi-with-bbq-lamb-tzatziki",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Turkish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Turkish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Imam bayildi with BBQ lamb & tzatziki",
+      "name_en": "Imam bayildi with BBQ lamb & tzatziki",
+      "description_de": "Imam bayildi with BBQ lamb & tzatziki",
+      "description_en": "Imam bayildi with BBQ lamb & tzatziki"
+    },
+    {
+      "idMeal": "53145",
+      "slug": "jamon-wild-garlic-croquetas",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Spanish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Spanish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "rain",
+        "cold",
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Jamon & wild garlic croquetas",
+      "name_en": "Jamon & wild garlic croquetas",
+      "description_de": "Jamon & wild garlic croquetas",
+      "description_en": "Jamon & wild garlic croquetas"
+    },
+    {
+      "idMeal": "52937",
+      "slug": "jerk-chicken-with-rice-peas",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Jamaican",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Jamaican"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Jerk chicken with rice & peas",
+      "name_en": "Jerk chicken with rice & peas",
+      "description_de": "Jerk chicken with rice & peas",
+      "description_en": "Jerk chicken with rice & peas"
+    },
+    {
+      "idMeal": "52808",
+      "slug": "lamb-rogan-josh",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "India",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · India"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Lamb Rogan josh",
+      "name_en": "Lamb Rogan josh",
+      "description_de": "Lamb Rogan josh",
+      "description_en": "Lamb Rogan josh"
+    },
+    {
+      "idMeal": "52843",
+      "slug": "lamb-tagine",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Moroccan",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Moroccan"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Lamb Tagine",
+      "name_en": "Lamb Tagine",
+      "description_de": "Lamb Tagine",
+      "description_en": "Lamb Tagine"
+    },
+    {
+      "idMeal": "53104",
+      "slug": "lamingtons",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Australian",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Australian"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Lamingtons",
+      "name_en": "Lamingtons",
+      "description_de": "Lamingtons",
+      "description_en": "Lamingtons"
+    },
+    {
+      "idMeal": "52844",
+      "slug": "lasagne",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Italian",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Italian"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild",
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Lasagne",
+      "name_en": "Lasagne",
+      "description_de": "Lasagne",
+      "description_en": "Lasagne"
+    },
+    {
+      "idMeal": "52991",
+      "slug": "mince-pies",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "British",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · British"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Mince Pies",
+      "name_en": "Mince Pies",
+      "description_de": "Mince Pies",
+      "description_en": "Mince Pies"
+    },
+    {
+      "idMeal": "53304",
+      "slug": "mini-bundt-cakes",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Polish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Polish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Mini bundt cakes",
+      "name_en": "Mini bundt cakes",
+      "description_de": "Mini bundt cakes",
+      "description_en": "Mini bundt cakes"
+    },
+    {
+      "idMeal": "53191",
+      "slug": "pad-thai",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Thai",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Thai"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "hot",
+        "mild",
+        "sunny"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Pad Thai",
+      "name_en": "Pad Thai",
+      "description_de": "Pad Thai",
+      "description_en": "Pad Thai"
+    },
+    {
+      "idMeal": "53152",
+      "slug": "pan-fried-hake-white-bean-chorizo-broth",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Spanish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Spanish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "hot",
+        "mild",
+        "sunny"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Pan-fried hake, white bean & chorizo broth",
+      "name_en": "Pan-fried hake, white bean & chorizo broth",
+      "description_de": "Pan-fried hake, white bean & chorizo broth",
+      "description_en": "Pan-fried hake, white bean & chorizo broth"
+    },
+    {
+      "idMeal": "53192",
+      "slug": "panang-chicken-curry-kaeng-panang-gai",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Thai",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Thai"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Panang chicken curry (kaeng panang gai)",
+      "name_en": "Panang chicken curry (kaeng panang gai)",
+      "description_de": "Panang chicken curry (kaeng panang gai)",
+      "description_en": "Panang chicken curry (kaeng panang gai)"
+    },
+    {
+      "idMeal": "53292",
+      "slug": "piernik-polish-gingerbread",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Polish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Polish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Piernik (Polish gingerbread)",
+      "name_en": "Piernik (Polish gingerbread)",
+      "description_de": "Piernik (Polish gingerbread)",
+      "description_en": "Piernik (Polish gingerbread)"
+    },
+    {
+      "idMeal": "53160",
+      "slug": "pisto-con-huevos",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Spanish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Spanish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "hot",
+        "mild",
+        "sunny"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Pisto con huevos",
+      "name_en": "Pisto con huevos",
+      "description_de": "Pisto con huevos",
+      "description_en": "Pisto con huevos"
+    },
+    {
+      "idMeal": "53298",
+      "slug": "polish-doughnuts-p-czki",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Polish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Polish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Polish doughnuts (Pączki)",
+      "name_en": "Polish doughnuts (Pączki)",
+      "description_de": "Polish doughnuts (Pączki)",
+      "description_en": "Polish doughnuts (Pączki)"
+    },
+    {
+      "idMeal": "53162",
+      "slug": "pollo-en-pepitoria",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Spanish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Spanish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Pollo en pepitoria",
+      "name_en": "Pollo en pepitoria",
+      "description_de": "Pollo en pepitoria",
+      "description_en": "Pollo en pepitoria"
+    },
+    {
+      "idMeal": "52847",
+      "slug": "pork-cassoulet",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "France",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · France"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "rain",
+        "cold",
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Pork Cassoulet",
+      "name_en": "Pork Cassoulet",
+      "description_de": "Pork Cassoulet",
+      "description_en": "Pork Cassoulet"
+    },
+    {
+      "idMeal": "53306",
+      "slug": "pork-rib-bortsch",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Polish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Polish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "rain",
+        "cold",
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Pork rib bortsch",
+      "name_en": "Pork rib bortsch",
+      "description_de": "Pork rib bortsch",
+      "description_en": "Pork rib bortsch"
+    },
+    {
+      "idMeal": "53244",
+      "slug": "prawn-noodle-salad-with-crispy-shallots",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Vietnamese",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Vietnamese"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "hot",
+        "mild",
+        "sunny"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Prawn & noodle salad with crispy shallots",
+      "name_en": "Prawn & noodle salad with crispy shallots",
+      "description_de": "Prawn & noodle salad with crispy shallots",
+      "description_en": "Prawn & noodle salad with crispy shallots"
+    },
+    {
+      "idMeal": "53200",
+      "slug": "prawn-stir-fry",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Thai",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Thai"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "hot",
+        "mild",
+        "sunny"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Prawn stir-fry",
+      "name_en": "Prawn stir-fry",
+      "description_de": "Prawn stir-fry",
+      "description_en": "Prawn stir-fry"
+    },
+    {
+      "idMeal": "53174",
+      "slug": "prawns-with-romesco-sauce",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Spanish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Spanish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "hot",
+        "mild",
+        "sunny"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Prawns with Romesco sauce",
+      "name_en": "Prawns with Romesco sauce",
+      "description_de": "Prawns with Romesco sauce",
+      "description_en": "Prawns with Romesco sauce"
+    },
+    {
+      "idMeal": "53227",
+      "slug": "rice-paper-dumplings",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Vietnamese",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Vietnamese"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "rain",
+        "cold",
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Rice paper dumplings",
+      "name_en": "Rice paper dumplings",
+      "description_de": "Rice paper dumplings",
+      "description_en": "Rice paper dumplings"
+    },
+    {
+      "idMeal": "53308",
+      "slug": "rye-bread",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Polish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Polish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Rye bread",
+      "name_en": "Rye bread",
+      "description_de": "Rye bread",
+      "description_en": "Rye bread"
+    },
+    {
+      "idMeal": "53233",
+      "slug": "salt-pepper-squid",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Vietnamese",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Vietnamese"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "hot",
+        "mild",
+        "sunny"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Salt & pepper squid",
+      "name_en": "Salt & pepper squid",
+      "description_de": "Salt & pepper squid",
+      "description_en": "Salt & pepper squid"
+    },
+    {
+      "idMeal": "53296",
+      "slug": "sauerkraut-pierogi",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Polish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Polish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "hot",
+        "mild",
+        "sunny"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Sauerkraut pierogi",
+      "name_en": "Sauerkraut pierogi",
+      "description_de": "Sauerkraut pierogi",
+      "description_en": "Sauerkraut pierogi"
+    },
+    {
+      "idMeal": "53314",
+      "slug": "sauerkraut-pierogii",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Ukrainian",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Ukrainian"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "hot",
+        "mild",
+        "sunny"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Sauerkraut pierogii",
+      "name_en": "Sauerkraut pierogii",
+      "description_de": "Sauerkraut pierogii",
+      "description_en": "Sauerkraut pierogii"
+    },
+    {
+      "idMeal": "53247",
+      "slug": "sea-bass-with-sizzled-ginger-chilli-spri",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Vietnamese",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Vietnamese"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "hot",
+        "mild",
+        "sunny"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Sea bass with sizzled ginger, chilli & spring onions",
+      "name_en": "Sea bass with sizzled ginger, chilli & spring onions",
+      "description_de": "Sea bass with sizzled ginger, chilli & spring onions",
+      "description_en": "Sea bass with sizzled ginger, chilli & spring onions"
+    },
+    {
+      "idMeal": "53260",
+      "slug": "slow-roast-lamb-with-cinnamon-fennel-cit",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Turkish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Turkish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Slow-roast lamb with cinnamon, fennel & citrus",
+      "name_en": "Slow-roast lamb with cinnamon, fennel & citrus",
+      "description_de": "Slow-roast lamb with cinnamon, fennel & citrus",
+      "description_en": "Slow-roast lamb with cinnamon, fennel & citrus"
+    },
+    {
+      "idMeal": "53302",
+      "slug": "slow-roasted-ham-with-lemon-garlic-sage",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Polish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Polish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "rain",
+        "cold",
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Slow-roasted ham with lemon, garlic & sage",
+      "name_en": "Slow-roasted ham with lemon, garlic & sage",
+      "description_de": "Slow-roasted ham with lemon, garlic & sage",
+      "description_en": "Slow-roasted ham with lemon, garlic & sage"
+    },
+    {
+      "idMeal": "52964",
+      "slug": "smoked-haddock-kedgeree",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "India",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · India"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner",
+        "breakfast",
+        "brunch"
+      ],
+      "exclude_tags": [],
+      "name_de": "Smoked Haddock Kedgeree",
+      "name_en": "Smoked Haddock Kedgeree",
+      "description_de": "Smoked Haddock Kedgeree",
+      "description_en": "Smoked Haddock Kedgeree"
+    },
+    {
+      "idMeal": "52982",
+      "slug": "spaghetti-alla-carbonara",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Italian",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Italian"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild",
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "dinner",
+        "breakfast",
+        "brunch"
+      ],
+      "exclude_tags": [],
+      "name_de": "Spaghetti alla Carbonara",
+      "name_en": "Spaghetti alla Carbonara",
+      "description_de": "Spaghetti alla Carbonara",
+      "description_en": "Spaghetti alla Carbonara"
+    },
+    {
+      "idMeal": "53177",
+      "slug": "spaghetti-with-spanish-flavours",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Spanish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Spanish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "rain",
+        "cold",
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Spaghetti with Spanish flavours",
+      "name_en": "Spaghetti with Spanish flavours",
+      "description_de": "Spaghetti with Spanish flavours",
+      "description_en": "Spaghetti with Spanish flavours"
+    },
+    {
+      "idMeal": "53183",
+      "slug": "spanish-meatballs-with-clams-chorizo-squ",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Spanish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Spanish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Spanish meatballs with clams, chorizo & squid",
+      "name_en": "Spanish meatballs with clams, chorizo & squid",
+      "description_de": "Spanish meatballs with clams, chorizo & squid",
+      "description_en": "Spanish meatballs with clams, chorizo & squid"
+    },
+    {
+      "idMeal": "53175",
+      "slug": "spanish-style-slow-cooked-lamb-shoulder-",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Spanish",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Spanish"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "rain",
+        "cold"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Spanish-style slow-cooked lamb shoulder & beans",
+      "name_en": "Spanish-style slow-cooked lamb shoulder & beans",
+      "description_de": "Spanish-style slow-cooked lamb shoulder & beans",
+      "description_en": "Spanish-style slow-cooked lamb shoulder & beans"
+    },
+    {
+      "idMeal": "52849",
+      "slug": "spinach-ricotta-cannelloni",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Italian",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Italian"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "hot",
+        "mild",
+        "sunny"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Spinach & Ricotta Cannelloni",
+      "name_en": "Spinach & Ricotta Cannelloni",
+      "description_de": "Spinach & Ricotta Cannelloni",
+      "description_en": "Spinach & Ricotta Cannelloni"
+    },
+    {
+      "idMeal": "53214",
+      "slug": "thai-green-chicken-soup",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Thai",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Thai"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner",
+        "lunch"
+      ],
+      "exclude_tags": [],
+      "name_de": "Thai green chicken soup",
+      "name_en": "Thai green chicken soup",
+      "description_de": "Thai green chicken soup",
+      "description_en": "Thai green chicken soup"
+    },
+    {
+      "idMeal": "53203",
+      "slug": "thai-rice-noodle-salad",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Thai",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Thai"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "hot",
+        "mild",
+        "sunny"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Thai rice noodle salad",
+      "name_en": "Thai rice noodle salad",
+      "description_de": "Thai rice noodle salad",
+      "description_en": "Thai rice noodle salad"
+    },
+    {
+      "idMeal": "53213",
+      "slug": "thai-style-fish-broth-with-greens",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Thai",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Thai"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "hot",
+        "mild",
+        "sunny"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Thai-style fish broth with greens",
+      "name_en": "Thai-style fish broth with greens",
+      "description_de": "Thai-style fish broth with greens",
+      "description_en": "Thai-style fish broth with greens"
+    },
+    {
+      "idMeal": "52912",
+      "slug": "three-cheese-souffles",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "France",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · France"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Three-cheese souffles",
+      "name_en": "Three-cheese souffles",
+      "description_de": "Three-cheese souffles",
+      "description_en": "Three-cheese souffles"
+    },
+    {
+      "idMeal": "53032",
+      "slug": "tonkatsu-pork",
+      "tier": "premium",
+      "rating": 4.5,
+      "chef": "BBC Good Food",
+      "cuisine": "Japanese",
+      "fineDiningMeta": {
+        "style": "haute-cuisine",
+        "inspiration": "BBC Good Food · Japanese"
+      },
+      "source_label_de": "BBC Good Food",
+      "source_label_en": "BBC Good Food",
+      "technique_de": "Klassisch",
+      "technique_en": "Classic",
+      "weather_tags": [
+        "rain",
+        "cold",
+        "mild"
+      ],
+      "meal_type": [
+        "dinner"
+      ],
+      "exclude_tags": [],
+      "name_de": "Tonkatsu pork",
+      "name_en": "Tonkatsu pork",
+      "description_de": "Tonkatsu pork",
+      "description_en": "Tonkatsu pork"
+    }
+  ]
+}

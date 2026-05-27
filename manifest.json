@@ -1,0 +1,35 @@
+{
+  "name": "GourmetOS",
+  "short_name": "GourmetOS",
+  "id": "./",
+  "description": "Weather-adaptive haute cuisine meal planner with dynamic portions",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#121212",
+  "theme_color": "#7CB342",
+  "lang": "en",
+  "categories": ["food", "lifestyle", "utilities"],
+  "icons": [
+    {
+      "src": "./assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Today's menu",
+      "url": "./index.html",
+      "description": "Open today's chef selection"
+    }
+  ]
+}
