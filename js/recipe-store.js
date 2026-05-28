@@ -4,8 +4,7 @@ import { getItem, setItem, STORAGE_KEYS } from './storage.js';
 
 const KEYS = {
   favorites: 'gourmetos_favorites',
-  overrides: 'gourmetos_recipe_overrides',
-  generated: 'gourmetos_generated_recipes'
+  overrides: 'gourmetos_recipe_overrides'
 };
 
 export function getFavorites() {
@@ -66,22 +65,6 @@ export function applyRecipeOverride(recipe) {
     base_portions: override.base_portions ?? recipe.base_portions,
     isCustomized: true
   };
-}
-
-export function getGeneratedRecipes() {
-  return getItem(KEYS.generated, []);
-}
-
-export function saveGeneratedRecipes(recipes) {
-  setItem(KEYS.generated, recipes);
-}
-
-export function addGeneratedRecipe(recipe) {
-  const list = getGeneratedRecipes();
-  if (list.some((r) => r.id === recipe.id)) return list;
-  list.push(recipe);
-  saveGeneratedRecipes(list);
-  return list;
 }
 
 /** Clone recipe fields safe for editing */

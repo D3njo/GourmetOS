@@ -170,24 +170,6 @@ export async function searchSpoonacularRecipes({ maxReadyTime = null, number = 8
   }
 }
 
-export async function fetchSpoonacularPool() {
-  if (!getSpoonacularApiKey()) return [];
-
-  const [quick, elaborate] = await Promise.all([
-    searchSpoonacularRecipes({ maxReadyTime: 45, number: 5 }),
-    searchSpoonacularRecipes({ number: 5 })
-  ]);
-
-  const seen = new Set();
-  const merged = [];
-  for (const r of [...quick, ...elaborate]) {
-    if (seen.has(r.id)) continue;
-    seen.add(r.id);
-    merged.push(r);
-  }
-  return merged;
-}
-
 export function isSpoonacularConfigured() {
   return !!getSpoonacularApiKey();
 }

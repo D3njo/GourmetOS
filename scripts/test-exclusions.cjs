@@ -87,11 +87,11 @@ async function main() {
   const stubCurry = { name: 'Thai Green Curry', ingredients: [], exclude_tags: [] };
   assert(
     isRecipeAllowed(stubCurry, { presetTags: ['shellfish'] }),
-    'stub without ingredients may pass name-only'
+    'stub without ingredients may pass name-only shellfish check'
   );
   assert(
-    isRecipeAllowed(stubCurry, { dietPreferences: ['vegetarian'] }),
-    'stub curry may pass vegetarian on name alone'
+    !isRecipeAllowed(stubCurry, { dietPreferences: ['vegetarian'] }),
+    'stub curry blocked for vegetarian until ingredients sync'
   );
 
   const seaBass = { name: 'Sea bass with ginger', ingredients: [], exclude_tags: [] };

@@ -4,30 +4,52 @@ import { $ } from './dom.js';
 
 export function updateAppStatus() {
   const el = $('#app-status');
-  if (!el) return;
+  const textEl = $('#app-status-text');
+  const reloadBtn = $('#btn-sw-reload');
+  if (!el || !textEl) return;
 
   if (state.appLoading) {
-    el.textContent = t('appLoading');
+    textEl.textContent = t('appLoading');
     el.dataset.status = 'loading';
     el.hidden = false;
+    if (reloadBtn) reloadBtn.hidden = true;
+    return;
+  }
+
+  if (state.swUpdateReady) {
+    textEl.textContent = t('statusUpdateAvailable');
+    el.dataset.status = 'update';
+    el.hidden = false;
+    if (reloadBtn) reloadBtn.hidden = false;
     return;
   }
 
   if (state.poolSyncing) {
-    el.textContent = t('statusSyncing');
+    textEl.textContent = t('statusSyncing');
     el.dataset.status = 'syncing';
     el.hidden = false;
+    if (reloadBtn) reloadBtn.hidden = true;
+    return;
+  }
+
+  if (state.strictFilterPending) {
+    textEl.textContent = t('statusStrictFilterPending');
+    el.dataset.status = 'filter-pending';
+    el.hidden = false;
+    if (reloadBtn) reloadBtn.hidden = true;
     return;
   }
 
   if (state.offline) {
-    el.textContent = t('statusOffline');
+    textEl.textContent = t('statusOffline');
     el.dataset.status = 'offline';
     el.hidden = false;
+    if (reloadBtn) reloadBtn.hidden = true;
     return;
   }
 
   el.hidden = true;
+  if (reloadBtn) reloadBtn.hidden = true;
 }
 
 export function bindConnectivityStatus() {

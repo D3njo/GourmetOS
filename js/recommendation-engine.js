@@ -141,7 +141,3 @@ export function rankRecipes(recipes, context = {}) {
     })
     .sort((a, b) => b.score - a.score);
 }
-
-export function reasonLabelKey(reason) {
-  return `recReason_${reason}`;
-}

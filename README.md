@@ -65,12 +65,15 @@ Premium recipes are ranked via `tier`, `qualityScore`, `chef`, and `fineDiningMe
 
 ```bash
 npm test               # syntax + data + measures + exclusions + diet
-npm run test:syntax    # ES module syntax check
+npm run test:syntax    # ES module syntax check (all js/ files)
 npm run test:data      # Validate JSON data + compliance rules
 npm run test:measures  # Measure parsing (no NaN in formatAmount)
 npm run test:exclusions
 npm run test:diet
 npm run build:data     # Rebuild index + bundled from TheMealDB
+npm run patch:data     # Merge catalog editorial into index + bundled
+npm run patch:tags     # Refresh exclude_tags on index entries
+npm run expand:catalog # Expand premium catalog seeds from index
 npm run curate:catalog # Curate premium catalog seeds
 npm run icons:build    # Regenerate PWA icons from assets/icons/icon.svg
 ```
@@ -82,7 +85,7 @@ python3 -m http.server 8080
 # open http://localhost:8080
 ```
 
-After a service worker update, hard-reload the page (current cache version in `js/config.js`, e.g. **v32**). First launch runs a background sync to fill IndexedDB.
+After a service worker update, use the in-app **Reload** banner or hard-reload the page (current cache version in `js/config.js`, e.g. **v32**). First launch runs a background sync to fill IndexedDB.
 
 ## Browser smoke test
 

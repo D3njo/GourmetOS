@@ -16,5 +16,7 @@ export const state = {
   expandedSlots: new Set(),
   appLoading: true,
   poolSyncing: false,
-  offline: typeof navigator !== 'undefined' ? !navigator.onLine : false
+  offline: typeof navigator !== 'undefined' ? !navigator.onLine : false,
+  swUpdateReady: false,
+  strictFilterPending: false
 };

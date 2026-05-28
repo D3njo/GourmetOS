@@ -86,6 +86,9 @@ function checkShellMarkup() {
   if (!html.includes('data-view="today"')) fail('index.html missing dock today button');
   if (!html.includes('data-view="week"')) fail('index.html missing dock week button');
   if (!html.includes('data-view="preferences"')) fail('index.html missing dock preferences button');
+  if (!html.includes('skip-to-main')) fail('index.html missing skip link');
+  if (!html.includes('id="app-status-text"')) fail('index.html missing app status text');
+  if (!html.includes('id="btn-sw-reload"')) fail('index.html missing SW reload button');
   if (html.includes('home-inventory-photo')) fail('index.html still has photo inventory UI');
   ok('index.html shell markup');
 }
@@ -112,11 +115,31 @@ function checkAppBootGraph() {
   if (!app.includes('registerServiceWorker')) fail('js/app.js missing service worker registration');
   if (!app.includes("import { syncPortionBarVisibility }")) fail('js/app.js missing portion bar');
   if (!app.includes('buildWeeklyPlan')) fail('js/app.js missing plan engine');
+  if (!app.includes('setupServiceWorkerUpdates')) fail('js/app.js missing service worker update flow');
   ok('js/app.js boot graph');
+}
+
+function checkSwCacheVersion() {
+  const config = read('js/config.js');
+  const sw = read('sw.js');
+  const match = config.match(/export const SW_CACHE_VERSION = '([^']+)'/);
+  if (!match) fail('js/config.js missing SW_CACHE_VERSION export');
+  const version = match[1];
+  if (!sw.includes(`import { SW_CACHE_VERSION } from './js/config.js'`)) {
+    fail('sw.js must import SW_CACHE_VERSION from js/config.js');
+  }
+  if (!sw.includes('`gourmetos-core-${SW_CACHE_VERSION}`')) {
+    fail('sw.js must derive core cache name from SW_CACHE_VERSION');
+  }
+  if (!sw.includes('`gourmetos-data-${SW_CACHE_VERSION}`')) {
+    fail('sw.js must derive data cache name from SW_CACHE_VERSION');
+  }
+  ok(`SW cache version aligned (${version})`);
 }
 
 function main() {
   checkSwAssets();
+  checkSwCacheVersion();
   checkManifest();
   checkShellMarkup();
   checkNoVisionModules();

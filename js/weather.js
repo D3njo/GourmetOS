@@ -9,6 +9,7 @@ import {
   getPreferences,
   savePreferences
 } from './storage.js';
+import { toDateKey } from './menu-refresh.js';
 
 const OPEN_METEO = 'https://api.open-meteo.com/v1/forecast';
 const RAIN_CODES = [51, 53, 55, 61, 63, 65, 80, 81, 82, 95, 96, 99];
@@ -17,13 +18,6 @@ const MANUAL_MODES = new Set(['hot', 'cold', 'mild']);
 
 /** Default fallback when geolocation is unavailable (Berlin) */
 const FALLBACK_COORDS = { latitude: 52.52, longitude: 13.405 };
-
-function toDateKey(date) {
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, '0');
-  const d = String(date.getDate()).padStart(2, '0');
-  return `${y}-${m}-${d}`;
-}
 
 function startOfDay(date) {
   const d = new Date(date);

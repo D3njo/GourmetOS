@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="./css/app.css">
 </head>
 <body class="no-scrollbar">
+  <a href="#main-content" class="skip-to-main">Skip to main content</a>
   <div class="app-bg" aria-hidden="true"></div>
 
   <div class="app-shell">
@@ -48,9 +49,12 @@
       </div>
     </header>
 
-    <div id="app-status" class="app-status" role="status" aria-live="polite" hidden></div>
+    <div id="app-status" class="app-status" role="status" aria-live="polite" hidden>
+      <span id="app-status-text"></span>
+      <button type="button" id="btn-sw-reload" class="app-status-action" hidden data-i18n="statusReloadApp">Reload</button>
+    </div>
 
-    <main class="app-main no-scrollbar">
+    <main id="main-content" class="app-main no-scrollbar" tabindex="-1">
       <section id="view-today" class="view active" aria-label="Today">
         <p class="text-muted text-sm mb-4 leading-relaxed" data-i18n="todayIntro"></p>
 
@@ -59,8 +63,8 @@
           <p class="m-0 text-muted text-xs mt-1" data-i18n="weatherAutoHint"></p>
         </div>
 
-        <p class="text-[11px] uppercase tracking-widest text-muted font-bold mb-2" data-i18n="weatherOverride"></p>
-        <div class="weather-pills weather-pills-grid">
+        <p id="weather-override-label" class="text-[11px] uppercase tracking-widest text-muted font-bold mb-2" data-i18n="weatherOverride"></p>
+        <div class="weather-pills weather-pills-grid" role="group" aria-labelledby="weather-override-label">
           <button type="button" class="pill ripple-host active" data-weather="auto" data-i18n="tagAuto">Auto</button>
           <button type="button" class="pill ripple-host" data-weather="mild">⛅ <span data-i18n="weatherMild"></span></button>
           <button type="button" class="pill ripple-host" data-weather="hot">☀️ <span data-i18n="weatherHot"></span></button>
@@ -68,7 +72,7 @@
         </div>
 
         <article class="hero-card glass">
-          <img id="hero-image" class="hero-image skeleton" src="" alt="" loading="lazy">
+          <img id="hero-image" class="hero-image skeleton" src="./assets/icons/icon-192.png" alt="Today's selected recipe" loading="lazy">
           <div class="hero-overlay">
             <div class="flex items-center justify-between gap-2 mb-2">
               <span id="weather-badge" class="weather-badge">—</span>
@@ -340,7 +344,7 @@
 
   <div id="recipe-editor-modal" class="editor-modal" hidden aria-hidden="true">
     <div class="editor-backdrop" data-close-editor></div>
-    <div class="editor-panel glass" role="dialog" aria-labelledby="editor-title">
+    <div class="editor-panel glass" role="dialog" aria-modal="true" aria-labelledby="editor-title">
       <div class="editor-header">
         <h3 id="editor-title" class="font-serif m-0" data-i18n="editRecipe"></h3>
         <button type="button" class="editor-close" data-close-editor data-i18n="closeEditor" data-i18n-attr="aria-label">×</button>

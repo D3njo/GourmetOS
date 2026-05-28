@@ -116,13 +116,13 @@ export function recipeMatchesDietPreferences(recipe, diets = null) {
   const active = diets ?? getActiveDietPreferences();
   if (!active.length || !recipe) return true;
 
+  if (!(recipe.ingredients?.length) && recipe.hasFullData !== true) {
+    return false;
+  }
+
   for (const id of active) {
     const matcher = DIET_MATCHERS[id];
     if (matcher && !matcher(recipe)) return false;
   }
   return true;
-}
-
-export function filterByDietPreferences(recipes, diets = null) {
-  return recipes.filter((r) => recipeMatchesDietPreferences(r, diets));
 }
