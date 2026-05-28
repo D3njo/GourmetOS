@@ -9,23 +9,13 @@ import {
 } from './storage.js';
 import { loadRecipes, getRecipeOptions, getRecipeById, prepareRecipe, findAllowedRecipe } from './recipes.js';
 import { resolveRecipe } from './recipe-loader.js';
-import { getRecipeWeatherPrimary } from './weather-buckets.js';
+import { getRecipeWeatherPrimary, DAY_KEYS } from './weather-buckets.js';
 import { resolveRecipesForSlots } from './recipe-loader.js';
 import { getWeatherTagForDate, getCurrentWeekDates, getManualWeatherMode } from './weather.js';
 import { getDayLabels, t } from './i18n.js';
 import { toDateKey } from './menu-refresh.js';
 import { createWeekDiversity, trackWeekRecipe } from './week-composition.js';
 import { isRecipeAllowed, sanitizePlanSelections } from './exclusions.js';
-
-const DAY_KEYS = [
-  'monday',
-  'tuesday',
-  'wednesday',
-  'thursday',
-  'friday',
-  'saturday',
-  'sunday'
-];
 
 const MEAL_TYPE_ROTATION = ['breakfast', 'lunch', 'dinner', 'snack', 'brunch'];
 
@@ -124,7 +114,7 @@ function resolveDaySelections(
   return ids;
 }
 
-export { DAY_KEYS };
+export { DAY_KEYS } from './weather-buckets.js';
 
 /**
  * After API resolve: re-validate full recipes (stubs may lack ingredients).

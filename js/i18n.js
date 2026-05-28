@@ -52,6 +52,10 @@ const STRINGS = {
     statusSyncing: 'Syncing recipe library…',
     statusOffline: 'Offline — cached recipes available',
     statusOnline: 'Back online',
+    statusUpdateAvailable: 'A new version is ready.',
+    statusReloadApp: 'Reload',
+    statusStrictFilterPending:
+      'Diet and allergen filters need full recipe data — sync recipes in Preferences.',
     emptyShoppingList: 'No ingredients for this scope — try Week view or add meals.',
     ingredientsHiddenByExclusions:
       'Some ingredients are hidden because of your exclusion settings in Preferences.',

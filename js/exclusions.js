@@ -151,9 +151,21 @@ export function filterAllowedIngredients(ingredients, options = {}) {
   return (ingredients || []).filter((ing) => !ingredientViolatesExclusions(ing.name, options));
 }
 
+/** True when recipe lacks ingredient data needed to verify diet/allergen rules. */
+export function isRecipeStub(recipe) {
+  if (!recipe) return true;
+  if (recipe.hasFullData === true) return false;
+  return !(recipe.ingredients?.length);
+}
+
 /** Alias — allergen + diet gate used across plan + UI. */
 export function isRecipeAllowed(recipe, options = {}) {
   const ctx = getActiveExclusionContext(options);
+
+  if (hasStrictFilterActive() && isRecipeStub(recipe) && ctx.dietPreferences?.length) {
+    return false;
+  }
+
   if (!recipeMatchesExclusions(recipe, ctx.presetTags, ctx.customTerms)) return false;
   if (!recipeMatchesDietPreferences(recipe, ctx.dietPreferences)) return false;
   return true;

@@ -1,5 +1,4 @@
 import { getPreferences } from './storage.js';
-import { resolveWeatherTagFromValues } from './weather.js';
 import { filterByExclusions, getAllExcludedTerms, isRecipeAllowed } from './exclusions.js';
 import { applyRecipeOverride, isFavorite } from './recipe-store.js';
 import { getPlanningPool, resolveRecipesForSlots } from './recipe-loader.js';
@@ -8,8 +7,7 @@ import { migrateFromLocalStorage } from './recipe-idb.js';
 import { bootstrapFromBundledIfEmpty } from './recipe-bootstrap.js';
 import {
   enrichRecipeComplexity,
-  effortMatchesFilter,
-  effortScoreBoost
+  effortMatchesFilter
 } from './recipe-complexity.js';
 import { toDateKey } from './menu-refresh.js';
 import { getRecipeWeatherPrimary } from './weather-buckets.js';
@@ -96,14 +94,6 @@ export function getRecipeById(recipes, id) {
   return found ? prepareRecipe(found) : null;
 }
 
-export function resolveWeatherTag(weatherData, manualMode) {
-  if (manualMode === 'hot' || manualMode === 'cold' || manualMode === 'mild') return manualMode;
-  if (!weatherData) return 'cold';
-
-  const temp = weatherData.temperature ?? weatherData.tempMean;
-  const code = weatherData.weathercode;
-  return resolveWeatherTagFromValues(temp, code);
-}
 
 function filterByEffort(pool, effortLevel) {
   if (!effortLevel) return pool;
@@ -242,12 +232,6 @@ export function getRecipeOptions(
   }
 
   return result;
-}
-
-export function pickRecipeForDay(recipes, dayIndex, weatherTag, effortLevel = null) {
-  const options = getRecipeOptions(recipes, { weatherTag, effortLevel, limit: 5, dayIndex });
-  if (options.length) return options[dayIndex % options.length];
-  return recipes.find((r) => isRecipeAllowed(r)) ?? null;
 }
 
 export async function getActiveRecipeFromPlan(weeklyPlan) {

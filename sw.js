@@ -1,5 +1,11 @@
-const CACHE_CORE = 'gourmetos-core-v32';
-const CACHE_DATA = 'gourmetos-data-v32';
+import { SW_CACHE_VERSION } from './js/config.js';
+
+const CACHE_CORE = `gourmetos-core-${SW_CACHE_VERSION}`;
+const CACHE_DATA = `gourmetos-data-${SW_CACHE_VERSION}`;
+
+const FONT_URLS = [
+  'https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap'
+];
 
 const CORE_URLS = [
   './',
@@ -56,7 +62,8 @@ const CORE_URLS = [
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',
   './assets/icons/icon-maskable-512.png',
-  './assets/icons/apple-touch-icon.png'
+  './assets/icons/apple-touch-icon.png',
+  ...FONT_URLS
 ];
 
 const DATA_URLS = [
@@ -78,6 +85,12 @@ async function cacheUrls(cache, urls) {
     console.warn('[SW] cache partial failure:', failed.length, 'of', urls.length);
   }
 }
+
+self.addEventListener('message', (event) => {
+  if (event.data?.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -138,7 +151,9 @@ self.addEventListener('fetch', (event) => {
     url.hostname === 'api.open-meteo.com' ||
     url.hostname === 'www.themealdb.com' ||
     url.hostname === 'api.spoonacular.com' ||
-    url.hostname === 'cdn.jsdelivr.net'
+    url.hostname === 'cdn.jsdelivr.net' ||
+    url.hostname === 'fonts.googleapis.com' ||
+    url.hostname === 'fonts.gstatic.com'
   ) {
     event.respondWith(
       fetch(request)

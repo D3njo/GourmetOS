@@ -152,7 +152,7 @@ async function main() {
     ingredients: [{ name: 'Raw King Prawns' }, { name: 'Jasmine Rice' }],
     exclude_tags: []
   };
-  assert(recipeMatchesDietPreferences(stubCurry, ['vegetarian']), 'stub curry name-only may pass');
+  assert(!recipeMatchesDietPreferences(stubCurry, ['vegetarian']), 'stub curry blocked until ingredients sync');
   assert(!recipeMatchesDietPreferences(fullCurry, ['vegetarian']), 'full curry with prawns blocked');
 
   savePreferences({ dietPreferences: ['vegetarian'], excludedTags: [], customExclusions: [] });

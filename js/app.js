@@ -10,6 +10,7 @@ import {
 } from './storage.js';
 import { invalidateRecipeCache, getActiveRecipeFromPlan, syncRecipePool } from './recipes.js';
 import { buildWeeklyPlan, getTodayDay, getTodayDayKey, refreshSlotInPlan } from './plan-engine.js';
+import { hasStrictFilterActive, isRecipeStub } from './exclusions.js';
 import {
   t,
   setLocale,
@@ -46,6 +47,7 @@ import { updateAppStatus, bindConnectivityStatus } from './ui/app-status.js';
 let refreshPlanInFlight = null;
 let initPhase = true;
 let pendingInitRefresh = false;
+let swReloadPending = false;
 
 function markPendingInitRefresh() {
   if (initPhase) pendingInitRefresh = true;
@@ -122,6 +124,15 @@ export async function refreshPlan() {
       invalidateRecipeCache();
       const prefs = getPreferences();
       state.weeklyPlan = await buildWeeklyPlan(state.forecast, prefs.excludedTags || []);
+
+      if (hasStrictFilterActive()) {
+        const hasStubs = state.weeklyPlan?.some((day) =>
+          day.slots?.some((slot) => isRecipeStub(slot.selected))
+        );
+        state.strictFilterPending = !!hasStubs && !state.poolSyncing;
+      } else {
+        state.strictFilterPending = false;
+      }
 
       const { recipe, weatherTag, categories } = await getActiveRecipeFromPlan(state.weeklyPlan);
       const slot = getActiveSlot();
@@ -225,12 +236,49 @@ async function registerServiceWorker() {
   try {
     const registration = await navigator.serviceWorker.register('./sw.js', {
       scope: './',
+      type: 'module',
       updateViaCache: 'none'
     });
+    setupServiceWorkerUpdates(registration);
     await registration.update();
   } catch (err) {
     console.warn('[PWA] service worker registration failed', err);
   }
+}
+
+function setupServiceWorkerUpdates(registration) {
+  const markUpdateReady = () => {
+    state.swUpdateReady = true;
+    updateAppStatus();
+  };
+
+  if (registration.waiting) {
+    markUpdateReady();
+  }
+
+  registration.addEventListener('updatefound', () => {
+    const worker = registration.installing;
+    if (!worker) return;
+    worker.addEventListener('statechange', () => {
+      if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+        markUpdateReady();
+      }
+    });
+  });
+
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (swReloadPending) {
+      window.location.reload();
+    }
+  });
+}
+
+function applyServiceWorkerUpdate() {
+  if (!('serviceWorker' in navigator)) return;
+  swReloadPending = true;
+  navigator.serviceWorker.ready.then((registration) => {
+    registration.waiting?.postMessage({ type: 'SKIP_WAITING' });
+  });
 }
 
 function wireBridge() {
@@ -268,6 +316,7 @@ async function init() {
   bindRipples();
 
   $('#theme-toggle')?.addEventListener('click', toggleTheme);
+  $('#btn-sw-reload')?.addEventListener('click', applyServiceWorkerUpdate);
 
   onLocaleChange(() => {
     renderStaticUI();

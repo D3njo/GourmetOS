@@ -22,6 +22,7 @@ npm test
 - [ ] Screen reader: alternative recipes, remove ingredient, dock `aria-current`
 - [ ] 320px width + notched device: dock, portion bar, modals not clipped
 - [ ] Hard refresh after deploy → no 404 for deleted `inventory-*` scripts in Network tab
+- [ ] Service worker update banner → **Reload** applies new version without manual cache clear
 
 ## Installability
 
