@@ -47,7 +47,6 @@ import { $, $$, escapeHtml, escapeAttr } from './dom.js';
 import { renderOnlineOnlyFallback } from './helpers.js';
 import { syncCookModeButton } from './cook-mode.js';
 import { syncPortionBarVisibility } from './portion-bar.js';
-import { renderFoodLogSection } from './food-log-view.js';
 
 export function renderWeatherStatus() {
   const el = $('#weather-status');
@@ -102,7 +101,6 @@ export function renderTodayView() {
       heroImg.classList.add('skeleton');
     }
     $('#hero-tags') && ($('#hero-tags').innerHTML = '');
-    renderFoodLogSection();
     return;
   }
 
@@ -165,7 +163,6 @@ export function renderTodayView() {
   renderWeatherStatus();
   updateWeatherPills();
   syncPortionBarVisibility();
-  renderFoodLogSection();
 }
 
 function labelKey(prefix, value) {
