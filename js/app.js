@@ -267,17 +267,34 @@ function setupServiceWorkerUpdates(registration) {
   });
 
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (swReloadPending) {
-      window.location.reload();
-    }
+    if (!swReloadPending) return;
+    swReloadPending = false;
+    window.location.reload();
   });
 }
 
 function applyServiceWorkerUpdate() {
-  if (!('serviceWorker' in navigator)) return;
+  if (!('serviceWorker' in navigator)) {
+    window.location.reload();
+    return;
+  }
+
   swReloadPending = true;
+
+  const reloadNow = () => {
+    if (!swReloadPending) return;
+    swReloadPending = false;
+    window.location.reload();
+  };
+
   navigator.serviceWorker.ready.then((registration) => {
-    registration.waiting?.postMessage({ type: 'SKIP_WAITING' });
+    if (registration.waiting) {
+      registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+      setTimeout(reloadNow, 2500);
+      return;
+    }
+    // Update already activated (e.g. legacy SW called skipWaiting on install).
+    reloadNow();
   });
 }
 

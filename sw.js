@@ -102,7 +102,6 @@ self.addEventListener('install', (event) => {
       await cacheUrls(data, DATA_URLS);
     })()
   );
-  self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
