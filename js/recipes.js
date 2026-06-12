@@ -142,12 +142,15 @@ export function findAllowedRecipe(
     usedCuisines = null,
     usedProteins = null,
     usedTastes = null,
-    usedTechniques = null
+    usedTechniques = null,
+    excludeRecipeIds = null
   } = {}
 ) {
   const { presetTags, customTerms } = getAllExcludedTerms();
   const tags = excludedTags ?? presetTags;
   const allowOpts = { presetTags: tags, customTerms };
+  const hardExclude =
+    excludeRecipeIds instanceof Set ? excludeRecipeIds : new Set(excludeRecipeIds || []);
 
   const pools = [
     filterRecipes(recipes, { weatherTag, excludedTags: tags, mealType, effortLevel }),
@@ -169,18 +172,23 @@ export function findAllowedRecipe(
       usedTastes,
       usedTechniques
     });
-    const allowedRanked = ranked.filter(({ recipe }) => isRecipeAllowed(recipe, allowOpts));
+    const allowedRanked = ranked.filter(
+      ({ recipe }) => isRecipeAllowed(recipe, allowOpts) && !hardExclude.has(recipe.id)
+    );
     const pickedId = pickFromRankedList(allowedRanked, dayIndex);
     if (pickedId) {
       const match = allowedRanked.find(({ recipe }) => recipe.id === pickedId);
       if (match) return prepareRecipe(match.recipe);
     }
     for (const { recipe } of ranked) {
+      if (hardExclude.has(recipe.id)) continue;
       if (isRecipeAllowed(recipe, allowOpts)) return prepareRecipe(recipe);
     }
   }
 
-  const fallback = recipes.find((r) => isRecipeAllowed(r, allowOpts));
+  const fallback = recipes.find(
+    (r) => isRecipeAllowed(r, allowOpts) && !hardExclude.has(r.id)
+  );
   return fallback ? prepareRecipe(fallback) : null;
 }
 
@@ -199,11 +207,14 @@ export function getRecipeOptions(
     usedCuisines = null,
     usedProteins = null,
     usedTastes = null,
-    usedTechniques = null
+    usedTechniques = null,
+    excludeRecipeIds = null
   }
 ) {
   const { presetTags, customTerms } = getAllExcludedTerms();
   const tags = excludedTags ?? presetTags;
+  const hardExclude =
+    excludeRecipeIds instanceof Set ? excludeRecipeIds : new Set(excludeRecipeIds || []);
 
   let pool = filterRecipes(recipes, { weatherTag, excludedTags: tags, mealType, effortLevel });
 
@@ -231,11 +242,20 @@ export function getRecipeOptions(
 
   const seen = new Set();
   const result = [];
-  for (const { recipe, reasons, score } of ranked) {
-    if (seen.has(recipe.id)) continue;
-    seen.add(recipe.id);
-    result.push({ ...prepareRecipe(recipe), _recScore: score, _recReasons: reasons });
-    if (result.length >= limit) break;
+
+  const pushRanked = (allowExcluded = false) => {
+    for (const { recipe, reasons, score } of ranked) {
+      if (seen.has(recipe.id)) continue;
+      if (!allowExcluded && hardExclude.has(recipe.id)) continue;
+      seen.add(recipe.id);
+      result.push({ ...prepareRecipe(recipe), _recScore: score, _recReasons: reasons });
+      if (result.length >= limit) break;
+    }
+  };
+
+  pushRanked(false);
+  if (result.length < limit && hardExclude.size) {
+    pushRanked(true);
   }
 
   return result;

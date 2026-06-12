@@ -46,9 +46,11 @@ function makeRecipe(id, overrides = {}) {
 async function main() {
   stubLocalStorage();
 
-  const { pickWeightedRecipeId, pickFromRankedList } = await loadEsm('js/recipe-picker.js');
+  const { pickWeightedRecipeId, pickFromRankedList, pickDiverseAlternatives } =
+    await loadEsm('js/recipe-picker.js');
   const { rankRecipes, scoreRecipe } = await loadEsm('js/recommendation-engine.js');
-  const { recordPlanRecipeIds, getRecentRecipeScorePenalty } = await loadEsm('js/storage.js');
+  const { recordPlanRecipeIds, getRecentRecipeScorePenalty, getRecentlyServedRecipeIds } =
+    await loadEsm('js/storage.js');
 
   const candidates = [
     { id: 'premium-top', _recScore: 20 },
@@ -103,9 +105,19 @@ async function main() {
   }
   assert(rankedPicks.size > 1, 'ranked weighted pick should vary across runs');
 
+  const altOptions = pool.map((recipe, i) => ({ ...recipe, id: recipe.id, _recScore: 20 - i }));
+  const diverse = pickDiverseAlternatives(altOptions, { selectedId: 'french-onion-soup', count: 2 });
+  assert(diverse.length === 2, 'should pick two diverse alternatives');
+  assert(!diverse.some((d) => d.id === 'french-onion-soup'), 'alternatives should exclude selected');
+
   recordPlanRecipeIds(['french-onion-soup'], '2026-06-10');
   const penalty = getRecentRecipeScorePenalty('french-onion-soup', new Date('2026-06-12'));
-  assert(penalty === -8, `expected -8 recent penalty within 7 days, got ${penalty}`);
+  assert(penalty === -15, `expected -15 recent penalty within 7 days, got ${penalty}`);
+
+  recordPlanRecipeIds(['ramen-noodles'], '2026-06-11');
+  const recent = getRecentlyServedRecipeIds(7, new Date('2026-06-12'));
+  assert(recent.has('french-onion-soup'), 'recent ids should include french-onion-soup');
+  assert(recent.has('ramen-noodles'), 'recent ids should include ramen-noodles');
 
   stubLocalStorage();
   const { recordPlanRecipeIds: recordFresh, getRecentRecipeScorePenalty: penaltyFresh } =
@@ -124,7 +136,7 @@ async function main() {
   recordFresh(['thai-green-curry'], '2026-06-12');
   const after = scoreFresh(recipe, ctx).score;
   assert(after < before, 'recently served recipe should score lower after recordPlanRecipeIds');
-  assert(penaltyFresh('thai-green-curry', new Date('2026-06-12')) === -8, 'same-day penalty is -8');
+  assert(penaltyFresh('thai-green-curry', new Date('2026-06-12')) === -15, 'same-day penalty is -15');
 
   console.log('test-plan-variety: all passed');
 }

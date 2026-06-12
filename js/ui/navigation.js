@@ -1,5 +1,6 @@
-import { clearPlanSelections, clearDayPlanSelection, getActivePlanModeKey } from '../storage.js';
+import { clearPlanSelections, clearDayPlanSelection, getActivePlanModeKey, recordPlanRecipeIds } from '../storage.js';
 import { getTodayDayKey } from '../plan-engine.js';
+import { toDateKey } from '../menu-refresh.js';
 import {
   shouldRefreshWeekPlan,
   shouldRefreshTodayMenu,
@@ -31,6 +32,12 @@ export async function maybeAutoRefreshMenu(trigger) {
 }
 
 export async function resetMenuManual() {
+  if (state.weeklyPlan?.length) {
+    for (const day of state.weeklyPlan) {
+      const ids = day.slots?.map((slot) => slot.recipeId).filter(Boolean) ?? [];
+      if (ids.length) recordPlanRecipeIds(ids, day.dateStr || toDateKey());
+    }
+  }
   clearPlanSelections();
   markManualMenuReset();
   await bridge.refreshPlan();

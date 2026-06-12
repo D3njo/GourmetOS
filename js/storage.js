@@ -318,10 +318,21 @@ export function getRecentRecipeScorePenalty(recipeId, ref = new Date()) {
   }
 
   if (!Number.isFinite(minDays)) return 0;
-  if (minDays <= 7) return -8;
-  if (minDays <= 14) return -4;
-  if (minDays <= 21) return -2;
+  if (minDays <= 7) return -15;
+  if (minDays <= 14) return -8;
+  if (minDays <= 21) return -4;
   return 0;
+}
+
+/** Recipe IDs served within the last N calendar days (for hard exclusion when picking). */
+export function getRecentlyServedRecipeIds(withinDays = 7, ref = new Date()) {
+  const ids = new Set();
+  for (const entry of getRecentRecipeEntries()) {
+    if (daysSinceDateKey(entry.date, ref) <= withinDays) {
+      for (const id of entry.ids || []) ids.add(id);
+    }
+  }
+  return ids;
 }
 
 export { STORAGE_KEYS, DEFAULT_MEAL_PLAN, DEFAULT_EFFORT_PLAN };

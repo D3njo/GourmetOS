@@ -16,8 +16,8 @@ import { getDayLabels, t } from './i18n.js';
 import { toDateKey } from './menu-refresh.js';
 import { createWeekDiversity, trackWeekRecipe } from './week-composition.js';
 import { isRecipeAllowed, sanitizePlanSelections } from './exclusions.js';
-import { recordPlanRecipeIds } from './storage.js';
-import { pickFromRankedOptions } from './recipe-picker.js';
+import { recordPlanRecipeIds, getRecentlyServedRecipeIds } from './storage.js';
+import { pickFromRankedOptions, pickDiverseAlternatives } from './recipe-picker.js';
 
 const MEAL_TYPE_ROTATION = ['breakfast', 'lunch', 'dinner', 'snack', 'brunch'];
 
@@ -82,12 +82,14 @@ function resolveDaySelections(
   while (ids.length < mealCount) {
     const slotIndex = ids.length;
     const mealType = getMealTypeForSlot(slotIndex, mealCount, dayKey);
+    const recentIds = getRecentlyServedRecipeIds(7);
     const options = getRecipeOptions(allRecipes, {
       weatherTag,
       mealType,
       effortLevel,
       excludedTags,
-      limit: 12,
+      limit: 24,
+      excludeRecipeIds: recentIds,
       dayIndex: DAY_KEYS.indexOf(dayKey),
       usedIds: diversity?.usedIds,
       usedCuisines: diversity?.usedCuisines,
@@ -105,6 +107,7 @@ function resolveDaySelections(
       mealType,
       effortLevel,
       excludedTags,
+      excludeRecipeIds: recentIds,
       dayIndex: DAY_KEYS.indexOf(dayKey),
       usedIds: diversity?.usedIds,
       usedCuisines: diversity?.usedCuisines,
@@ -226,7 +229,8 @@ export async function buildWeeklyPlan(forecast, excludedTags = []) {
         mealType,
         effortLevel,
         excludedTags,
-        limit: 5,
+        limit: 24,
+        excludeRecipeIds: getRecentlyServedRecipeIds(7),
         dayIndex: index + slotIndex,
         usedIds: diversity.usedIds,
         usedCuisines: diversity.usedCuisines,
@@ -246,6 +250,7 @@ export async function buildWeeklyPlan(forecast, excludedTags = []) {
             mealType,
             effortLevel,
             excludedTags,
+            excludeRecipeIds: getRecentlyServedRecipeIds(7),
             dayIndex: index + slotIndex,
             usedIds: diversity.usedIds,
             usedCuisines: diversity.usedCuisines,
@@ -256,11 +261,11 @@ export async function buildWeeklyPlan(forecast, excludedTags = []) {
       }
 
       if (selected?.id && isRecipeAllowed(selected, allowOpts)) {
-        if (!alternatives.some((a) => a.id === selected.id)) {
-          alternatives = [selected, ...alternatives].slice(0, 3);
-        } else {
-          alternatives = [selected, ...alternatives.filter((a) => a.id !== selected.id)].slice(0, 3);
-        }
+        const diverse = pickDiverseAlternatives(alternatives, {
+          selectedId: selected.id,
+          count: 2
+        }).filter((a) => isRecipeAllowed(a, allowOpts));
+        alternatives = [selected, ...diverse].slice(0, 3);
       } else {
         selected = alternatives[0] ?? null;
       }

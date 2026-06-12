@@ -1652,6 +1652,33 @@ button:focus:not(:focus-visible),
   overflow-y: auto;
   border-radius: 24px 24px 0 0;
   padding: 20px;
+  background: color-mix(in srgb, var(--color-bg) 94%, var(--color-text) 6%);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.28);
+  color: var(--color-text);
+}
+
+[data-theme='dark'] .cook-mode-panel {
+  background: #1c1c1e;
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 -16px 48px rgba(0, 0, 0, 0.55);
+}
+
+.cook-mode-panel .font-serif,
+.cook-mode-panel .cook-step-text,
+.cook-mode-panel .cook-finish-text,
+.cook-mode-panel .cook-mise-list {
+  color: var(--color-text);
+}
+
+.cook-mode-panel .editor-close {
+  color: var(--color-text);
+  opacity: 0.85;
+}
+
+.cook-mode-panel .editor-close:hover,
+.cook-mode-panel .editor-close:focus-visible {
+  opacity: 1;
 }
 
 .cook-mode-header {
