@@ -22,7 +22,7 @@ Entries may link to third-party sites (e.g. BBC Good Food, Serious Eats, Jamie O
 ## Spoonacular (optional)
 
 - **Website:** https://spoonacular.com
-- **Use in GourmetOS:** Optional API key stored locally in the browser. Recipes are fetched on demand; extended results are not committed to this repository.
+- **Use in GourmetOS:** Optional API key stored locally in the browser. Recipes are fetched on demand; the **What I ate** food log may query Spoonacular for protein and calorie estimates; extended results are not committed to this repository.
 - **Your obligations:** Comply with Spoonacular API terms; the API key is for personal use by the user who provides it.
 
 ## Google Fonts

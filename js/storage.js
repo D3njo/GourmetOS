@@ -18,7 +18,8 @@ const STORAGE_KEYS = {
   weatherCache: 'gourmetos_weather_cache',
   forecastCache: 'gourmetos_forecast_cache',
   homeInventory: 'gourmetos_home_inventory',
-  recentRecipes: 'gourmetos_recent_recipes'
+  recentRecipes: 'gourmetos_recent_recipes',
+  foodLog: 'gourmetos_food_log'
 };
 
 const RECENT_RECIPE_MAX_ENTRIES = 30;
@@ -334,5 +335,54 @@ export function getRecentlyServedRecipeIds(withinDays = 7, ref = new Date()) {
   }
   return ids;
 }
+
+function foodLogDateKey(d = new Date()) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+export function getFoodLogStore() {
+  const raw = getItem(STORAGE_KEYS.foodLog, {});
+  return raw && typeof raw === 'object' ? raw : {};
+}
+
+function saveFoodLogStore(store) {
+  setItem(STORAGE_KEYS.foodLog, store);
+}
+
+export function getFoodLogForDate(dateStr = foodLogDateKey()) {
+  const store = getFoodLogStore();
+  return Array.isArray(store[dateStr]) ? store[dateStr] : [];
+}
+
+export function addFoodLogEntry(entry, dateStr = foodLogDateKey()) {
+  const store = getFoodLogStore();
+  const list = [...(store[dateStr] || [])];
+  list.push(entry);
+  store[dateStr] = list;
+  saveFoodLogStore(store);
+  return entry;
+}
+
+export function removeFoodLogEntry(entryId, dateStr = foodLogDateKey()) {
+  const store = getFoodLogStore();
+  store[dateStr] = (store[dateStr] || []).filter((e) => e.id !== entryId);
+  saveFoodLogStore(store);
+}
+
+export function getFoodLogDailyTotals(dateStr = foodLogDateKey()) {
+  const entries = getFoodLogForDate(dateStr);
+  return entries.reduce(
+    (acc, e) => ({
+      proteinG: acc.proteinG + (Number(e.proteinG) || 0),
+      caloriesKcal: acc.caloriesKcal + (Number(e.caloriesKcal) || 0)
+    }),
+    { proteinG: 0, caloriesKcal: 0 }
+  );
+}
+
+export { foodLogDateKey };
 
 export { STORAGE_KEYS, DEFAULT_MEAL_PLAN, DEFAULT_EFFORT_PLAN };

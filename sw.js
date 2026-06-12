@@ -26,6 +26,8 @@ const CORE_URLS = [
   './js/ui/shopping-view.js',
   './js/ui/app-status.js',
   './js/ui/cook-mode.js',
+  './js/ui/food-log-view.js',
+  './js/dish-lookup.js',
   './js/weather-buckets.js',
   './js/storage.js',
   './js/weather.js',
@@ -70,7 +72,8 @@ const CORE_URLS = [
 const DATA_URLS = [
   './data/recipe-catalog.json',
   './data/recipe-index.json',
-  './data/recipes-bundled.json'
+  './data/recipes-bundled.json',
+  './data/common-dishes.json'
 ];
 
 async function cacheUrls(cache, urls) {

@@ -37,6 +37,14 @@ export function getSpoonacularQuota() {
   return getItem(QUOTA_KEY, null);
 }
 
+export class SpoonacularQuotaError extends Error {
+  constructor() {
+    super('Spoonacular quota exceeded');
+    this.name = 'SpoonacularQuotaError';
+    this.quotaExceeded = true;
+  }
+}
+
 async function spoonacularFetch(path, params = {}) {
   const apiKey = getSpoonacularApiKey();
   if (!apiKey) return null;
@@ -50,11 +58,94 @@ async function spoonacularFetch(path, params = {}) {
   const response = await fetch(url.toString(), { cache: 'no-store' });
   saveQuotaFromResponse(response);
 
+  if (response.status === 402) {
+    throw new SpoonacularQuotaError();
+  }
+
   if (!response.ok) {
     throw new Error(`Spoonacular HTTP ${response.status}`);
   }
 
   return response.json();
+}
+
+/** Extract protein (g) and calories (kcal) from Spoonacular nutrition payloads. */
+export function extractNutrientsFromSpoonacular(nutrition) {
+  const nutrients = nutrition?.nutrients || nutrition?.nutrition?.nutrients || [];
+  let proteinG = null;
+  let caloriesKcal = null;
+
+  for (const n of nutrients) {
+    const name = String(n.name || '').toLowerCase();
+    const amount = Number(n.amount);
+    if (!Number.isFinite(amount)) continue;
+    if (name === 'protein') proteinG = Math.round(amount);
+    if (name === 'calories') caloriesKcal = Math.round(amount);
+  }
+
+  return { proteinG, caloriesKcal };
+}
+
+/** Search recipes by dish name for food-log nutrition lookup. */
+export async function searchDishByName(query, number = 3) {
+  if (!getSpoonacularApiKey()) return [];
+  try {
+    const data = await spoonacularFetch('/recipes/complexSearch', {
+      query,
+      number,
+      addRecipeInformation: true,
+      sort: 'popularity',
+      language: 'en'
+    });
+    return data?.results || [];
+  } catch (err) {
+    if (err instanceof SpoonacularQuotaError) throw err;
+    console.warn('Spoonacular dish search failed:', err);
+    return [];
+  }
+}
+
+/** Nutrition for a Spoonacular recipe id. */
+export async function fetchRecipeNutrition(recipeId) {
+  if (!getSpoonacularApiKey()) return null;
+  try {
+    return await spoonacularFetch(`/recipes/${recipeId}/nutritionWidget.json`);
+  } catch (err) {
+    if (err instanceof SpoonacularQuotaError) throw err;
+    console.warn('Spoonacular recipe nutrition failed:', err);
+    return null;
+  }
+}
+
+/** Restaurant / takeaway menu items (kebab, etc.). */
+export async function searchMenuItemByName(query, number = 3) {
+  if (!getSpoonacularApiKey()) return [];
+  try {
+    const data = await spoonacularFetch('/food/menuItems/search', { query, number });
+    return data?.menuItems || [];
+  } catch (err) {
+    if (err instanceof SpoonacularQuotaError) throw err;
+    console.warn('Spoonacular menu search failed:', err);
+    return [];
+  }
+}
+
+/** Nutrition for a Spoonacular menu item id. */
+export async function fetchMenuItemNutrition(menuItemId) {
+  if (!getSpoonacularApiKey()) return null;
+  try {
+    return await spoonacularFetch(`/food/menuItems/${menuItemId}/nutritionWidget.json`);
+  } catch (err) {
+    if (err instanceof SpoonacularQuotaError) throw err;
+    console.warn('Spoonacular menu nutrition failed:', err);
+    return null;
+  }
+}
+
+export function hasSpoonacularQuotaRemaining() {
+  const quota = getSpoonacularQuota();
+  if (!quota || quota.left == null) return !!getSpoonacularApiKey();
+  return quota.left > 0;
 }
 
 function parseInstructions(recipe) {
