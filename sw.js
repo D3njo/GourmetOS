@@ -33,6 +33,7 @@ const CORE_URLS = [
   './js/recipe-meta.js',
   './js/editorial-recipe.js',
   './js/recommendation-engine.js',
+  './js/recipe-picker.js',
   './js/week-composition.js',
   './js/ingredient-normalize.js',
   './js/recipe-api.js',

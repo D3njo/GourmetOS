@@ -16,6 +16,8 @@ import { getDayLabels, t } from './i18n.js';
 import { toDateKey } from './menu-refresh.js';
 import { createWeekDiversity, trackWeekRecipe } from './week-composition.js';
 import { isRecipeAllowed, sanitizePlanSelections } from './exclusions.js';
+import { recordPlanRecipeIds } from './storage.js';
+import { pickFromRankedOptions } from './recipe-picker.js';
 
 const MEAL_TYPE_ROTATION = ['breakfast', 'lunch', 'dinner', 'snack', 'brunch'];
 
@@ -37,9 +39,16 @@ export function mealTypeLabel(mealType) {
   return label !== key ? label : mealType;
 }
 
-function defaultRecipeId(options, slotIndex) {
+function pickRecipeIdFromOptions(options, slotIndex, excludeIds = []) {
   if (!options.length) return null;
-  return options[slotIndex % options.length].id;
+  const exclude = Array.isArray(excludeIds) ? excludeIds : [...excludeIds];
+  const filtered = options.filter((r) => !exclude.includes(r.id));
+  if (!filtered.length) return null;
+  return (
+    pickFromRankedOptions(filtered, slotIndex, exclude) ??
+    filtered[slotIndex % filtered.length]?.id ??
+    null
+  );
 }
 
 function trackRecipeDiversity(recipe, diversity) {
@@ -78,7 +87,7 @@ function resolveDaySelections(
       mealType,
       effortLevel,
       excludedTags,
-      limit: 3,
+      limit: 12,
       dayIndex: DAY_KEYS.indexOf(dayKey),
       usedIds: diversity?.usedIds,
       usedCuisines: diversity?.usedCuisines,
@@ -86,9 +95,10 @@ function resolveDaySelections(
       usedTastes: diversity?.usedTastes,
       usedTechniques: diversity?.usedTechniques
     });
-    const pick = defaultRecipeId(
+    const pick = pickRecipeIdFromOptions(
       options.filter((r) => !ids.includes(r.id)),
-      slotIndex
+      slotIndex,
+      ids
     );
     const fallback = findAllowedRecipe(allRecipes, {
       weatherTag,
@@ -301,6 +311,14 @@ export async function buildWeeklyPlan(forecast, excludedTags = []) {
   });
 
   savePlanSelectionsForMode(modeKey, updatedSelections);
+
+  for (const { dateStr } of weekDates) {
+    const dayIds = safeDays
+      .find((d) => d.dateStr === dateStr)
+      ?.slots.map((s) => s.recipeId)
+      .filter(Boolean);
+    if (dayIds?.length) recordPlanRecipeIds(dayIds, dateStr);
+  }
 
   return safeDays;
 }

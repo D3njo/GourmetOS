@@ -14,6 +14,7 @@ import { getRecipeWeatherPrimary } from './weather-buckets.js';
 import { enrichEditorial } from './editorial-recipe.js';
 import { inferProtein } from './recipe-meta.js';
 import { rankRecipes } from './recommendation-engine.js';
+import { pickFromRankedList } from './recipe-picker.js';
 
 let recipeDatabase = null;
 
@@ -168,6 +169,12 @@ export function findAllowedRecipe(
       usedTastes,
       usedTechniques
     });
+    const allowedRanked = ranked.filter(({ recipe }) => isRecipeAllowed(recipe, allowOpts));
+    const pickedId = pickFromRankedList(allowedRanked, dayIndex);
+    if (pickedId) {
+      const match = allowedRanked.find(({ recipe }) => recipe.id === pickedId);
+      if (match) return prepareRecipe(match.recipe);
+    }
     for (const { recipe } of ranked) {
       if (isRecipeAllowed(recipe, allowOpts)) return prepareRecipe(recipe);
     }

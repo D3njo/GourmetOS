@@ -17,8 +17,26 @@ const STORAGE_KEYS = {
   weatherMode: 'gourmetos_weather_mode',
   weatherCache: 'gourmetos_weather_cache',
   forecastCache: 'gourmetos_forecast_cache',
-  homeInventory: 'gourmetos_home_inventory'
+  homeInventory: 'gourmetos_home_inventory',
+  recentRecipes: 'gourmetos_recent_recipes'
 };
+
+const RECENT_RECIPE_MAX_ENTRIES = 30;
+const RECENT_RECIPE_MAX_AGE_DAYS = 21;
+
+function recentDateKey(d = new Date()) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+function daysSinceDateKey(dateKey, ref = new Date()) {
+  const [y, m, d] = dateKey.split('-').map(Number);
+  const then = new Date(y, m - 1, d);
+  const start = new Date(ref.getFullYear(), ref.getMonth(), ref.getDate());
+  return Math.floor((start - then) / 86400000);
+}
 
 const DEFAULT_PREFERENCES = {
   excludedTags: [],
@@ -262,6 +280,48 @@ export function addHomeInventoryItems(names, source = 'manual') {
 
 export function removeHomeInventoryItem(id) {
   saveHomeInventory(getHomeInventory().filter((item) => item.id !== id));
+}
+
+/** Ring buffer of { date, ids[] } for cross-week variety scoring. */
+export function getRecentRecipeEntries() {
+  const raw = getItem(STORAGE_KEYS.recentRecipes, []);
+  return Array.isArray(raw) ? raw : [];
+}
+
+function pruneRecentRecipeEntries(entries, ref = new Date()) {
+  return entries
+    .filter((e) => e?.date && Array.isArray(e.ids) && e.ids.length)
+    .filter((e) => daysSinceDateKey(e.date, ref) <= RECENT_RECIPE_MAX_AGE_DAYS)
+    .slice(-RECENT_RECIPE_MAX_ENTRIES);
+}
+
+/** Record recipe IDs served on a calendar day (merged into one entry per day). */
+export function recordPlanRecipeIds(recipeIds, dateStr = recentDateKey()) {
+  const ids = [...new Set((recipeIds || []).filter(Boolean))];
+  if (!ids.length) return;
+
+  const all = getRecentRecipeEntries();
+  const existing = all.find((e) => e.date === dateStr);
+  const mergedIds = existing ? [...new Set([...(existing.ids || []), ...ids])] : ids;
+  const entries = [...all.filter((e) => e.date !== dateStr), { date: dateStr, ids: mergedIds }];
+  setItem(STORAGE_KEYS.recentRecipes, pruneRecentRecipeEntries(entries));
+}
+
+/** Score penalty for recipes served recently (cross-week fatigue). */
+export function getRecentRecipeScorePenalty(recipeId, ref = new Date()) {
+  if (!recipeId) return 0;
+
+  let minDays = Infinity;
+  for (const entry of getRecentRecipeEntries()) {
+    if (!entry.ids?.includes(recipeId)) continue;
+    minDays = Math.min(minDays, daysSinceDateKey(entry.date, ref));
+  }
+
+  if (!Number.isFinite(minDays)) return 0;
+  if (minDays <= 7) return -8;
+  if (minDays <= 14) return -4;
+  if (minDays <= 21) return -2;
+  return 0;
 }
 
 export { STORAGE_KEYS, DEFAULT_MEAL_PLAN, DEFAULT_EFFORT_PLAN };

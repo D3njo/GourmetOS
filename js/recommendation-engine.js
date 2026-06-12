@@ -2,7 +2,7 @@
  * Explainable recommendation scoring v2 — weather mood, taste, occasion, diversity.
  */
 
-import { getPreferences, getHomeInventory } from './storage.js';
+import { getPreferences, getHomeInventory, getRecentRecipeScorePenalty } from './storage.js';
 import { highProteinBoost } from './protein-preferences.js';
 import { homeIngredientBoost } from './home-inventory.js';
 import { isFavorite } from './recipe-store.js';
@@ -70,14 +70,14 @@ export function scoreRecipe(recipe, context = {}) {
   }
 
   if (recipe.tier === 'premium') {
-    score += 3;
+    score += 1.5;
     reasons.push('premium');
   }
-  if (recipe.qualityScore) score += recipe.qualityScore * 1.2;
+  if (recipe.qualityScore) score += recipe.qualityScore * 0.8;
   if (recipe.rating) score += recipe.rating * 0.8;
   if (recipe.chef) score += 1;
   if (recipe.fineDiningMeta?.style === 'haute-cuisine') {
-    score += 1.5;
+    score += 1;
     reasons.push('hauteCuisine');
   }
   if (recipe.hasFullData !== false && recipe.ingredients?.length) score += 0.5;
@@ -104,6 +104,12 @@ export function scoreRecipe(recipe, context = {}) {
       reasons.push('usesHomeIngredients');
       if (total > 0 && missing.length <= 2) reasons.push('minimalShopping');
     }
+  }
+
+  const recentPenalty = getRecentRecipeScorePenalty(recipe.id);
+  if (recentPenalty < 0) {
+    score += recentPenalty;
+    reasons.push('recentlyServed');
   }
 
   if (usedIds?.has(recipe.id)) {
